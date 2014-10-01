@@ -202,9 +202,7 @@ function LoginView() {
 
 	//Add behavior for UI
 	loginBtn.addEventListener('click', function(e) {
-	   
 	    loginReq();
-	    
     });
     backButton.addEventListener('click', function(e){
         self.animate({bottom:-Ti.Platform.displayCaps.platformHeight, duration:750},function(){

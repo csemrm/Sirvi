@@ -9,6 +9,15 @@ function MainMenu() {
     textloaded=false;
     var qbutton = require('ui/common/buttonCreator');
     
+    var userCred = Ti.App.Properties.getObject('userCred');
+    var longitude;
+    var latitude;
+    
+    var apiCall = '/api/appUsers/' + userCred['userId'];
+	var apiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
+	var url = apiURL + apiCall;
+    
+    
     var h1 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'28dp',color:'#fff'};
     var h2 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'18dp',color:'#fff'};
     var h3 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'14dp',color:'#fff'};
@@ -35,42 +44,66 @@ function MainMenu() {
 //
 // GET CURRENT POSITION - THIS FIRES ONCE
 //
-Titanium.Geolocation.getCurrentPosition(function(e) {
-    if(!e.success || e.error) {
-        Ti.API.info('error:' + JSON.stringify(e.error));
-        return;
-    }
- 
-    var longitude = e.coords.longitude;
-    var latitude = e.coords.latitude;
-    var altitude = e.coords.altitude;
-    var heading = e.coords.heading;
-    var accuracy = e.coords.accuracy;
-    var speed = e.coords.speed;
-    var timestamp = e.coords.timestamp;
-    var altitudeAccuracy = e.coords.altitudeAccuracy;
-    Ti.API.info('speed ' + speed);
- 
-    Titanium.API.info('geo - current location: ' + new Date(timestamp) + ' long ' + longitude + ' lat ' + latitude + ' accuracy ' + accuracy);
-});
-var locationCallback = function(e) {
-    if(!e.success || e.error) {
-        Ti.API.info('error:' + JSON.stringify(e.error));
-        return;
-    }
- 
-    var longitude = e.coords.longitude;
-    var latitude = e.coords.latitude;
-    var altitude = e.coords.altitude;
-    var heading = e.coords.heading;
-    var accuracy = e.coords.accuracy;
-    var speed = e.coords.speed;
-    var timestamp = e.coords.timestamp;
-    var altitudeAccuracy = e.coords.altitudeAccuracy;
- 
-    Titanium.API.info('geo - location updated: ' + new Date(timestamp) + ' long ' + longitude + ' lat ' + latitude + ' accuracy ' + accuracy);
-};
-Titanium.Geolocation.addEventListener('location', locationCallback);
+	Titanium.Geolocation.getCurrentPosition(function(e) {
+	    if(!e.success || e.error) {
+	        Ti.API.info('error: get current position: ' + JSON.stringify(e.error));
+	        return;
+	    }
+	 
+	    longitude = e.coords.longitude;
+	    latitude = e.coords.latitude;
+	    var altitude = e.coords.altitude;
+	    var heading = e.coords.heading;
+	    var accuracy = e.coords.accuracy;
+	    var speed = e.coords.speed;
+	    var timestamp = e.coords.timestamp;
+	    var altitudeAccuracy = e.coords.altitudeAccuracy;
+	    Ti.API.info('speed ' + speed);
+	 	locationCallback(e);
+	    //Titanium.API.info('geo - current location: ' + new Date(timestamp) + ' long ' + longitude + ' lat ' + latitude + ' accuracy ' + accuracy);
+	});
+	function locationCallback(e) {
+	    if(!e.success || e.error) {
+	        Ti.API.info('error: location callback: ' + JSON.stringify(e.error));
+	        return;
+	    }
+	 
+	    var longitude = e.coords.longitude;
+	    var latitude = e.coords.latitude;
+	    var altitude = e.coords.altitude;
+	    var heading = e.coords.heading;
+	    var accuracy = e.coords.accuracy;
+	    var speed = e.coords.speed;
+	    var timestamp = e.coords.timestamp;
+	    var altitudeAccuracy = e.coords.altitudeAccuracy;
+	 
+	 	var client = Ti.Network.createHTTPClient({
+             onload : function(e) {
+                 //Ti.API.info(e.success);
+                 Ti.API.info(this.responseText);
+                 //saveInfo(JSON.parse(this.responseText));
+             },
+             onerror : function(e) {
+                 Ti.API.info(e.error + ' Location Callback Function ' + JSON.stringify(e));
+                 alert('Invalid Email Or Password');
+             },
+             timeout : 5000  // in milliseconds
+         });
+
+        params = {
+            access_token:userCred['id'],
+            //id:userCred['userId'],
+            last_location:latitude + ',' + longitude
+        };
+        
+        client.open("PUT", url);
+        client.setRequestHeader("Content-Type", "application/json");
+        client.setRequestHeader('charset','utf-8');
+        client.send(JSON.stringify(params));
+        Ti.API.info(JSON.stringify(params));   
+	};
+
+	Titanium.Geolocation.addEventListener('location', locationCallback);
     
     var spacer = Ti.UI.createView({
             height:'10dp',
@@ -115,26 +148,7 @@ Titanium.Geolocation.addEventListener('location', locationCallback);
         opacity:0.7
     });
     
-    function updateUserLoc(){
-        Titanium.Geolocation.getCurrentPosition(function(e) {
-            if(!e.success || e.error) {
-                Ti.API.info('error:' + JSON.stringify(e.error));
-                return;
-            }
-         
-            var longitude = e.coords.longitude;
-            var latitude = e.coords.latitude;
-            var altitude = e.coords.altitude;
-            var heading = e.coords.heading;
-            var accuracy = e.coords.accuracy;
-            var speed = e.coords.speed;
-            var timestamp = e.coords.timestamp;
-            var altitudeAccuracy = e.coords.altitudeAccuracy;
-            Ti.API.info('speed ' + speed);
-         
-            Titanium.API.info('geo - current location: ' + new Date(timestamp) + ' long ' + longitude + ' lat ' + latitude + ' accuracy ' + accuracy);
-        });
-    }
+    
     
     function callSirvi(){
         var Twilio = require('com.twilio.client');
@@ -183,23 +197,35 @@ Titanium.Geolocation.addEventListener('location', locationCallback);
             },
             timeout: 5000
         });
-        client.open('GET', url);
-        client.send();
+        client.open('POST', url);
+        
+        authParams = {
+        	caller:userCred['userId'],
+        	lat:latitude,
+        	lng:longitude
+        };
+        
+        client.send(authParams);
         
         // Make an outbound call
         function makeCall() {
             Ti.API.info('making call...');
             Twilio.Device.connect({
-                PhoneNumber:'+19546103618',
-                CallerId:'+15613243601'
+                PhoneNumber:'+18666971684',
+                CallerId:'+15612038918',
+                //FriendlyName:userCred['email']
             });
             Ti.API.info('call enroute...');
             self.add(overlay);
             self.add(callDialog);
+            
+            locationCallback(e);
         }
-    }
-    
-    
+        
+        
+        
+        
+        }
         
     var childView = Ti.UI.createView({
         height:'386.5dp',

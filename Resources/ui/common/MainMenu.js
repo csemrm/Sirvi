@@ -168,8 +168,7 @@ function MainMenu() {
             font:h1,
             color:'black'
         });
-        
-        
+
         var spacer = Ti.UI.createView({
             height:'10dp',
         });
@@ -221,11 +220,7 @@ function MainMenu() {
             
             locationCallback;
         }
-        
-        
-        
-        
-        }
+    }
         
     var childView = Ti.UI.createView({
         height:'386.5dp',

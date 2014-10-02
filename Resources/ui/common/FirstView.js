@@ -157,7 +157,8 @@ function chatView() {
 
     
     textBtn.addEventListener('click', function(){
-       self.hide(); 
+    	textChatField.blur();
+        self.hide(); 
     });
 
     return self;

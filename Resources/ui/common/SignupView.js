@@ -168,7 +168,6 @@ function SignupView() {
     datePicker = Titanium.UI.createPicker({
         top : 43,
         type : Titanium.UI.PICKER_TYPE_DATE,
-        maxDate : new Date(2009, 01, 01),
         selectionIndicator : true
     });
     
@@ -202,6 +201,11 @@ function SignupView() {
     datePickerView.add(pickerToolbar);
     
     bdayField.addEventListener('click', function(e){
+    	fnameField.blur();
+    	lnameField.blur();
+    	emailField.blur();
+    	passField.blur();
+    	cityField.blur();
         datePickerView.animate(slideIn);
     });
     
@@ -278,7 +282,7 @@ function SignupView() {
     
     function saveInfo(data){
         var userData= data;
-        userData['email'] = emailField.value;
+        userData['email'] = emailField.value.toLowerCase();
         userData['password'] = passField.value;
         userData['fname'] = fnameField.value;
         userData['lname'] = lnameField.value;
@@ -296,6 +300,11 @@ function SignupView() {
     }
     
     function signupReq(){
+    	fnameField.blur();
+    	lnameField.blur();
+    	emailField.blur();
+    	passField.blur();
+    	cityField.blur();
         var client = Ti.Network.createHTTPClient({
              onload : function(e) {
                  saveInfo(JSON.parse(this.responseText));
@@ -311,18 +320,22 @@ function SignupView() {
              },
              timeout : 5000  
          });
+         var eMail = emailField.value;
+         
 
         params = {
           details: {
-            masked_email: emailField.value,
+            masked_email: eMail.toLowerCase(),
             first_name: fnameField.value,
             last_name: lnameField.value,
             birthday: bdayField.value,
             city: cityField.value,
           },
-          email: emailField.value,
+          email: emailField.value.toLowerCase(),
           password:passField.value
         };
+        
+        Ti.API.info(params);
         
         client.open("POST", url);
         client.setRequestHeader("Content-Type", "application/json");

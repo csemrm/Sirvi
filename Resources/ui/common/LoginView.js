@@ -176,7 +176,7 @@ function LoginView() {
          });
 
         params = {
-            email:userField.value,
+            email:userField.value.toLowerCase(),
             password:passField.value
         };
         
@@ -189,7 +189,7 @@ function LoginView() {
     
 	function saveInfo(data){
 	    var userData= data;
-	    userData['email'] = userField.value;
+	    userData['email'] = userField.value.toLowerCase();
 	    userData['password'] = passField.value;
 	    Ti.App.Properties.setObject('userCred',userData);
 	    Ti.App.Properties.setBool('loggedIn',true);
@@ -202,6 +202,8 @@ function LoginView() {
 
 	//Add behavior for UI
 	loginBtn.addEventListener('click', function(e) {
+		userField.blur();
+		passField.blur();
 	    loginReq();
     });
     backButton.addEventListener('click', function(e){

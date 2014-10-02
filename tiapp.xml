@@ -62,4 +62,5 @@
         <target device="mobileweb">false</target>
     </deployment-targets>
     <sdk-version>3.4.0.GA</sdk-version>
+    <property name="ti.deploytype">production</property>
 </ti:app>

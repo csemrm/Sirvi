@@ -85,7 +85,7 @@ function MainMenu() {
              },
              onerror : function(e) {
                  Ti.API.info(e.error + ' Location Callback Function ' + JSON.stringify(e));
-                 alert('Invalid Email Or Password');
+                 alert('Error');
              },
              timeout : 5000  // in milliseconds
          });
@@ -96,10 +96,10 @@ function MainMenu() {
             last_location:latitude + ',' + longitude
         };
         
-        client.open("PUT", url);
+        /*client.open("PUT", url);
         client.setRequestHeader("Content-Type", "application/json");
         client.setRequestHeader('charset','utf-8');
-        client.send(JSON.stringify(params));
+        client.send(JSON.stringify(params));*/
         Ti.API.info(JSON.stringify(params));   
 	};
 
@@ -184,7 +184,7 @@ function MainMenu() {
             self.remove(overlay);
         });
 
-        var url = 'http://multaply.biz/browsercall/auth.php';
+        var url = 'http://healthypeps.com/auth.php';
         var client = Ti.Network.createHTTPClient({
             onload: function(e) {
                 
@@ -193,7 +193,7 @@ function MainMenu() {
                 makeCall();
             },
             onerror: function(e) {
-                Ti.Platform.openURL('tel:17858164322');
+                Ti.Platform.openURL('tel:18666971684');
             },
             timeout: 5000
         });
@@ -213,13 +213,12 @@ function MainMenu() {
             Twilio.Device.connect({
                 PhoneNumber:'+18666971684',
                 CallerId:'+15612038918',
-                //FriendlyName:userCred['email']
             });
             Ti.API.info('call enroute...');
             self.add(overlay);
             self.add(callDialog);
             
-            locationCallback(e);
+            locationCallback;
         }
         
         

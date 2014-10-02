@@ -1,1 +1,0 @@
-/Users/nanianderson/Sirvi/Resources/app.js

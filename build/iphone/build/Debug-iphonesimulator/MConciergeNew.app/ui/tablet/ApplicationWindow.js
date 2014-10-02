@@ -1,1 +1,0 @@
-/Users/nanianderson/Sirvi/Resources/ui/tablet/ApplicationWindow.js

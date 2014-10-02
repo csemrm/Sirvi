@@ -1,0 +1,60 @@
+dependencies: \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiUIiOSProxy.m \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiUIiOSProxy.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiProxy.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiBase.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiThreading.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiPublicAPI.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiEvaluator.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/KrollContext.h \
+  /Users/nanianderson/Sirvi/build/iphone/headers/TiCore/TiCore.h \
+  headers/TiCore/Ti.h headers/TiCore/TiBase.h \
+  headers/TiCore/TiContextRef.h headers/TiCore/TiObjectRef.h \
+  headers/TiCore/TiValueRef.h headers/TiCore/WebKitAvailability.h \
+  headers/TiCore/TiStringRef.h headers/TiCore/TiStringRefCF.h \
+  /Users/nanianderson/Sirvi/build/iphone/headers/TiCore/TiContextRefPrivate.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/KrollCallback.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/KrollObject.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiBindingRunLoop.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiUIiOSAdViewProxy.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiUIViewProxy.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiViewProxy.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiUIView.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiAnimation.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiPoint.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiDimension.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiColor.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/ListenerEntry.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiModule.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiUtils.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/WebFont.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiFile.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiBuffer.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiBlob.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/LayoutConstraint.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiGradient.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiRect.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiViewTemplate.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/Webcolor.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiUIiOSTransitionAnimationProxy.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiUIiOSAttributedStringProxy.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/Ti3DMatrix.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiUIiOSCoverFlowViewProxy.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiUIiOSToolbarProxy.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiToolbar.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiUIiOSTabbedBarProxy.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiUIiOSDocumentViewerProxy.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiUIiOSNavWindowProxy.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiWindowProxy.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiTab.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiTabGroup.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiViewController.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiControllerProtocols.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiAnimatorProxy.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiSnapBehavior.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiPushBehavior.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiGravityBehavior.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiAnchorAttachBehavior.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiViewAttachBehavior.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiCollisionBehavior.h \
+  /Users/nanianderson/Sirvi/build/iphone/Classes/TiDynamicItemBehavior.h

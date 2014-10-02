@@ -22,12 +22,52 @@ function ApplicationWindow() {
 	var Law = require('ui/common/lawView');
 	var Question = require('ui/common/QuestionView');
 	
+	var userCred = Ti.App.Properties.getObject('userCred',{});
+	
+	var apiCall = '/api/appUsers/login';
+	var apiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
+	var url = apiURL + apiCall;
+	
 	if(Ti.App.Properties.getBool('loggedIn',false)){
-	   MainMenuView = new MainMenu();
-       self.add(MainMenuView);
+		loginReq();
+	    
 	}else{
        LoadView = new Load(2000);
        self.add(LoadView);
+	}
+	
+	function loginReq(){
+        var client = Ti.Network.createHTTPClient({
+             onload : function(e) {
+                 //Ti.API.info(e.success);
+                 Ti.API.info(this.responseText);
+                 saveInfo(JSON.parse(this.responseText));
+             },
+             onerror : function(e) {
+                 Ti.API.info(e.error + ' ' + JSON.stringify(e));
+                 alert('Invalid Email Or Password');
+             },
+             timeout : 5000  // in milliseconds
+         });
+
+        params = {
+            email:userCred['email'],
+            password:userCred['password']
+        };
+        
+        client.open("POST", url);
+        client.setRequestHeader("Content-Type", "application/json");
+        client.setRequestHeader('charset','utf-8');
+        client.send(JSON.stringify(params));
+        Ti.API.info(JSON.stringify(params));
+    }
+    
+    function saveInfo(data){
+	    var userData= data;
+	    Ti.App.Properties.setObject('userCred',userData);
+	    //Ti.App.Properties.setBool('loggedIn',true);
+	    MainMenuView = new MainMenu();
+        self.add(MainMenuView);
 	}
 	
 	Ti.addEventListener('load', function(e){

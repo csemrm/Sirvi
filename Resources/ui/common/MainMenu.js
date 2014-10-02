@@ -201,6 +201,7 @@ function MainMenu() {
         
         authParams = {
         	caller:userCred['userId'],
+        	access_token:userCred['id'],
         	lat:latitude,
         	lng:longitude
         };

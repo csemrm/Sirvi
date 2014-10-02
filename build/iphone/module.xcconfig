@@ -1,0 +1,4 @@
+// this is a generated file - DO NOT EDIT
+
+COM_TWILIO_CLIENT_OTHER_LDFLAGS=$(inherited) -framework AudioToolbox -framework SystemConfiguration -framework CFNetwork -framework AVFoundation
+OTHER_LDFLAGS=$(inherited) $(COM_TWILIO_CLIENT_OTHER_LDFLAGS) 

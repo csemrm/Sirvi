@@ -12,7 +12,9 @@ function SignupView() {
     var h1 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'28dp',color:'#fff'};
     var h2 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'22dp',color:'#fff'};
     var h3 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'14dp',color:'#fff'};
-    //label using localization-ready strings from <app dir>/i18n/en/strings.xml
+    
+    var userData = {};
+    
     var apiCall = '/api/appUsers';
     var apiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
     var url = apiURL + apiCall;
@@ -20,11 +22,17 @@ function SignupView() {
     
     var imagepath = '/images/signup/';
     
-    var backButton = Ti.UI.createImageView({
-        image:imagepath + 'arrow.png',
+    var backButton = Ti.UI.createView({
+        height:'30dp',
+        width:'40dp',
         center:{y:'40dp'}
     });
     self.add(backButton);
+    
+    var arrowImg = Ti.UI.createImageView({
+        image:imagepath + 'arrow.png'
+    });
+    backButton.add(arrowImg);
     
     
     var welcomeImg = Ti.UI.createImageView({
@@ -157,7 +165,38 @@ function SignupView() {
     scrollView.add(formView);
     self.add(scrollView);
     
+    var noAccountLabel = Ti.UI.createLabel({
+        text:'Already have an account?  ',
+        font:h3,
+        color:'white',
+        height:'20dp'
+    });
     
+    var signUpLabel = Ti.UI.createLabel({
+        text:'Login',
+        font:h3,
+        color:'yellow',
+        height:'20dp'
+    });
+    
+    var bottomLabelView = Titanium.UI.createView({
+        width:'195dp',
+        layout:'horizontal',
+        bottom:'20dp',
+        height:'20dp',
+    });
+    bottomLabelView.add(noAccountLabel);
+    bottomLabelView.add(signUpLabel);
+    self.add(bottomLabelView);
+    
+    var cheatView = Ti.UI.createView({
+        backgroundColor:'#000',
+        height:Ti.UI.FILL,
+        width:Ti.UI.FILL,
+        opacity:0.5,
+        visible:false
+    });
+    self.add(cheatView);
     var datePickerView = Titanium.UI.createView({
         height : 248,
         bottom : -248
@@ -206,6 +245,7 @@ function SignupView() {
     	emailField.blur();
     	passField.blur();
     	cityField.blur();
+    	cheatView.show();
         datePickerView.animate(slideIn);
     });
     
@@ -221,28 +261,10 @@ function SignupView() {
     
     pickerDone.addEventListener('click', function(e){
         datePickerView.animate(slideOut);
+        cheatView.hide();
     });
     
-    var noAccountLabel = Ti.UI.createLabel({
-        text:'Already have an account?  ',
-        font:h3,
-        color:'white'
-    });
     
-    var signUpLabel = Ti.UI.createLabel({
-        text:'Login',
-        font:h3,
-        color:'yellow',
-    });
-    
-    var bottomLabelView = Titanium.UI.createView({
-        width:'195dp',
-        layout:'horizontal',
-        bottom:'20dp',
-        height:'20dp',
-    });
-    bottomLabelView.add(noAccountLabel);
-    bottomLabelView.add(signUpLabel);
     
     bottomLabelView.addEventListener('click', function(){
         self.animate({bottom:-Ti.Platform.displayCaps.platformHeight, duration:750},function(){
@@ -251,10 +273,22 @@ function SignupView() {
         Ti.fireEvent('login');
     });
     
-    self.add(bottomLabelView);
+    
+    
+    backButton.addEventListener('click', function(e){
+        self.animate({bottom:-Ti.Platform.displayCaps.platformHeight, duration:750},function(){
+            self=null;
+        });
+        Ti.fireEvent('closeSignup');
+    });
     
     //Add behavior for UI
     signupBtn.addEventListener('click', function(e) {
+        fnameField.blur();
+        lnameField.blur();
+        emailField.blur();
+        passField.blur();
+        cityField.blur();
         if(!emailField.value||!passField.value||!lnameField.value||!cityField.value||!bdayField.value||!fnameField.value)
         {
             alert('All fields are required.');
@@ -276,12 +310,45 @@ function SignupView() {
         return (testresults);
     };
     
-    function checkage(bday){
+    function signupReq(){
         
+        var client = Ti.Network.createHTTPClient({
+             onload : function(e) {
+                 Ti.API.info(this.responseText);
+                 saveInfo(JSON.parse(this.responseText));
+             },
+             onerror : function(e) {
+                 Ti.API.info(e);
+                 if(e.code==422){
+                     alert('Email Address already exists');
+                 } else{
+                     alert('Check your internet connection and try again');
+                 }
+             },
+             timeout : 5000  
+         });
+         
+        params = {
+          details: {
+              masked_email: emailField.value.toLowerCase(),
+              first_name: fnameField.value,
+              last_name: lnameField.value,
+              birthday: bdayField.value,
+              city: cityField.value,
+          },
+          email: emailField.value.toLowerCase(),
+          password:passField.value
+        };
+        
+        Ti.API.info(params);
+        client.open("POST", url);
+        client.setRequestHeader("Content-Type", "application/json");
+        client.setRequestHeader('charset','utf-8');
+        client.send(JSON.stringify(params));
     }
     
     function saveInfo(data){
-        var userData= data;
+        userData= data;
         userData['email'] = emailField.value.toLowerCase();
         userData['password'] = passField.value;
         userData['fname'] = fnameField.value;
@@ -289,68 +356,56 @@ function SignupView() {
         userData['city'] = cityField.value;
         userData['bday'] = bdayField.value;
         userData['password'] = passField.value;
-        Ti.App.Properties.setObject('userCred',userData);
+        loginReq();
         Ti.App.Properties.setBool('loggedIn',true);
-        Ti.App.Properties.setObject('userCred',userData);
+        
         Ti.fireEvent('loadBack');
         self.animate({opacity:0, duration:750},function(){
             self=null;
         });
         Ti.fireEvent('TutorialView');
+        
     }
     
-    function signupReq(){
-    	fnameField.blur();
-    	lnameField.blur();
-    	emailField.blur();
-    	passField.blur();
-    	cityField.blur();
+    function checkage(bday){
+        
+    }
+    
+    function loginReq(){
+        var loginapiCall = '/api/appUsers/login';
+        var loginapiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
+        var loginurl = loginapiURL + loginapiCall;
         var client = Ti.Network.createHTTPClient({
              onload : function(e) {
-                 saveInfo(JSON.parse(this.responseText));
-                 //Ti.API.info(this.responseText);
+                 //Ti.API.info(e.success);
+                 Ti.API.info(this.responseText);
+                 saveLoginInfo(JSON.parse(this.responseText));
              },
              onerror : function(e) {
-                 Ti.API.info(e);
-                 if(e.code==422){
-                     alert('Email Address already exists');
-                 }else{
-                 alert('Check your internet connection and try again');
-                 }
+                 Ti.API.info(e.error + ' ' + JSON.stringify(e));
              },
-             timeout : 5000  
+             timeout : 5000 
          });
-         var eMail = emailField.value;
-         
 
         params = {
-          details: {
-            masked_email: eMail.toLowerCase(),
-            first_name: fnameField.value,
-            last_name: lnameField.value,
-            birthday: bdayField.value,
-            city: cityField.value,
-          },
-          email: emailField.value.toLowerCase(),
-          password:passField.value
+            email:emailField.value.toLowerCase(),
+            password:passField.value
         };
         
-        Ti.API.info(params);
-        
-        client.open("POST", url);
+        client.open("POST", loginurl);
         client.setRequestHeader("Content-Type", "application/json");
         client.setRequestHeader('charset','utf-8');
         client.send(JSON.stringify(params));
+        Ti.API.info(JSON.stringify(params));
     }
     
-    backButton.addEventListener('click', function(e){
+    function saveLoginInfo(data){
+        userData['userId']=data.userId;
+        userData['id']=data.id;
+        Ti.API.info(userData);
+        Ti.App.Properties.setObject('userCred',userData);
         
-        self.animate({bottom:-Ti.Platform.displayCaps.platformHeight, duration:750},function(){
-            self=null;
-        });
-        Ti.fireEvent('closeSignup');
-    });
-
+    }
 
     return self;
 }

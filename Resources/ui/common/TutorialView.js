@@ -182,6 +182,7 @@ function TutorialView() {
     loginBtn3.addEventListener('click', function(e){
         
         self.animate({opacity:0, duration:750}, function(){
+            Ti.App.Properties.setBool('questions', false);
             Ti.fireEvent('mainmenu');
         });
         

@@ -53,6 +53,14 @@ function Offers() {
         right:'5dp'
     });
     
+    var offersTableView = Ti.UI.createTableView({
+        top:'105dp',
+        width:'100%',
+        separatorColor:'transparent',
+        backgroundColor:'transparent'
+        });
+    self.add(offersTableView);
+    
     load();
     
     
@@ -90,14 +98,10 @@ function Offers() {
          client.open("GET", url);
          client.send();
      
-        Titanium.API.info('geo - current location: ' + new Date(timestamp) + ' long ' + longitude + ' lat ' + latitude + ' accuracy ' + accuracy);
+        //Titanium.API.info('geo - current location: ' + new Date(timestamp) + ' long ' + longitude + ' lat ' + latitude + ' accuracy ' + accuracy);
     });
     }
-    
-    
-     
-     
-     
+
      function offerTable(data){
         var xGrid = 2;
         var yGrid = data.length/2;
@@ -110,8 +114,7 @@ function Offers() {
                 height: '235dp',
                 width:'100%'
             });
-            
-            
+
             for (var x=0; x<xGrid; x++){
              //   if (!data[cellIndex]) {break;}
                 var thisView = Ti.UI.createView({
@@ -123,11 +126,14 @@ function Offers() {
                     borderRadius:5,
                     borderWidth:1,
                     url:data[cellIndex].deal.url,
+                    untracked_url:data[cellIndex].deal.untracked_url,
                 });
                     
                var itemImage = Ti.UI.createImageView({
                     top:'0dp',
                     image:data[cellIndex].deal.image_url,
+                    url:data[cellIndex].deal.url,
+                    untracked_url:data[cellIndex].deal.untracked_url,
                     width:'150dp',
                     height:'150dp',
                 });
@@ -142,7 +148,9 @@ function Offers() {
                     borderRadius:5,
                     borderWidth:1,
                     borderColor:'#000',
-                    opacity:0.8
+                    opacity:0.8,
+                    url:data[cellIndex].deal.url,
+                    untracked_url:data[cellIndex].deal.untracked_url,
                 });
                 
                 
@@ -151,6 +159,8 @@ function Offers() {
                     text:'$'+data[cellIndex].deal.price,
                     font: h4,
                     color:'white',
+                    url:data[cellIndex].deal.url,
+                    untracked_url:data[cellIndex].deal.untracked_url,
                 });
                 
                 thisView.add(overlay);
@@ -162,7 +172,9 @@ function Offers() {
                     left:'2dp',
                     text:data[cellIndex].deal.merchant.name,
                     font: h3,
-                    color:'black'
+                    color:'black',
+                    url:data[cellIndex].deal.url,
+                    untracked_url:data[cellIndex].deal.untracked_url,
                 });
                 var description = Ti.UI.createLabel({
                     top:'150dp',
@@ -171,7 +183,9 @@ function Offers() {
                     color:'#478caf',
                     left:'2dp',
                     right:'2dp',
-                    height:'29dp'
+                    height:'29dp',
+                    url:data[cellIndex].deal.url,
+                    untracked_url:data[cellIndex].deal.untracked_url,
                 });
                 thisView.add(description);
                 thisView.add(textlabel);
@@ -180,16 +194,64 @@ function Offers() {
             }
             tableData.push(thisRow);
         }
-        
-        var offersTableView = Ti.UI.createTableView({
-             top:'105dp',
-             data:tableData,
-             width:'100%',
-             separatorColor:'transparent',
-        backgroundColor:'transparent'
-        });
-        self.add(offersTableView);
+        offersTableView.setData(tableData);
      }
+     
+     offersTableView.addEventListener('click', function(e){
+         if(e.source.url||e.source.untracked_url){
+             openWebView(e.source.url,e.source.untracked_url);
+         }
+     });
+     
+    function openWebView(url, untracked_url){
+        var frameView = Ti.UI.createView({
+            height:Ti.UI.FILL,
+            width:Ti.UI.FILL,
+            layout:'vertical',
+            backgroundColor:'f7b21d'
+        });
+        var opaqueStatus = Ti.UI.createView({
+            width:'100%',
+            height:'20dp',
+            backgroundColor:'#000',
+            top:'0dp',
+            opacity:0.2
+        });
+        frameView.add(opaqueStatus);
+        
+        var buttonBar = Ti.UI.createView({
+            height:'40dp',
+            backgroundColor:'#f7b21d'
+        });
+        frameView.add(buttonBar);
+        
+        var openInBrowser = Ti.UI.createButton({
+            title:'Open in Safari',
+            right:'5dp',
+        });
+        buttonBar.add(openInBrowser);
+        
+        var closeWebView = Ti.UI.createButton({
+            title:'Close',
+            left:'5dp',
+        });
+        buttonBar.add(closeWebView);
+        
+        var dealWebView = Ti.UI.createWebView({
+            url:url ? url : untracked_url
+        });
+        
+        frameView.add(dealWebView);
+        self.add(frameView);
+        
+        openInBrowser.addEventListener('click', function(e){
+            Ti.Platform.openURL(url ? url : untracked_url);
+        });
+        closeWebView.addEventListener('click', function(e){
+            self.remove(frameView);
+        });
+    }
+     
     
     self.add(ribbon);
     self.add(backButton);

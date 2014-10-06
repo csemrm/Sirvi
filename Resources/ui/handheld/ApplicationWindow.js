@@ -28,12 +28,14 @@ function ApplicationWindow() {
 	var apiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
 	var url = apiURL + apiCall;
 	
-	if(!Ti.App.Properties.getBool('loggedIn',false)){
+	var loginStatus = Ti.App.Properties.getBool('loggedIn',false);
+	
+	if(userCred['email']&&userCred['password']&&(loginStatus)){
 		loginReq();
-	    
 	}else{
        LoadView = new Load(2000);
        self.add(LoadView);
+      
 	}
 	
 	function loginReq(){

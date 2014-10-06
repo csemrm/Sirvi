@@ -16,11 +16,17 @@ function LoginView() {
 	
 	var imagepath = '/images/login/';
 	
-	var backButton = Ti.UI.createImageView({
-	    image:imagepath + 'arrow.png',
+	var backButton = Ti.UI.createView({
+	    height:'30dp',
+	    width:'40dp',
 	    center:{y:'40dp'}
 	});
 	self.add(backButton);
+	
+	var arrowImg = Ti.UI.createImageView({
+        image:imagepath + 'arrow.png'
+    });
+    backButton.add(arrowImg);
 	
 	var apiCall = '/api/appUsers/login';
 	var apiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
@@ -97,26 +103,34 @@ function LoginView() {
 	    font:h3,
 	    color:'white',
 	    left:'5dp',
+	    height:'20dp'
 	});
 	
 	var forgotPassLabel = Ti.UI.createLabel({
         text:'Forgot Password',
         font:h3,
         color:'white',
-        left:'10dp'
+        left:'10dp',
+        height:'20dp'
     });
     
     var labelView = Ti.UI.createView({
         width:'234dp',
         top:'14dp',
-        height:'10dp',
+        height:'20dp',
         layout:'horizontal'
     });
-    labelView.add(checkBox);
-    labelView.add(keepLoginLabel);
+    
+    var loggedInView = Ti.UI.createView({
+        width:Ti.UI.SIZE,
+        height:'20dp',
+        layout:'horizontal'
+    });
+    loggedInView.add(checkBox);
+    loggedInView.add(keepLoginLabel);
+    labelView.add(loggedInView);
     labelView.add(forgotPassLabel);
-	
-	
+
 	var formView = Ti.UI.createScrollView({
 	    width:'235dp',
 	    layout:'vertical',
@@ -145,12 +159,15 @@ function LoginView() {
         width:'195dp',
         layout:'horizontal',
         bottom:'25dp',
-        height:'10dp',
+        height:'20dp',
     });
     bottomLabelView.add(noAccountLabel);
     bottomLabelView.add(signUpLabel);
     
     self.add(bottomLabelView);
+    
+    keepLoginLabel.addEventListener('click', toggleLogin);
+    checkBox.addEventListener('click', toggleLogin);
     
     bottomLabelView.addEventListener('click', function(){
         self.animate({bottom:-Ti.Platform.displayCaps.platformHeight, duration:750},function(){
@@ -166,7 +183,11 @@ function LoginView() {
              onload : function(e) {
                  //Ti.API.info(e.success);
                  Ti.API.info(this.responseText);
-                 saveInfo(JSON.parse(this.responseText));
+                 if(checkBox.image==imagepath + 'checkOn.png'){
+                    saveInfo(JSON.parse(this.responseText));
+                 }else if(checkBox.image==imagepath + 'checkOff.png'){
+                     dontSaveInfo(JSON.parse(this.responseText));
+                 }
              },
              onerror : function(e) {
                  Ti.API.info(e.error + ' ' + JSON.stringify(e));
@@ -199,8 +220,28 @@ function LoginView() {
         });
         Ti.fireEvent('mainmenu');
 	}
+	
+	function dontSaveInfo(data){
+        var userData= data;
+        userData['email'] = userField.value.toLowerCase();
+        userData['password'] = passField.value;
+        Ti.App.Properties.setObject('userCred',userData);
+        Ti.App.Properties.setBool('loggedIn',false);
+         Ti.fireEvent('loadBack');
+         self.animate({opacity:0, duration:750},function(){
+            self=null;
+        });
+        Ti.fireEvent('mainmenu');
+    }
 
-	//Add behavior for UI
+	function toggleLogin (){
+        if (checkBox.image==imagepath + 'checkOn.png'){
+            checkBox.image=imagepath + 'checkOff.png';
+        }else if(checkBox.image==imagepath + 'checkOff.png'){
+            checkBox.image=imagepath + 'checkOn.png';
+        }
+    }
+	
 	loginBtn.addEventListener('click', function(e) {
 		userField.blur();
 		passField.blur();
@@ -212,14 +253,7 @@ function LoginView() {
         });
         Ti.fireEvent('closeLogin');
     });
- /*   loginImg.addEventListener('click', function(e) {
-        alert('clicked');
-        Ti.fireEvent('firstview');
-    });
-    loginLabel.addEventListener('click', function(e) {
-        Ti.fireEvent('firstview');
-        alert('clicked');
-    });*/
+
 
 	return self;
 }

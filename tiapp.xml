@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
     <id>com.multaply.sirvi</id>
-    <name>MConciergeNew</name>
+    <name>Sirvi</name>
     <version>1.0</version>
-    <publisher>gruby20</publisher>
+    <publisher>Omar Maghrabi</publisher>
     <url>http://</url>
     <description>undefined</description>
-    <copyright>2014 by gruby20</copyright>
+    <copyright>2014 by Omar Maghrabi</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
     <guid>bd70e3fc-acaa-4936-a36f-7cbe54996efa</guid>
+    <property name="ti.facebook.appid">214878188648827</property>
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <ios>
         <plist>
@@ -36,9 +37,9 @@
                 <key>UIStatusBarStyle</key>
                 <string>UIStatusBarStyleLightContent</string>
                 <key>NSLocationWhenInUseUsageDescription</key>
-				<string>Find the best local deals</string>
-				<key>NSLocationAlwaysUsageDescription</key>
-				<string>Find the best local deals</string>
+                <string>Find the best local deals</string>
+                <key>NSLocationAlwaysUsageDescription</key>
+                <string>Find the best local deals</string>
             </dict>
         </plist>
     </ios>
@@ -53,6 +54,8 @@
     </mobileweb>
     <modules>
         <module platform="iphone">com.twilio.client</module>
+        <module platform="android">facebook</module>
+        <module platform="iphone">facebook</module>
     </modules>
     <deployment-targets>
         <target device="android">true</target>

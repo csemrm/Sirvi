@@ -356,6 +356,8 @@ function SignupView() {
         userData['city'] = cityField.value;
         userData['bday'] = bdayField.value;
         userData['password'] = passField.value;
+        Ti.App.Properties.setString('email',emailField.value.toLowerCase());
+        Ti.App.Properties.setString('password',passField.value);
         loginReq();
         Ti.App.Properties.setBool('loggedIn',true);
         

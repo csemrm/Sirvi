@@ -212,6 +212,8 @@ function LoginView() {
 	    var userData= data;
 	    userData['email'] = userField.value.toLowerCase();
 	    userData['password'] = passField.value;
+	    Ti.App.Properties.setString('email',userField.value.toLowerCase());
+        Ti.App.Properties.setString('pass',passField.value);
 	    Ti.App.Properties.setObject('userCred',userData);
 	    Ti.App.Properties.setBool('loggedIn',true);
 	     Ti.fireEvent('loadBack');

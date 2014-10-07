@@ -5,6 +5,7 @@ function MainMenu() {
     var self = Ti.UI.createView({
         backgroundImage : imagepath + 'background.png',
     });
+
     loaded = false;
     textloaded = false;
     var qbutton = require('ui/common/buttonCreator');
@@ -13,9 +14,7 @@ function MainMenu() {
     var longitude;
     var latitude;
 
-    var apiCall = '/api/appUsers/' + userCred['userId'];
-    var apiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
-    var url = apiURL + apiCall;
+    loginReq();
 
     var h1 = {
         fontFamily : 'HelveticaNeue-Thin',
@@ -42,14 +41,14 @@ function MainMenu() {
     });
     var textChat = require('ui/common/FirstView');
     /*textBtn.addEventListener('click', function() {
-        if (!textloaded) {
-            chatView = new textChat();
-            self.add(chatView);
-            textloaded = true;
-        } else {
-            chatView.show();
-        }
-    });*/
+     if (!textloaded) {
+     chatView = new textChat();
+     self.add(chatView);
+     textloaded = true;
+     } else {
+     chatView.show();
+     }
+     });*/
 
     Ti.Geolocation.preferredProvider = "gps";
     Ti.Geolocation.purpose = "Find local deals";
@@ -76,11 +75,46 @@ function MainMenu() {
         Ti.API.info('speed ' + speed);
         locationCallback(e);
     });
+
+    function loginReq() {
+        var apiCall = '/api/appUsers/login';
+        var apiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
+        var url = apiURL + apiCall;
+        var client = Ti.Network.createHTTPClient({
+            onload : function(e) {
+                Ti.API.info(this.responseText);
+                saveInfo(JSON.parse(this.responseText));
+            },
+            onerror : function(e) {
+                Ti.API.info(e.error + ' ' + JSON.stringify(e));
+                alert('Invalid Email Or Password');
+            },
+            timeout : 5000 // in milliseconds
+        });
+
+        params = {
+            email : Titanium.App.Properties.getString('email', userCred['email']),
+            password : Titanium.App.Properties.getString('pass', userCred['pass'])
+        };
+
+        client.open("POST", url);
+        client.setRequestHeader("Content-Type", "application/json");
+        client.setRequestHeader('charset', 'utf-8');
+        client.send(JSON.stringify(params));
+        Ti.API.info(JSON.stringify(params));
+    }
+
+    function saveInfo(data) {
+        userData = data;
+        Ti.App.Properties.setObject('userCred', userData);
+    }
+
     function locationCallback(e) {
         if (!e.success || e.error) {
             Ti.API.info('error: location callback: ' + JSON.stringify(e.error));
             return;
         }
+        var urlCall = 'http://104.131.124.227:3000/api/appUsers/' + userCred['userId'] + '?access_token=' + userCred['id'];
 
         var longitude = e.coords.longitude;
         var latitude = e.coords.latitude;
@@ -105,15 +139,16 @@ function MainMenu() {
         });
 
         params = {
-            access_token : userCred['id'],
-            //id:userCred['userId'],
-            last_location : latitude + ',' + longitude
+            last_location : {
+                "lat" : latitude,
+                "lng" : longitude
+            }
         };
 
-        /*client.open("PUT", url);
-         client.setRequestHeader("Content-Type", "application/json");
-         client.setRequestHeader('charset','utf-8');
-         client.send(JSON.stringify(params));*/
+        client.open("PUT", urlCall);
+        client.setRequestHeader("Content-Type", "application/json");
+        client.setRequestHeader('charset', 'utf-8');
+        client.send(JSON.stringify(params));
         Ti.API.info(JSON.stringify(params));
     };
 
@@ -229,7 +264,8 @@ function MainMenu() {
             });
             Ti.API.info(Twilio.Device.status(token) + 'call enroute...');
             self.add(overlay);
-            self.add(callDialog); locationCallback;
+            self.add(callDialog);
+            locationCallback;
         }
 
     }

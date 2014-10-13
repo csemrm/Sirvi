@@ -13,6 +13,8 @@ function SignupView() {
     var h2 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'22dp',color:'#fff'};
     var h3 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'14dp',color:'#fff'};
     
+    var h4 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'18dp',color:'#fff'};
+    
     var userData = {};
     
     var apiCall = '/api/appUsers';
@@ -167,23 +169,24 @@ function SignupView() {
     
     var noAccountLabel = Ti.UI.createLabel({
         text:'Already have an account?  ',
-        font:h3,
+        font:h4,
         color:'white',
         height:'20dp'
     });
     
     var signUpLabel = Ti.UI.createLabel({
         text:'Login',
-        font:h3,
+        font:h4,
         color:'yellow',
         height:'20dp'
     });
     
     var bottomLabelView = Titanium.UI.createView({
-        width:'195dp',
+        width:Ti.UI.SIZE,
         layout:'horizontal',
         bottom:'20dp',
         height:'20dp',
+        
     });
     bottomLabelView.add(noAccountLabel);
     bottomLabelView.add(signUpLabel);

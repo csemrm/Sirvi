@@ -183,7 +183,7 @@ function TutorialView() {
         
         self.animate({opacity:0, duration:750}, function(){
             Ti.App.Properties.setBool('questions', false);
-            Ti.fireEvent('mainmenu');
+            Ti.fireEvent('interestsview');
         });
         
     });

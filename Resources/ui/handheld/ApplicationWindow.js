@@ -1,6 +1,6 @@
 //Application Window Component Constructor
 function ApplicationWindow() {
-	
+	//var apiURL = 'http://104.131.124.227:3000';
 	
 	var apiURL = 'http://104.131.124.227:3000';
 	//var apiURL = 'http://104.131.124.227:3000';
@@ -21,21 +21,23 @@ function ApplicationWindow() {
 	var Tag = require('ui/common/TagView');
 	var Law = require('ui/common/lawView');
 	var Question = require('ui/common/QuestionView');
-	
+	var Profile = require('ui/common/ProfileView');
 	var userCred = Ti.App.Properties.getObject('userCred',{});
 	
 	var apiCall = '/api/appUsers/login';
-	var apiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
+	//var apiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
 	var url = apiURL + apiCall;
 	
 	var loginStatus = Ti.App.Properties.getBool('loggedIn',false);
 	
-	if(userCred['email']&&userCred['password']&&(loginStatus)){
+	userEmail = Ti.App.Properties.getString('email', '');
+    userPass = Ti.App.Properties.getString('pass','');
+	
+	if((userEmail)&&(userPass)&&(loginStatus)){
 		loginReq();
 	}else{
        LoadView = new Load(2000);
        self.add(LoadView);
-      
 	}
 	
 	function loginReq(){
@@ -49,12 +51,12 @@ function ApplicationWindow() {
                  Ti.API.info(e.error + ' ' + JSON.stringify(e));
                  alert('Invalid Email Or Password');
              },
-             timeout : 5000  // in milliseconds
+             timeout : 5000  
          });
 
         params = {
-            email:userCred['email'],
-            password:userCred['password']
+            email:userEmail,
+            password:userPass
         };
         
         client.open("POST", url);
@@ -155,5 +157,4 @@ function ApplicationWindow() {
 	return self;
 }
 
-//make constructor function the public component interface
 module.exports = ApplicationWindow;

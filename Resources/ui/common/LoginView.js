@@ -12,6 +12,8 @@ function LoginView() {
     var h1 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'28dp',color:'#fff'};
     var h2 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'18dp',color:'#fff'};
     var h3 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'14dp',color:'#fff'};
+    
+    var h4 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'18dp',color:'#fff'};
 	//label using localization-ready strings from <app dir>/i18n/en/strings.xml
 	
 	var imagepath = '/images/login/';
@@ -145,18 +147,18 @@ function LoginView() {
     
     var noAccountLabel = Ti.UI.createLabel({
         text:'Don\'t have an account? ',
-        font:h3,
+        font:h4,
         color:'white'
     });
     
     var signUpLabel = Ti.UI.createLabel({
         text:'Sign Up',
-        font:h3,
+        font:h4,
         color:'yellow',
     });
     
     var bottomLabelView = Titanium.UI.createView({
-        width:'195dp',
+        width:Ti.UI.SIZE,
         layout:'horizontal',
         bottom:'25dp',
         height:'20dp',

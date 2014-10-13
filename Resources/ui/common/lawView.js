@@ -44,7 +44,6 @@ function lawView(_title) {
         center:{y:'50dp'}
     });
     
-    
     var menuButton = Ti.UI.createImageView({
         image:imagepath + 'menu.png',
         right:'12.5dp',

@@ -1,11 +1,14 @@
 //FirstView Component Constructor
 function MainMenu() {
     //create object instance, a parasitic subclass of Observable
+    var apiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
     var imagepath = '/images/mainmenu/';
     var self = Ti.UI.createView({
         backgroundImage : imagepath + 'background.png',
     });
-
+    var Notifications = require('/libs/notifications').Notifications;
+    new Notifications();
+    
     loaded = false;
     textloaded = false;
     var qbutton = require('ui/common/buttonCreator');
@@ -13,7 +16,7 @@ function MainMenu() {
     var userCred = Ti.App.Properties.getObject('userCred');
     var longitude;
     var latitude;
-
+    
     loginReq();
 
     var h1 = {
@@ -34,13 +37,12 @@ function MainMenu() {
 
     var textBtn = Ti.UI.createImageView({
         image : imagepath + 'text.png',
-        left : '12.5dp',
-        center : {
-            y : '50dp'
-        }
+        right : '12.5dp',
+        bottom : '15dp'
+
     });
     var textChat = require('ui/common/FirstView');
-    /*textBtn.addEventListener('click', function() {
+    textBtn.addEventListener('click', function() {
      if (!textloaded) {
      chatView = new textChat();
      self.add(chatView);
@@ -48,7 +50,7 @@ function MainMenu() {
      } else {
      chatView.show();
      }
-     });*/
+     });
 
     Ti.Geolocation.preferredProvider = "gps";
     Ti.Geolocation.purpose = "Find local deals";
@@ -78,7 +80,6 @@ function MainMenu() {
 
     function loginReq() {
         var apiCall = '/api/appUsers/login';
-        var apiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
         var url = apiURL + apiCall;
         var client = Ti.Network.createHTTPClient({
             onload : function(e) {
@@ -109,12 +110,54 @@ function MainMenu() {
         Ti.App.Properties.setObject('userCred', userData);
     }
 
+    function openProfile(userData) {
+        var Profile = require('ui/common/SlideOutMenu');
+        profileView = new Profile(userData);
+        self.add(overlay1);
+        overlay1.animate({
+            opacity : 0.7,
+            duration : 750
+        });
+        self.add(profileView);
+
+        Ti.addEventListener('closeSlideOut', function(e) {
+            overlay1.animate({
+                opacity : 0,
+                duration : 750
+            }, function() {
+                self.remove(overlay1);
+                self.remove(profileView);
+            });
+        });
+    }
+    
+    Ti.addEventListener('openProfile', function(e){
+        var ProfileView = require('ui/common/ProfileView');
+            profile = new ProfileView(self);
+            self.add(profile);
+    });
+    Ti.addEventListener('openInbox', function(e){
+        var ProfileView = require('ui/common/InboxView');
+            profile = new ProfileView(self);
+            self.add(profile);
+    });
+    Ti.addEventListener('openInterests', function(e){
+        var ProfileView = require('ui/common/InterestsView');
+            profile = new ProfileView(self);
+            self.add(profile);
+    });
+    Ti.addEventListener('openSettings', function(e){
+        var ProfileView = require('ui/common/SettingsView');
+            profile = new ProfileView(self);
+            self.add(profile);
+    });
+
     function locationCallback(e) {
         if (!e.success || e.error) {
             Ti.API.info('error: location callback: ' + JSON.stringify(e.error));
             return;
         }
-        var urlCall = 'http://104.131.124.227:3000/api/appUsers/' + userCred['userId'] + '?access_token=' + userCred['id'];
+        var urlCall = apiURL + '/api/appUsers/' + userCred['userId'] + '?access_token=' + userCred['id'];
 
         var longitude = e.coords.longitude;
         var latitude = e.coords.latitude;
@@ -179,8 +222,10 @@ function MainMenu() {
 
     var profileButton = Ti.UI.createImageView({
         image : imagepath + 'profile.png',
-        right : '12.5dp',
-        bottom : '15dp'
+        left : '12.5dp',
+        center : {
+            y : '50dp'
+        }
     });
 
     var callBtn = Ti.UI.createImageView({
@@ -196,6 +241,13 @@ function MainMenu() {
         width : Ti.UI.FILL,
         backgroundColor : '#333',
         opacity : 0.7
+    });
+
+    var overlay1 = Ti.UI.createView({
+        height : Ti.UI.FILL,
+        width : Ti.UI.FILL,
+        backgroundColor : '#333',
+        opacity : 0
     });
 
     function callSirvi() {
@@ -255,6 +307,48 @@ function MainMenu() {
 
         client.send(authParams);
 
+        var _callURL = 'http://healthypeps.com/auth.php';
+        var client = Ti.Network.createHTTPClient({
+            onload : function(e) {
+
+                Ti.API.info('Received capability token: ' + this.responseText);
+                Twilio.Device.setup(this.responseText);
+                makeCall(this.responseText);
+            },
+            onerror : function(e) {
+                // Ti.Platform.openURL('tel:18666971684');
+            },
+            timeout : 5000
+        });
+        client.open('POST', _callURL);
+
+        function getDate() {
+            var currentTime = new Date();
+            var hours = currentTime.getHours();
+            var minutes = currentTime.getMinutes();
+            var month = currentTime.getMonth() + 1;
+            var day = currentTime.getDate();
+            var year = currentTime.getFullYear();
+
+            return month + "/" + day + "/" + year + " - " + hours + ":" + minutes;
+        };
+        var nowTime = getDate();
+
+        authParams = {
+            "phone_number" : 0,
+            "wait_time" : "00",
+            "start_time" : nowTime,
+            "intent" : "00",
+            "resolution" : "00",
+            "recording_url" : "00",
+            "end_time" : "00",
+            "id" : userCred['userId'],
+            "agentId" : "objectid",
+            "appUserId" : userCred['id']
+        };
+
+        client.send(authParams);
+
         // Make an outbound call
         function makeCall(token) {
             Ti.API.info(Twilio.Device.status(token) + 'making call...');
@@ -264,8 +358,7 @@ function MainMenu() {
             });
             Ti.API.info(Twilio.Device.status(token) + 'call enroute...');
             self.add(overlay);
-            self.add(callDialog);
-            locationCallback;
+            self.add(callDialog); locationCallback;
         }
 
     }
@@ -495,34 +588,7 @@ function MainMenu() {
     });
 
     profileButton.addEventListener('click', function() {
-        self.add(overlay);
-        var logoutScreen = Ti.UI.createView({
-            height : Ti.UI.SIZE,
-            width : '90%',
-            layout : 'vertical'
-        });
-
-        var logoutButton = qbutton.createButton('Logout', '#b40301');
-        var backtoApp = qbutton.createButton('Back To App', '#23b823');
-
-        logoutScreen.add(logoutButton);
-        logoutScreen.add(backtoApp);
-        logoutScreen.add(spacer);
-
-        self.add(logoutScreen);
-
-        backtoApp.addEventListener('click', function() {
-            self.remove(logoutScreen);
-            self.remove(overlay);
-        });
-
-        logoutButton.addEventListener('click', function() {
-            Ti.App.Properties.setBool('loggedIn', false);
-            Ti.fireEvent('load');
-            self.remove(logoutScreen);
-            self.remove(overlay);
-        });
-
+        openProfile(userCred);
     });
 
     childView.add(lawBtn);

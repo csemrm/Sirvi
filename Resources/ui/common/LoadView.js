@@ -1,9 +1,11 @@
 //FirstView Component Constructor
 function LoadView(_dur) {
     //create object instance, a parasitic subclass of Observable
+    if(Ti.Platform.osname!= 'mobileweb'){
     var fb = require('facebook');
     fb.appid = 214878188648827;
     fb.permissions = ['email'];
+    }
 
     var imagepath = '/images/load/';
     var self = Ti.UI.createView({

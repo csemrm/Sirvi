@@ -11,9 +11,10 @@
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>bd70e3fc-acaa-4936-a36f-7cbe54996efa</guid>
+    <guid>096c760a-e0bb-44a2-af5b-0966ace60ddb</guid>
     <property name="ti.facebook.appid">214878188648827</property>
     <property name="ti.ui.defaultunit" type="string">dp</property>
+    <property name="GCM_sender_id" type="string">746694382567</property>
     <ios>
         <plist>
             <dict>
@@ -43,7 +44,51 @@
             </dict>
         </plist>
     </ios>
-    <android xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <android xmlns:android="http://schemas.android.com/apk/res/android">
+        <manifest android:versionCode="1" android:versionName="1"
+            package="com.multaply.sirvi" xmlns:android="http://schemas.android.com/apk/res/android">
+            <uses-sdk android:minSdkVersion="16"/>
+            <application>
+                <!-- begin gcm.js module -->
+                <receiver
+                    android:name="net.iamyellow.gcmjs.GCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+                    <intent-filter>
+                        <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                        <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+                        <category android:name="com.multaply.sirvi"/>
+                    </intent-filter>
+                </receiver>
+                <service android:name="net.iamyellow.gcmjs.GCMIntentService"/>
+                <service android:name="net.iamyellow.gcmjs.GcmjsService"/>
+                <activity
+                    android:name="net.iamyellow.gcmjs.GcmjsActivity"
+                    android:noHistory="true" android:theme="@style/Theme.Titanium">
+                    <intent-filter>
+                        <action android:name="android.intent.action.VIEW"/>
+                        <category android:name="android.intent.category.DEFAULT"/>
+                        <category android:name="android.intent.category.BROWSABLE"/>
+                    </intent-filter>
+                </activity>
+            </application>
+            <permission
+                android:name="com.multaply.sirvi.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
+            <uses-permission android:name="android.permission.VIBRATE"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.READ_CALENDAR"/>
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+            <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+            <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
+            <uses-permission android:name="com.multaply.sirvi.permission.C2D_MESSAGE"/>
+            <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+            <uses-permission android:name="android.permission.WAKE_LOCK"/>
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+            <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+            <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+        </manifest>
+    </android>
     <mobileweb>
         <precache/>
         <splash>
@@ -56,13 +101,14 @@
         <module platform="iphone">com.twilio.client</module>
         <module platform="android">facebook</module>
         <module platform="iphone">facebook</module>
+        <module platform="android">net.iamyellow.gcmjs</module>
     </modules>
     <deployment-targets>
         <target device="android">true</target>
         <target device="blackberry">false</target>
         <target device="ipad">true</target>
         <target device="iphone">true</target>
-        <target device="mobileweb">false</target>
+        <target device="mobileweb">true</target>
     </deployment-targets>
     <sdk-version>3.4.0.GA</sdk-version>
     <property name="ti.deploytype">production</property>

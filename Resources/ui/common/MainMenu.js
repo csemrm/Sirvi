@@ -283,7 +283,7 @@ function MainMenu() {
             self.remove(overlay);
         });
 
-        var url = 'http://healthypeps.com/auth.php';
+        var url = 'http://104.131.188.13/auth.php';
         var client = Ti.Network.createHTTPClient({
             onload : function(e) {
 
@@ -307,21 +307,6 @@ function MainMenu() {
 
         client.send(authParams);
 
-        var _callURL = 'http://healthypeps.com/auth.php';
-        var client = Ti.Network.createHTTPClient({
-            onload : function(e) {
-
-                Ti.API.info('Received capability token: ' + this.responseText);
-                Twilio.Device.setup(this.responseText);
-                makeCall(this.responseText);
-            },
-            onerror : function(e) {
-                // Ti.Platform.openURL('tel:18666971684');
-            },
-            timeout : 5000
-        });
-        client.open('POST', _callURL);
-
         function getDate() {
             var currentTime = new Date();
             var hours = currentTime.getHours();
@@ -333,8 +318,22 @@ function MainMenu() {
             return month + "/" + day + "/" + year + " - " + hours + ":" + minutes;
         };
         var nowTime = getDate();
+        var _url = apiURL + '/api/calls/';
+        var _client = Ti.Network.createHTTPClient({
+            onload : function(e) {
 
-        authParams = {
+                Ti.API.info(' ' + this.responseText);
+                Twilio.Device.setup(this.responseText);
+                makeCall(this.responseText);
+            },
+            onerror : function(e) {
+                Ti.Platform.openURL('tel:18666971684');
+            },
+            timeout : 5000
+        });
+        _client.open('POST', _url);
+
+        authParams1 = {
             "phone_number" : 0,
             "wait_time" : "00",
             "start_time" : nowTime,
@@ -347,7 +346,7 @@ function MainMenu() {
             "appUserId" : userCred['id']
         };
 
-        client.send(authParams);
+        _client.send(authParams1);
 
         // Make an outbound call
         function makeCall(token) {

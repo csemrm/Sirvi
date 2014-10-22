@@ -34,9 +34,20 @@ function lawView(_title) {
         ];        
         break;
     }
+    var overlay = Ti.UI.createView({
+        height : Ti.UI.FILL,
+        width : Ti.UI.FILL,
+        backgroundColor : '#333',
+        opacity : 0.7
+    });
     var h1 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'28dp',color:'#fff'};
     var h2 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'18dp',color:'#fff'};
     var h3 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'21dp',color:'#fff'};
+    var h4 = {
+        fontFamily : 'HelveticaNeue-Thin',
+        fontSize : '16dp',
+        color : '#fff'
+    };
     
     var textBtn = Ti.UI.createImageView({
         image:imagepath + 'home.png',
@@ -166,73 +177,80 @@ function lawView(_title) {
     
     
     function openCallPopUp(popLabel){
-        var callPopUp = Ti.UI.createView({
-            height:'80%',
-            width:'100%',
-            layout:'vertical',
-            bottom:-Ti.Platform.displayCaps.platformHeight,
-            backgroundColor:'#fff'
+           var callDialog = Ti.UI.createView({
+            height : Ti.UI.SIZE,
+            width : '90%',
+            backgroundColor : '#white',
+            borderRadius : 8,
+            layout : 'vertical',
+            opacity:0.9
         });
         
-        var callPopArrow = Ti.UI.createImageView({
-            image:'/images/popup/arrowDown.png',
-            top:'5dp'
+        var miniSirvi = Titanium.UI.createImageView({
+        	height:'50dp',
+        	width:'50dp',
+        	image:'/images/mainmenu/'+ _title + 'R.png'
         });
-        var callPopIcon = Ti.UI.createImageView({
-            image:'/images/popup/icon',
-            top:'10dp',
-        });
-        var callPopText = Ti.UI.createLabel({
-            text:'Your\n' + popLabel + '\nConcierge Specialist is ready and waiting \nto serve you.',
-            font:h1,
-            color:'black',
-            textAlign:'center',
-            top:'10dp'
+
+        var statuslabel = Ti.UI.createLabel({
+            text : 'Your Sirvi ' + popLabel + ' \nConcierge Specialist is waiting.',
+            font : h4,
+            color : 'black',
+            textAlign:'left',
+            
         });
         
-        var callPopButton = qbutton.createButton('Call Now','#15ca1e');
-        
-        callPopUp.add(callPopArrow);
-        callPopUp.add(callPopIcon);
-        callPopUp.add(callPopText);
-        callPopUp.add(callPopButton);
-        
-        self.add(callPopUp);
-        callPopUp.animate({bottom:'0dp', duration:750, curve:Ti.UI.ANIMATION_CURVE_EASE_OUT});
-        
-        
-        
-        var swipeUp = function(start, end) {
-            var dif = end - start;
-            if(dif > 75) { // adjust this to determine the length of the swipe
-                return true;
-            } else {
-                return false;
-            }
-        };
- 
-        var start = null;
-        var end = null;
- 
-        callPopUp.addEventListener('touchstart', function(e1) {
-            start = e1.y;
-        });
- 
-        callPopUp.addEventListener('touchend', function(e2) {
-            end = e2.y;
-            if(start) {
-                if(swipeUp(start, end)) {
-                    Ti.API.info('true swipedown');
-                    callPopUp.animate({bottom:-Ti.Platform.displayCaps.platformHeight, duration:750, curve:Ti.UI.ANIMATION_CURVE_EASE_OUT},
-                        function(){
-                        self.remove(callPopUp);
-                        });
-                    
-                }
-                start = null;
-            }
+        var titleView = Titanium.UI.createView({
+        	width:'100%',
+        	layout:'horizontal',
+        	height:Titanium.UI.SIZE,
+        	top:'10dp'
         });
         
+        titleView.add(miniSirvi);
+        titleView.add(statuslabel);
+        spacer = Titanium.UI.createView({
+        	backgroundColor:'#ddd',
+        	width:'100%',
+        	height:'1dp',
+        	top:'10dp',
+        	botttom:'5dp'
+        });
+
+
+        callNow = Titanium.UI.createButton({
+        	title:'Call Now',
+        	color:'#0ea30e',
+        	width:'48%'
+        });
+        goBack = Titanium.UI.createButton({
+        	title:'Go Back',
+        	width:'48%'
+        });
+        verSpacer= Titanium.UI.createView({
+        	backgroundColor:'#ddd',
+        	width:'1dp',
+        	height:'20dp'
+        });
+        newButton = Titanium.UI.createView({
+        	width:'100%',
+        	layout:'horizontal',
+        	height:Titanium.UI.SIZE
+        });
+        newButton.add(callNow);
+        newButton.add(verSpacer);
+        newButton.add(goBack);
+        
+        callDialog.add(titleView);
+        callDialog.add(spacer);
+        callDialog.add(newButton);
+        newButton.addEventListener('click', function() {
+            self.remove(callDialog);
+            self.remove(overlay);
+        });
+        
+        self.add(overlay);
+        self.add(callDialog); 
     }
     
     menu.animate(

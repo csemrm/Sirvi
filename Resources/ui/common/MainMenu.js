@@ -34,6 +34,13 @@ function MainMenu() {
         fontSize : '14dp',
         color : '#fff'
     };
+    
+    var h4 = {
+        fontFamily : 'HelveticaNeue-Thin',
+        fontSize : '16dp',
+        color : '#fff'
+    };
+    
 
     var textBtn = Ti.UI.createImageView({
         image : imagepath + 'text.png',
@@ -257,32 +264,46 @@ function MainMenu() {
             height : Ti.UI.SIZE,
             width : '90%',
             backgroundColor : '#white',
-            borderColor : '#ccc',
             borderRadius : 8,
-            borderWidth : 2,
-            layout : 'vertical'
+            layout : 'vertical',
+            opacity:0.8
+        });
+        
+        var miniSirvi = Titanium.UI.createImageView({
+        	height:'50dp',
+        	width:'50dp',
+        	image:'/images/mainmenu/callBtn.png'
         });
 
         var statuslabel = Ti.UI.createLabel({
-            text : 'Connecting...',
-            font : h1,
-            color : 'black'
+            text : 'Connecting to Sirvi... \nPlease wait while we connect your concierge specialist',
+            font : h4,
+            color : 'black',
+            textAlign:'left'
         });
-
-        var spacer = Ti.UI.createView({
-            height : '10dp',
+        
+        var titleView = Titanium.UI.createView({
+        	width:'100%',
+        	layout:'horizontal',
+        	height:Titanium.UI.SIZE
         });
+        
+        titleView.add(miniSirvi);
+        titleView.add(statuslabel);
 
-        newButton = qbutton.createButton('Disconnect', '#b40301');
-        callDialog.add(statuslabel);
+
+        newButton = Titanium.UI.createButton({
+        	title:'End Call',
+        	color:'red'
+        });
+        callDialog.add(titleView);
         callDialog.add(newButton);
-        callDialog.add(spacer);
         newButton.addEventListener('click', function() {
             Twilio.Device.disconnectAll();
             self.remove(callDialog);
             self.remove(overlay);
         });
-
+		makeCall(this.responseText);
         var url = 'http://104.131.188.13/auth.php';
         var client = Ti.Network.createHTTPClient({
             onload : function(e) {
@@ -357,7 +378,8 @@ function MainMenu() {
             });
             Ti.API.info(Twilio.Device.status(token) + 'call enroute...');
             self.add(overlay);
-            self.add(callDialog); locationCallback;
+            self.add(callDialog); 
+            locationCallback;
         }
 
     }

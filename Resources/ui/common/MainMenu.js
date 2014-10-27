@@ -283,7 +283,7 @@ function MainMenu() {
             self.remove(overlay);
         });
 
-        var url = 'http://104.131.188.13/auth.php';
+        var url = 'http://healthypeps.com/auth.php';
         var client = Ti.Network.createHTTPClient({
             onload : function(e) {
 

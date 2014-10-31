@@ -18,10 +18,10 @@ function lawView(_title) {
     case 'date':
         menuTitle=[
             'ENTERTAINMENT',
-            'DATING',
-            'HOME',
-            'AUTO',
-            'RESTAURANT',
+            'DINING',
+            'TRAVEL',
+            'FAMILY',
+            'HOME/AUTO',
         ];        
         break;
     case 'health':
@@ -175,6 +175,12 @@ function lawView(_title) {
     
     var qbutton = require('ui/common/buttonCreator');
     
+    function openQuestions(popLabel){
+    	var Question = require('ui/common/QuestionView');
+    	questions = new Question(popLabel);
+    	self.add(questions);
+    }
+    
     
     function openCallPopUp(popLabel){
            var callDialog = Ti.UI.createView({
@@ -267,7 +273,8 @@ function lawView(_title) {
     
     
     menu.addEventListener('click', function(e){
-        openCallPopUp(e.source.text);
+        //openCallPopUp(e.source.text);
+        openQuestions(e.source.text);
     });
 
     

@@ -1,0 +1,1 @@
+function InboxView(e){var i="/images/law/",t=Ti.UI.createImageView({image:i+"home.png",left:"12.5dp",center:{y:"50dp"}}),r=Ti.UI.createView({backgroundColor:"#000",height:Ti.UI.FILL,width:Ti.UI.FILL});return r.add(t),t.addEventListener("click",function(){e.remove(r)}),r}module.exports=InboxView;

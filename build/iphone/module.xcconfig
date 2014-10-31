@@ -1,0 +1,5 @@
+// this is a generated file - DO NOT EDIT
+
+COM_TWILIO_CLIENT_OTHER_LDFLAGS=$(inherited) -framework AudioToolbox -framework SystemConfiguration -framework CFNetwork -framework AVFoundation
+FACEBOOK_OTHER_LDFLAGS=$(inherited) -weak_framework AdSupport -weak_framework Accounts -weak_framework Social
+OTHER_LDFLAGS=$(inherited) $(COM_TWILIO_CLIENT_OTHER_LDFLAGS) $(FACEBOOK_OTHER_LDFLAGS) 

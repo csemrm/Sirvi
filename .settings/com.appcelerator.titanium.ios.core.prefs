@@ -1,10 +1,10 @@
 eclipse.preferences.version=1
 iosLaunchConfigurationAttributes/ATTR_MINIFY=true
-iosLaunchConfigurationAttributes/ATTR_PROJECT_NAME=SirviApp
+iosLaunchConfigurationAttributes/ATTR_PROJECT_NAME=Sirvi
 iosLaunchConfigurationAttributes/appid=com.multaply.sirvi
 iosLaunchConfigurationAttributes/certificate=Multaply Inc. (PU46YD4FV6)
 iosLaunchConfigurationAttributes/distribute_path=/Users/gruby20/Desktop
 iosLaunchConfigurationAttributes/keychain=
 iosLaunchConfigurationAttributes/output_format=ipa
 iosLaunchConfigurationAttributes/sdk_version=8.1
-iosLaunchConfigurationAttributes/uuid=6809249b-27bc-439b-bc38-6132b849dbe6
+iosLaunchConfigurationAttributes/uuid=204f69cf-0e95-486f-af6d-1ac50d3ae03b

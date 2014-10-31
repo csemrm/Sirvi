@@ -1,0 +1,1 @@
+function ProfileView(e){var t="/images/law/",i=Ti.UI.createImageView({image:t+"home.png",left:"12.5dp",center:{y:"50dp"}}),a=Ti.UI.createView({backgroundColor:"#000",height:Ti.UI.FILL,width:Ti.UI.FILL});return a.add(i),i.addEventListener("click",function(){e.remove(a)}),a}module.exports=ProfileView;

@@ -126,7 +126,6 @@ function SignupView() {
         paddingLeft:'35dp',
         color:'white',
         top:'5%',
-        keyboardType:KEYBOARD_NUMBER_PAD
     });
     
     var signupImg = Ti.UI.createImageView({

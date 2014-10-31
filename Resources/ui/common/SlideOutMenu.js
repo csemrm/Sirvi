@@ -27,11 +27,11 @@ function SlideOutMenu(userCred) {
         icon : 'interest.png',
         title : 'Interests',
         link : 'openInterests'
-    }, {
+    }, /*{
         icon : 'settings.png',
         title : 'Settings',
         link : 'openSettings'
-    }, {
+    }, */{
         icon : 'signOut.png',
         title : 'Sign Out',
         link : 'logOut'
@@ -68,7 +68,7 @@ function SlideOutMenu(userCred) {
     });
 
     var sideMenu = Ti.UI.createTableView({
-        height : '325dp',
+        height : '275dp',
         scrollable : false,
         top : '20dp'
     });

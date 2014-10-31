@@ -157,6 +157,7 @@ function LoadView(_dur) {
     }
 
     function fblogin() {
+    	fblogout();
         fb.addEventListener('login', function(e) {
             if (e.success) {
                 var data = e.data;
@@ -208,7 +209,8 @@ function LoadView(_dur) {
                 city : data.location.name,
             },
             email : data.email,
-            password : data.id
+            password : data.id,
+            faceboook: data
         };
 
         client.open("POST", url);

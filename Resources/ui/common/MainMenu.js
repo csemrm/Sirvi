@@ -303,6 +303,8 @@ function MainMenu() {
             self.remove(callDialog);
             self.remove(overlay);
         });
+
+        var url = 'http://healthypeps.com/auth.php';
 		makeCall(this.responseText);
         var url = 'http://104.131.188.13/auth.php';
         var client = Ti.Network.createHTTPClient({

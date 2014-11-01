@@ -103,7 +103,6 @@ function SignupView() {
         top:'5%',
         paddingLeft:'35dp',
         color:'white',
-        passwordMask:true
     });
     
     var bdayField = Ti.UI.createTextField({
@@ -120,7 +119,7 @@ function SignupView() {
     
     var cityField = Ti.UI.createTextField({
         backgroundImage:imagepath + 'city.png',
-        hintText:'CITY',
+        hintText:'ZIP',
         font:h2,
         width:'229.5dp',
         height:'28.5dp',
@@ -337,7 +336,7 @@ function SignupView() {
               first_name: fnameField.value,
               last_name: lnameField.value,
               birthday: bdayField.value,
-              city: cityField.value,
+              zip: cityField.value,
           },
           email: emailField.value.toLowerCase(),
           password:passField.value
@@ -356,7 +355,7 @@ function SignupView() {
         userData['password'] = passField.value;
         userData['fname'] = fnameField.value;
         userData['lname'] = lnameField.value;
-        userData['city'] = cityField.value;
+        userData['zip'] = cityField.value;
         userData['bday'] = bdayField.value;
         userData['password'] = passField.value;
         Ti.App.Properties.setString('email',emailField.value.toLowerCase());

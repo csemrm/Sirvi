@@ -1,5 +1,5 @@
 //FirstView Component Constructor
-function QuestionView() {
+function QuestionView(popLabel) {
     //create object instance, a parasitic subclass of Observable
     //purple
     var userCredentials = Ti.App.Properties.getObject('userCred');
@@ -45,7 +45,7 @@ function QuestionView() {
     };
     var h4 = {
         fontFamily : 'HelveticaNeue-Thin',
-        fontSize : '60dp',
+        fontSize : '50dp',
         color : '#fff'
     };
 
@@ -55,8 +55,10 @@ function QuestionView() {
     });
 
     var pointsNumber = Ti.UI.createLabel({
-        text : Ti.App.Properties.getInt('userPoints', 50),
-        font : h4
+        text : Ti.App.Properties.getInt('userPoints', 50) + '\nPoints',
+        font : h4,
+        color:'white',
+        textAlign:'center'
     });
 
     var pointsText = Ti.UI.createLabel({
@@ -65,14 +67,16 @@ function QuestionView() {
     });
 
     var pointsView = Ti.UI.createView({
-        layout : 'vertical',
         width : Ti.UI.FILL,
-        height : '40%',
-        top : '225dp'
+        height : Ti.UI.FILL,
+        backgroundImage:'/images/mainmenu/surveyEnd.png'
     });
-    pointsView.add(centerText);
+    
+
+    
+    //pointsView.add(centerText);
     pointsView.add(pointsNumber);
-    pointsView.add(pointsText);
+    //pointsView.add(pointsText);
     self.add(pointsView);
     pointsView.hide();
 
@@ -90,7 +94,7 @@ function QuestionView() {
 
     var apiCall = '/api/questions';
     var apiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
-    var url = 'http://104.131.124.227:3000/api/questions';
+    var url = 'http://104.131.124.227:3000/api/questions?filter=%7B%22where%22%3A%7B%22section%22%3A%22' + popLabel.toLowerCase()+ '%22%7D%7D';
     //apiURL + apiCall;
 
     function questionReq() {

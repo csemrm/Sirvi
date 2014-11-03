@@ -162,13 +162,15 @@ function LoadView(_dur) {
             if (e.success) {
                 var data = e.data;
                 Ti.API.info(data);
+                var locationData = data.location.name.split(',');
                 Ti.App.Properties.setString('socialType', 'fb');
                 Ti.App.Properties.setString("socialUserId", data.id);
                 Ti.App.Properties.setString('socialfirstname', data.first_name);
                 Ti.App.Properties.setString('sociallastname', data.last_name);
                 Ti.App.Properties.setString('socialUserEmail', data.email);
                 Ti.App.Properties.setString('birthday', data.birthday);
-                Ti.App.Properties.setString('city', data.location.name);
+                Ti.App.Properties.setString('city', locationData[0]);
+                Ti.App.Properties.setString('state', locationData[1]);
                 fbsignup(data);
             } else if (e.error) {
                 alert(e.error);
@@ -183,6 +185,8 @@ function LoadView(_dur) {
         var apiCall = '/api/appUsers';
         var apiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
         var url = apiURL + apiCall;
+        
+        var locationData = data.location.name.split(',');
 
         var client = Ti.Network.createHTTPClient({
             onload : function(e) {
@@ -192,7 +196,8 @@ function LoadView(_dur) {
             onerror : function(e) {
                 Ti.API.info(e);
                 if (e.code == 422) {
-                    alert('Email Address already exists');
+                	saveInfoFB(JSON.parse(this.responseText));
+                	Ti.fireEvent('mainmenu');
                 } else {
                     alert('Check your internet connection and try again');
                 }
@@ -205,8 +210,13 @@ function LoadView(_dur) {
                 masked_email : data.email,
                 first_name : data.first_name,
                 last_name : data.last_name,
+                profile_image:'http://graph.facebook.com/'+ data.id + '/picture?height=220&width=220',
                 birthday : data.birthday,
-                city : data.location.name,
+                city : locationData[0],
+                state:locationData[1],
+                education:data.education,
+                work:data.work,
+                gender:data.gender
             },
             email : data.email,
             password : data.id,
@@ -241,6 +251,18 @@ function LoadView(_dur) {
         Ti.fireEvent('TutorialView');
 
     }
+    function saveInfoFB(data) {
+        userData = data;
+        userData['email'] = Ti.App.Properties.getString('socialUserEmail');
+        userData['password'] = Ti.App.Properties.getString("socialUserId");
+        userData['fname'] = Ti.App.Properties.getString('socialfirstname');
+        userData['lname'] = Ti.App.Properties.getString('sociallastname');
+        userData['city'] = Ti.App.Properties.getString('city');
+        userData['bday'] = Ti.App.Properties.getString('birthday');
+        userData['password'] = Ti.App.Properties.getString("socialUserId");
+        loginReq();
+        Ti.App.Properties.setBool('loggedIn', true);
+    }
 
     function loginReq(){
         var loginapiCall = '/api/appUsers/login';
@@ -251,6 +273,7 @@ function LoadView(_dur) {
                  //Ti.API.info(e.success);
                  Ti.API.info(this.responseText);
                  saveLoginInfo(JSON.parse(this.responseText));
+                 
              },
              onerror : function(e) {
                  Ti.API.info(e.error + ' ' + JSON.stringify(e));

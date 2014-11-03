@@ -8,8 +8,6 @@ function MainMenu() {
 	});
 	var Notifications = require('/libs/notifications').Notifications;
 	new Notifications();
-	
-	
 
 	loaded = false;
 	textloaded = false;
@@ -98,7 +96,7 @@ function MainMenu() {
 			},
 			onerror : function(e) {
 				Ti.API.info(e.error + ' ' + JSON.stringify(e));
-				alert('Invalid Email Or Password');
+				alert('Unable to establish connection');
 			},
 			timeout : 5000 // in milliseconds
 		});
@@ -187,7 +185,6 @@ function MainMenu() {
 			},
 			onerror : function(e) {
 				Ti.API.info(e.error + ' Location Callback Function ' + JSON.stringify(e));
-				alert('Error');
 			},
 			timeout : 5000 // in milliseconds
 		});
@@ -383,7 +380,8 @@ function MainMenu() {
 			});
 			Ti.API.info(Twilio.Device.status(token) + 'call enroute...');
 			self.add(overlay);
-			self.add(callDialog); locationCallback;
+			self.add(callDialog);
+			locationCallback;
 		}
 
 	}
@@ -483,36 +481,39 @@ function MainMenu() {
 	});
 
 	callBtn.animate(sunAnimation, function(e) {
-	childView.animate(planetAnimation);
-	healthBtn.animate({
-	right : '26.5dp',
-	top : '59dp',
-	duration : 1000,
-	curve : Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-	});
-	datingBtn.animate({
-	right : '0dp',
-	bottom : '158dp',
-	duration : 1000,
-	curve : Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-	});
+		childView.animate(planetAnimation);
+		healthBtn.animate({
+			right : '26.5dp',
+			top : '59dp',
+			duration : 1000,
+			curve : Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		});
+		datingBtn.animate({
+			right : '0dp',
+			bottom : '158dp',
+			duration : 1000,
+			curve : Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		});
 
-	financeBtn.animate({
-	right : '26.5dp',
-	bottom : '59dp',
-	duration : 1100,
-	curve : Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-	});
-	raffleBtn.animate({
-	bottom : '0dp',
-	left : '20dp',
-	opacity : 1,
-	duration : 1100,
-	curve : Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
-	});
-	setTimeout(function(){
-    helpScreen.show();
-}, 1500);
+		financeBtn.animate({
+			right : '26.5dp',
+			bottom : '59dp',
+			duration : 1100,
+			curve : Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		});
+		raffleBtn.animate({
+			bottom : '0dp',
+			left : '20dp',
+			opacity : 1,
+			duration : 1100,
+			curve : Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
+		});
+		if (Titanium.App.Properties.getBool('firsttime', true)) {
+			setTimeout(function() {
+				helpScreen.show();
+				Titanium.App.Properties.setBool('firsttime', false);
+			}, 1500);
+		}
 	});
 
 	lawBtn.addEventListener('click', function(e) {
@@ -583,54 +584,53 @@ function MainMenu() {
 	var Question = require('ui/common/QuestionView');
 	raffleBtn.addEventListener('click', function(e) {
 		if (!loaded) {
-		loadTerms();
-		}else loadQuestions();
+			loadTerms();
+		} else
+			loadQuestions();
 	});
-	
+
 	var raffleTermsView = Titanium.UI.createView({
-		height:Titanium.UI.FILL,
-		width:Titanium.UI.FILL,
-		backgroundImage:'/images/mainmenu/background.png'
+		height : Titanium.UI.FILL,
+		width : Titanium.UI.FILL,
+		backgroundImage : '/images/mainmenu/background.png'
 	});
-	
+
 	var raffleBackBtn = Titanium.UI.createImageView({
-		image:'/images/law/home.png',
-        left:'12.5dp',
-        center:{y:'40dp'}
+		image : '/images/law/home.png',
+		left : '12.5dp',
+		center : {
+			y : '40dp'
+		}
 	});
-	
+
 	var raffleBckgrnd = Titanium.UI.createImageView({
-		height:Titanium.UI.FILL,
-		width:Titanium.UI.FILL,
-		backgroundImage:'/images/mainmenu/spstart.png'
+		height : Titanium.UI.FILL,
+		width : Titanium.UI.FILL,
+		backgroundImage : '/images/mainmenu/spstart.png'
 	});
-	
+
 	var lowerButtonView = Titanium.UI.createView({
-		height:'50dp',
-		bottom:'40dp'
+		height : '50dp',
+		bottom : '40dp'
 	});
-	
-	var raffleRegister =qbutton.createButton('Register', '#0d004c');
-	
-	raffleRegister.addEventListener('click', function(){
+
+	var raffleRegister = qbutton.createButton('Register', '#0d004c');
+
+	raffleRegister.addEventListener('click', function() {
 		loadQuestions();
 	});
-	
+
 	lowerButtonView.add(raffleRegister);
-	
+
 	raffleTermsView.add(raffleBckgrnd);
 	raffleTermsView.add(raffleBackBtn);
 	raffleTermsView.add(lowerButtonView);
-	
-	raffleBackBtn.addEventListener('click', function(){
+
+	raffleBackBtn.addEventListener('click', function() {
 		self.remove(raffleTermsView);
 	});
-	
-	
-	
-	
-	
-	function loadTerms(){
+
+	function loadTerms() {
 		self.add(raffleTermsView);
 	}
 

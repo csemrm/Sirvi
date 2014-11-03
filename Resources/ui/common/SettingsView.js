@@ -1,5 +1,5 @@
 //FirstView Component Constructor
-function ProfileView(parent) {
+function SettingsView(parent) {
     var h1 = {
         fontFamily : 'HelveticaNeue-Thin',
         fontSize : '28dp',
@@ -37,4 +37,4 @@ function ProfileView(parent) {
     return self;
 }
 
-module.exports = ProfileView;
+module.exports = SettingsView;

@@ -168,16 +168,16 @@ function SlideOutMenu(userCred) {
     sideMenu.addEventListener('click', function(e) {
         if (e.source.link == 'logOut') {
             logOut();
-        }else if(e.source.link !='logOut') {
-            
+        }else if(e.source.link =='openProfile'||e.source.link =='openInbox'||e.source.link =='openInterests') {
             self.animate({
             left : -(Ti.Platform.displayCaps.platformWidth * .77),
             duration : 750
         }, function() {
             self = null;
             Ti.fireEvent(e.source.link);
+            Ti.fireEvent('closeSlideOut');
         });
-        Ti.fireEvent('closeSlideOut');
+        
             
         }
     });
@@ -186,12 +186,11 @@ function SlideOutMenu(userCred) {
         self.animate({
             left : -(Ti.Platform.displayCaps.platformWidth * .77),
             duration : 750
+        }, function(){
+            Ti.fireEvent('closeSlideOut');
         });
             
-        setTimeout(function(){
-            self = null;
-            Ti.fireEvent('closeSlideOut');
-        }, 750);
+        
     });
 
     return self;

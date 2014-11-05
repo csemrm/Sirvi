@@ -21,11 +21,11 @@ if (Ti.version < 1.8) {
         version = Ti.Platform.version,
         height = Ti.Platform.displayCaps.platformHeight,
         width = Ti.Platform.displayCaps.platformWidth;
-
+        
+	var platform = Ti.Platform.osname;
     //considering tablets to have width over 720px and height over 600px - you can define your own
     function checkTablet() {
-        var platform = Ti.Platform.osname;
-
+        
         switch (platform) {
         case 'ipad':
             return true;
@@ -41,13 +41,11 @@ if (Ti.version < 1.8) {
     var isTablet = checkTablet();
     console.log(isTablet);
 
-    var Window;
+	var Window;
     if (isTablet) {
         Window = require('ui/handheld/ApplicationWindow');
     } else {
-
-        Window = require('ui/handheld/ApplicationWindow');
-
+        Window = (platform === 'android') ? require('ui/handheld/ApplicationWindow_Android') : require('ui/handheld/ApplicationWindow');
     }
     new Window().open();
 })();

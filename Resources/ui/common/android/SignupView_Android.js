@@ -263,7 +263,9 @@ function SignupView() {
         top : 43,
         type : Titanium.UI.PICKER_TYPE_DATE,
         selectionIndicator : true,
-        backgroundColor:'white',
+        backgroundColor:'#000',
+        opacity:0.6,
+        color : 'black',
         width : '100%'
     });
     
@@ -275,21 +277,12 @@ function SignupView() {
         bottom : 0
     });
 
-    pickerCancel = Titanium.UI.createButton({
-        title : 'Cancel',
-    });
-
     pickerDone = Titanium.UI.createButton({
         title : 'Done',
+        right : '10dp'
     });
 
-    pickerSpacer = Titanium.UI.createButton({
-        systemButton : Titanium.UI.iPhone.SystemButton.FLEXIBLE_SPACE
-    });
-
-	pickerToolbar = Titanium.UI.createView({ height : 44,top : 0,layout:'horizontal' });
-	pickerToolbar.add(pickerCancel);
-	pickerToolbar.add(pickerSpacer);
+	pickerToolbar = Titanium.UI.createView({ height : 44,top : 0, backgroundColor:'#000',opacity:0.8});
 	pickerToolbar.add(pickerDone);
 	datePickerView.add(pickerToolbar);
 /*

@@ -40,32 +40,33 @@ function InterestsView() {
         {"id": "30","interest": "random"},
 	];
 	
-	var tag = require('ui/common/TagView');
+	var tag = require('ui/common/android/TagView_Android');
 	
 	
 	var imagepath = '/images/interest/';
-	var h1 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'28dp',color:'#fff'};
-    var h2 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'18dp',color:'#fff'};
-    var h3 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'14dp',color:'#fff'};
+	var appglobal = require('../AppGlobals');
+	var h1 = appglobal.getFont('28dp'); // {fontFamily: 'HelveticaNeue-Thin',fontSize:'28dp',color:'#fff'};
+    var h2 = appglobal.getFont('18dp'); //{fontFamily: 'HelveticaNeue-Thin',fontSize:'18dp',color:'#fff'};
+    var h3 = appglobal.getFont('14dp'); //{fontFamily: 'HelveticaNeue-Thin',fontSize:'14dp',color:'#fff'};
 
 	var welcomeImg = Ti.UI.createImageView({
-        image:imagepath + 'welcome.png',
-        width:'294dp',
-        center:{y:'50dp'}
+        image:imagepath + 'welcome@2x.png',
+        width:'100%',
+        center:{y:'40dp'}
     });
     
     var welcomeLabel = Ti.UI.createLabel({
         text:'Let\'s Get Started',
         font:h1,
         color:'white',
-        center:{y:'50dp'}
+        center:{y:'40dp'}
     });
     
     var subTitle = Ti.UI.createLabel({
         text:'Lorem Ipsum dolor sit amet',
         font:h2,
         color:'white',
-        center:{y:'80dp'}
+        center:{y:'70dp'}
     });
     
     var tagsView = Ti.UI.createView({
@@ -88,7 +89,7 @@ function InterestsView() {
     }
     
     var showmoreLabel = Ti.UI.createImageView({
-        image:imagepath + 'showmore.png',
+        image:imagepath + 'showmore@2x.png',
         bottom:'20dp'
     });
     var temp;
@@ -117,22 +118,14 @@ function InterestsView() {
         }
     }
 
-    var loginImg = Ti.UI.createImageView({
-        image:imagepath + 'nextPink.png',
-        height:'47dp',
-        width:'170.5dp'
-    });
-    
-    var loginLabel = Ti.UI.createLabel({
-        text:'NEXT',
-        font:h1,
-        color:'white'
-    });
-    
     var loginBtn = Ti.UI.createButton({
+    	backgroundImage : imagepath + 'nextPink@2x.png',
         height:'47dp',
         width:'170.5dp',
-        bottom:'20dp'
+        bottom:'20dp',
+        title:'NEXT',
+        font:h1,
+        color:'white'
     });
     
     loginBtn.addEventListener('click', function(){
@@ -140,11 +133,6 @@ function InterestsView() {
         Ti.App.fireEvent('premain');
     });
     
-    loginBtn.add(loginImg);
-    loginBtn.add(loginLabel);
-
-	
-	
     self.add(showmoreLabel);
 	return self;
 }

@@ -375,8 +375,8 @@ function LoadView(_dur) {
         });
         Ti.App.fireEvent('login');
         
-        //temperory lookup tutorial view 
-        //Ti.App.fireEvent('interestsview');
+        //temperory lookup premain  
+       // Ti.App.fireEvent('mainmenu');
     }
 
     return self;

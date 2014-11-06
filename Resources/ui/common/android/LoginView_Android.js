@@ -134,7 +134,6 @@ function LoginView()
 	var loggedInView = Ti.UI.createView({
 		width : Ti.UI.SIZE,
 		height : '25dp',
-		
 		layout : 'horizontal'
 	});
 	labelView.add(checkBox);
@@ -282,13 +281,71 @@ function LoginView()
 		Ti.App.fireEvent('closeLogin');
 	});
 
-	forgotPassLabel.addEventListener('click', function(e) {
+	forgotPassLabel.addEventListener('click', function(e) 
+	{
+		/*
 		passDialog = Titanium.UI.createAlertDialog({
 			title : 'Please Enter your email address',
 			style : Ti.UI.iPhone.AlertDialogStyle.PLAIN_TEXT_INPUT,
 			buttonNames : ['OK']
 		});
 		passDialog.show();
+		*/
+		var vwAlert = Ti.UI.createView({
+    		width       : '90%',
+    		height      : '30%',
+    		borderRadius: 5
+		}); 
+		var vwBgAlert = Ti.UI.createView({
+    		width       : '100%',
+    		height      : '100%',
+    		layout      : 'vertical',
+    		backgroundColor : 'white',
+    		opacity		: 0.98,
+    		borderRadius: 5
+		});
+		var vwForm = Ti.UI.createView({
+    		width       : '100%',
+    		height      : '100%',
+    		layout      : 'vertical',
+    		borderRadius: 5
+		});
+		var lblMessage = Ti.UI.createLabel({
+    		text        : 'Please Enter your email address',
+    		top         : 10,
+    		color       : 'black',
+    		font        : {fontWeight : 'bold', fontSize : '18'}
+		});
+
+		var txtPassword = Ti.UI.createTextField({
+    		width       :  '90%',
+    		top         :  '15',
+    		color		: 'black',
+    		font:appgloabl.getFont('18dp'),
+    		//hintText    : 'Please Enter your email address',
+    		//borderStyle     : Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+    		keyboardType	: Ti.UI.KEYBOARD_EMAIL,
+    		returnKeyType   : Ti.UI.RETURNKEY_RETURN,
+    		maxLength       : 70
+		});
+
+		var btnOK = Ti.UI.createButton({
+    		title   : 'OK',
+    		width   : '43%',
+    		top     : '15',
+    		color 	: '#007AFF',
+    		font    : {fontWeight : 'bold', fontSize : '16'}
+		});
+		btnOK.addEventListener('click',function(e){
+			self.remove(vwAlert);
+		});
+		vwAlert.add(vwBgAlert);
+		vwAlert.add(vwForm);
+		vwForm.add(lblMessage);
+		vwForm.add(txtPassword);
+		vwForm.add(btnOK);
+		self.add(vwAlert);
+		txtPassword.focus();
 	});
 
 	return self;

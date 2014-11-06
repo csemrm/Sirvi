@@ -22,7 +22,7 @@ function LoginView()
 		height : '30dp',
 		width : '40dp',
 		center : {
-			y : '40dp'
+			y : '20dp'
 		}
 	});
 	self.add(backButton);
@@ -38,9 +38,7 @@ function LoginView()
 
 	var welcomeImg = Ti.UI.createImageView({
 		image : imagepath + 'welcome@2x.png',
-		center : {
-			y : '100dp'
-		}
+		center : { y : '50dp' }
 	});
 	self.add(welcomeImg);
 
@@ -48,16 +46,13 @@ function LoginView()
 		text : 'Welcome Back',
 		font : appgloabl.getFont('28dp'),
 		color : 'white',
-		center : {
-			y : '100dp'
-		}
+		center : { y : '50dp' }
 	});
-
 	self.add(welcomeImg);
 	self.add(welcomeLabel);
 
 	//Emial Textfield SetUp
-	var viewEmail = Ti.UI.createView({ height:'30dp'});
+	var viewEmail = Ti.UI.createView({ height:'30dp',width : '229.5dp'});
 	{
 		var userFieldImg = Ti.UI.createImageView({
 			backgroundImage : imagepath + 'user@2x.png',
@@ -69,15 +64,15 @@ function LoginView()
 			hintText : 'EMAIL',
 			font : appgloabl.getFont('18dp'),
 			width : '229.5dp',
-			height : '30dp',
-			left : '35dp',
+			height : '35dp',
+			left : '25dp',
 			color : 'white'
 		});
 		viewEmail.add(userFieldImg);
 		viewEmail.add(userField);
 	}
 	//Password Field SetUp
-	var viewPassword = Ti.UI.createView({ height:'30dp',top : '28.5dp'});
+	var viewPassword = Ti.UI.createView({ height:'30dp',top : '28.5dp',width : '229.5dp'});
 	{
 		var userFieldImg = Ti.UI.createImageView({
 			backgroundImage : imagepath + 'pass@2x.png',
@@ -88,8 +83,8 @@ function LoginView()
 			hintText : 'PASSWORD',
 			font : appgloabl.getFont('18dp'),
 			width : '229.5dp',
-			height : '30dp',
-			left : '35dp',
+			height : '35dp',
+			left : '25dp',
 			color : 'white',
 			passwordMask : true
 		});
@@ -139,6 +134,7 @@ function LoginView()
 	var loggedInView = Ti.UI.createView({
 		width : Ti.UI.SIZE,
 		height : '25dp',
+		
 		layout : 'horizontal'
 	});
 	labelView.add(checkBox);
@@ -147,7 +143,7 @@ function LoginView()
 	labelView.add(forgotPassLabel);
 
 	var formView = Ti.UI.createScrollView({
-		width : '235dp',
+		width : '240dp',
 		layout : 'vertical',
 		height : '200dp',
 		center : {

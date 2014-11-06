@@ -278,15 +278,15 @@ function lawView(_title) {
     });
 
     
-    Ti.fireEvent('closemainmenu');
+    Ti.App.fireEvent('closemainmenu');
     self.add(menu);
     self.add(lawIcon);
     self.add(textBtn);
     
     
     textBtn.addEventListener('click', function(){
-        Ti.fireEvent('mainmenu');
-        Ti.fireEvent('closelawview');
+        Ti.App.fireEvent('mainmenu');
+        Ti.App.fireEvent('closelawview');
     });
     
     

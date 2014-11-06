@@ -158,7 +158,7 @@ function SlideOutMenu(userCred) {
 
         logoutButton.addEventListener('click', function() {
             Ti.App.Properties.setBool('loggedIn', false);
-            Ti.fireEvent('load');
+            Ti.App.fireEvent('load');
             self.remove(logoutScreen);
             self.remove(overlay);
         });
@@ -174,8 +174,8 @@ function SlideOutMenu(userCred) {
             duration : 750
         }, function() {
             self = null;
-            Ti.fireEvent(e.source.link);
-            Ti.fireEvent('closeSlideOut');
+            Ti.App.fireEvent(e.source.link);
+            Ti.App.fireEvent('closeSlideOut');
         });
         
             
@@ -187,7 +187,7 @@ function SlideOutMenu(userCred) {
             left : -(Ti.Platform.displayCaps.platformWidth * .77),
             duration : 750
         }, function(){
-            Ti.fireEvent('closeSlideOut');
+            Ti.App.fireEvent('closeSlideOut');
         });
             
         

@@ -137,7 +137,7 @@ function InterestsView() {
     
     loginBtn.addEventListener('click', function(){
         clearList();
-        Ti.fireEvent('premain');
+        Ti.App.fireEvent('premain');
     });
     
     loginBtn.add(loginImg);

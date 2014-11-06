@@ -41,7 +41,7 @@ function PreMain() {
     loginBtn.add(loginLabel);
     
     loginBtn.addEventListener('click', function(e){
-        Ti.fireEvent('mainmenu');
+        Ti.App.fireEvent('mainmenu');
     });
     
     self.add(logoImg);

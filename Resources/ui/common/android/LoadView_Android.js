@@ -373,7 +373,10 @@ function LoadView(_dur) {
         }, function() {
             self = null;
         });
-        Ti.App.fireEvent('login');
+        //Ti.App.fireEvent('login');
+        
+        //temperory lookup tutorial view 
+        Ti.App.fireEvent('TutorialView');
     }
 
     return self;

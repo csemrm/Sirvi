@@ -282,7 +282,7 @@ function MyProfileView(data) {
 		}, function() {
 			self = null;
 		});
-		Ti.fireEvent('closeupdate');
+		Ti.App.fireEvent('closeupdate');
 	});
 
 	return self;

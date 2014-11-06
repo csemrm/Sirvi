@@ -530,7 +530,7 @@ function MainMenu() {
 			lawBtn.hide();
 			lawBig.animate(planetZoom);
 			childView.animate(planetRotateOut, function(e) {
-				Ti.fireEvent('lawview', {
+				Ti.App.fireEvent('lawview', {
 					x : 'law'
 				});
 			});
@@ -552,7 +552,7 @@ function MainMenu() {
 			healthBtn.hide();
 			healthBig.animate(planetZoom);
 			childView.animate(planetRotateOut, function() {
-				Ti.fireEvent('lawview', {
+				Ti.App.fireEvent('lawview', {
 					x : 'health'
 				});
 			});
@@ -573,7 +573,7 @@ function MainMenu() {
 			datingBtn.hide();
 			datingBig.animate(planetZoom);
 			childView.animate(planetRotateOut, function() {
-				Ti.fireEvent('lawview', {
+				Ti.App.fireEvent('lawview', {
 					x : 'date'
 				});
 			});

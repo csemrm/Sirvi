@@ -4,54 +4,44 @@ function TutorialView() {
 	var self = Ti.UI.createView({
         backgroundColor:'#00a2c5',
     });
+    var appglobal = require('../AppGlobals');
     
-    var h1 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'28dp',color:'#fff'};
-    var h2 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'18dp',color:'#fff'};
-    var h3 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'14dp',color:'#fff'};
+    var h1 = appglobal.getFont('28dp'); //{fontFamily: 'HelveticaNeue-Thin',fontSize:'28dp',color:'#fff'};
+    var h2 = appglobal.getFont('18dp'); //{fontFamily: 'HelveticaNeue-Thin',fontSize:'18dp',color:'#fff'};
+    var h3 = appglobal.getFont('14dp'); //{fontFamily: 'HelveticaNeue-Thin',fontSize:'14dp',color:'#fff'};
     //label using localization-ready strings from <app dir>/i18n/en/strings.xml
     
     var imagepath = '/images/tutorial/';
     
     var backButton = Ti.UI.createImageView({
-        image:imagepath + 'arrow.png',
+        image:imagepath + 'arrow@2x.png',
         left:'12.5dp',
-        center:{y:'40dp'}
+        center:{y:'20dp'}
     });
     var backButton2 = Ti.UI.createImageView({
-        image:imagepath + 'arrow.png',
+        image:imagepath + 'arrow@2x.png',
         left:'12.5dp',
-        center:{y:'40dp'}
+        center:{y:'20dp'}
     });
     
     var tutImage = Ti.UI.createImageView({
-        image:imagepath + 'tut1.png',
+        image:imagepath + 'tut1@2x.png',
     });
     
-    var loginImg = Ti.UI.createImageView({
-        image:imagepath + 'nextBlue.png',
+    var loginBtn = Ti.UI.createButton({
+    	backgroundImage : imagepath + 'nextBlue@2x.png',
         height:'47dp',
         width:'170.5dp',
-    });
-    
-    var loginLabel = Ti.UI.createLabel({
-        text:'More Please',
+        bottom:'30dp',
+        title:'More Please',
         font:h1,
         color:'white'
     });
     
-    var loginBtn = Ti.UI.createButton({
-        height:'47dp',
-        width:'170.5dp',
-        bottom:'30dp'
-    });
-    
-    loginBtn.add(loginImg);
-    loginBtn.add(loginLabel);
-    
     var view1 = Ti.UI.createView({
         height:Ti.UI.FILL,
         width:'294dp',
-        top:'55dp',
+        top:'45dp',
         opacity:0
     });
     view1.add(tutImage);
@@ -62,34 +52,23 @@ function TutorialView() {
     //Add behavior for UI
     
     var welcomeImg2 = Ti.UI.createImageView({
-        image:imagepath + '5.png',
+        image:imagepath + 'tut2@2x.png',
     });
        
-    var loginImg2 = Ti.UI.createImageView({
-        image:imagepath + 'nextRed.png',
+    var loginBtn2 = Ti.UI.createButton({
         height:'47dp',
         width:'170.5dp',
-    });
-    
-    var loginLabel2 = Ti.UI.createLabel({
-        text:'More Please',
+        bottom:'30dp',
+        backgroundImage : imagepath + 'nextRed@2x.png',
+        title:'More Please',
         font:h1,
         color:'white'
     });
     
-    var loginBtn2 = Ti.UI.createButton({
-        height:'47dp',
-        width:'170.5dp',
-        bottom:'30dp'
-    });
-    
-    loginBtn2.add(loginImg2);
-    loginBtn2.add(loginLabel2);
-    
     var view2 = Ti.UI.createView({
         height:Ti.UI.FILL,
         width:'294dp',
-        top:'55dp',
+        top:'45dp',
         opacity:0
     });
     view2.add(welcomeImg2);
@@ -97,30 +76,19 @@ function TutorialView() {
 
     
     var welcomeImg3 = Ti.UI.createImageView({
-        image:imagepath + 'tut3t@2x.png',
+        image: imagepath + 'tut3t@2x.png',
         center:{y:'40%'}
-    });
-    
-    var loginImg3 = Ti.UI.createImageView({
-        image:imagepath + 'nextYellow.png',
-        height:'47dp',
-        width:'170.5dp'
-    });
-    
-    var loginLabel3 = Ti.UI.createLabel({
-        text:'Let\'s Start',
-        font:h1,
-        color:'white'
     });
     
     var loginBtn3 = Ti.UI.createButton({
         height:'47dp',
         width:'170.5dp',
-        bottom:'30dp'
+        bottom:'30dp',
+        backgroundImage : imagepath + 'nextYellow@2x.png',
+        title:'Let\'s Start',
+        font:h1,
+        color:'white'
     });
-    
-    loginBtn3.add(loginImg3);
-    loginBtn3.add(loginLabel3);
     
     var view3 = Ti.UI.createView({
         height:Ti.UI.FILL,
@@ -183,7 +151,7 @@ function TutorialView() {
         
         self.animate({opacity:0, duration:750}, function(){
             Ti.App.Properties.setBool('questions', false);
-            Ti.fireEvent('interestsview');
+            Ti.App.fireEvent('interestsview');
         });
         
     });

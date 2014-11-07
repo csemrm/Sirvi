@@ -41,8 +41,11 @@ function SlideOutMenu(userCred)
         duration : 750
     });
 
-    var backButton = Ti.UI.createImageView({
+    var backButton = Ti.UI.createButton({
         //top:'20dp',
+        backgroundColor : 'transparent',
+        height : '40dp',
+        width : '40dp',
         right : '10dp',
         image : imagepath + 'arrow@2x.png'
     });

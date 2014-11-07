@@ -1,86 +1,65 @@
 //FirstView Component Constructor
-function SlideOutMenu(userCred) {
-    var h1 = {
-        fontFamily : 'HelveticaNeue-Thin',
-        fontSize : '28dp',
-        color : '#fff'
-    };
-    var h2 = {
-        fontFamily : 'HelveticaNeue-Thin',
-        fontSize : '22dp',
-        color : '#fff'
-    };
-    var h3 = {
-        fontFamily : 'HelveticaNeue-Thin',
-        fontSize : '14dp',
-        color : '#fff'
-    };
+function SlideOutMenu(userCred) 
+{
+	var appglobal = require('../AppGlobals');
+	var h1 = appglobal.getFont('28dp'); 
+	var h2 = appglobal.getFont('22dp');
+	var h3 = appglobal.getFont('14dp');
+	
     data = [{
-        icon : 'profile.png',
+        icon : 'profile@2x.png',
         title : 'Profile',
         link : 'openProfile'
     }, {
-        icon : 'inbox.png',
+        icon : 'inbox@2x.png',
         title : 'Inbox',
         link : 'openInbox'
     }, {
-        icon : 'interest.png',
+        icon : 'interest@2x.png',
         title : 'Interests',
         link : 'openInterests'
     }, /*{
-        icon : 'settings.png',
+        icon : 'settings@2x.png',
         title : 'Settings',
         link : 'openSettings'
     }, */{
-        icon : 'signOut.png',
+        icon : 'signOut@2x.png',
         title : 'Sign Out',
         link : 'logOut'
     }];
     var imagepath = '/images/profile/';
-    var qbutton = require('ui/common/buttonCreator');
+    var qbutton = require('ui/common/android/buttonCreator_Android');
     var self = Ti.UI.createView({
         backgroundColor : '#fff',
-        height : Ti.Platform.displayCaps.platformHeight,
-        width : Ti.Platform.displayCaps.platformWidth * 0.77,
-        left : -(Ti.Platform.displayCaps.platformWidth * 0.77),
+        height : '100%',
+        width : '80%' ,//Ti.Platform.displayCaps.platformWidth/2 * 0.77,
+        left : -(Ti.Platform.displayCaps.platformWidth/2),
         opacity : 0.9
-
     });
     self.animate({
         left : '0dp',
         duration : 750
     });
 
-    var backButton = Ti.UI.createView({
+    var backButton = Ti.UI.createImageView({
         //top:'20dp',
-        height : '30dp',
-        width : '40dp',
-        right : '0dp'
+        right : '10dp',
+        image : imagepath + 'arrow@2x.png'
     });
     //self.add(backButton);
     tableData = [];
 
-    var statusView = Ti.UI.createView({
-        height : '20dp',
-        top : '0dp',
-        backgroundColor : '#1c971c',
-        right:'0.5dp'
-    });
-
     var sideMenu = Ti.UI.createTableView({
         height : '275dp',
         scrollable : false,
-        top : '20dp'
-    });
-    self.add(statusView);
+        top : '0dp',
+     });
+    
     createSideMenu();
     self.add(sideMenu);
-    var arrowImg = Ti.UI.createImageView({
-        image : imagepath + 'arrow.png'
-    });
-    backButton.add(arrowImg);
 
-    function createSideMenu() {
+    function createSideMenu() 
+    {
         var titleBar = Ti.UI.createTableViewRow({
             height : '75dp',
             backgroundColor : '#23b823'
@@ -94,9 +73,9 @@ function SlideOutMenu(userCred) {
         titleBar.add(titleLabel);
         titleBar.add(backButton);
         tableData.push(titleBar);
-        for (var i = 0; i < data.length; i++) {
+        for (var i = 0; i < data.length; i++) 
+        {
             rowData = data[i];
-
             var menuOption = Ti.UI.createTableViewRow({
                 height : '50dp',
                 link : rowData.link,
@@ -131,7 +110,8 @@ function SlideOutMenu(userCred) {
         opacity : 0.7
     });
 
-    function logOut() {
+    function logOut() 
+    {
         var logoutScreen = Ti.UI.createView({
             height : Ti.UI.SIZE,
             width : '71%',

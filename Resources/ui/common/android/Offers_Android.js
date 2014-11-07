@@ -21,28 +21,23 @@ function Offers() {
         backgroundColor:'#f7b21d',
         top:'0dp'
     });
-    
-    var headerOpaque = Ti.UI.createView({
-        width:'100%',
-        height:'20dp',
-        backgroundColor:'#000',
-        top:'0dp',
-        opacity:0.2
-    });
     self.add(header);
-    
     
     var backButton = Ti.UI.createImageView({
         image:imagepath + 'home@2x.png',
         left:'12.5dp',
-        center:{y:'52.5dp'}
+        center:{y:'40dp'}
+    });
+    backButton.addEventListener('click', function(){
+        self.hide();
     });
     
+    self.add(backButton);
     
     var headerLabel = Ti.UI.createLabel({
         text:'Daily Deals',
         font:h1,
-        center:{y:'52.5dp'},
+        center:{y:'40dp'},
         color:'white'
     });
     self.add(headerLabel);
@@ -52,7 +47,7 @@ function Offers() {
         top:'0dp',
         right:'5dp'
     });
-    
+
     var offersTableView = Ti.UI.createTableView({
         top:'105dp',
         width:'100%',
@@ -60,29 +55,36 @@ function Offers() {
         backgroundColor:'transparent'
         });
     self.add(offersTableView);
+    self.add(ribbon);
     
     load();
     
     
     function load(){
         Titanium.Geolocation.getCurrentPosition(function(e) {
-        if(!e.success || e.error) {
+        if(!e.success || e.error) 
+        {
             Ti.API.info('error:' + JSON.stringify(e.error));
             return;
+        }else
+        {
+        	lng = e.coords.longitude;
+        	lat = e.coords.latitude;
+        	var altitude = e.coords.altitude;
+        	var heading = e.coords.heading;
+        	var accuracy = e.coords.accuracy;
+        	var speed = e.coords.speed;
+        	var timestamp = e.coords.timestamp;
+        	var altitudeAccuracy = e.coords.altitudeAccuracy;
+        	Ti.API.info('speed ' + speed);
         }
-     
-        var lng = e.coords.longitude;
-        var lat = e.coords.latitude;
-        var altitude = e.coords.altitude;
-        var heading = e.coords.heading;
-        var accuracy = e.coords.accuracy;
-        var speed = e.coords.speed;
-        var timestamp = e.coords.timestamp;
-        var altitudeAccuracy = e.coords.altitudeAccuracy;
-        Ti.API.info('speed ' + speed);
-        
-        var url = 'http://api.sqoot.com/v2/deals?api_key=f07pod&order=distance&per_page=50&location='+lat + ',' + lng;
+        //enable for testing purpuse 
+        //lat = '26.748988387';
+    	//lng = '-80.227010947';
 
+        var url = 'http://api.sqoot.com/v2/deals?api_key=f07pod&order=distance&per_page=50&location='+lat + ',' + lng;
+		//Ti.API.info('url fired ' + url);
+		
         var client = Ti.Network.createHTTPClient({
              onload : function(e) {
                  localDeals = JSON.parse(this.responseText).deals;
@@ -210,23 +212,14 @@ function Offers() {
             layout:'vertical',
             backgroundColor:'f7b21d'
         });
-        var opaqueStatus = Ti.UI.createView({
-            width:'100%',
-            height:'20dp',
-            backgroundColor:'#000',
-            top:'0dp',
-            opacity:0.2
-        });
-        frameView.add(opaqueStatus);
-        
         var buttonBar = Ti.UI.createView({
-            height:'40dp',
+            height:'45dp',
             backgroundColor:'#f7b21d'
         });
         frameView.add(buttonBar);
         
         var openInBrowser = Ti.UI.createButton({
-            title:'Open in Safari',
+            title:'Open in Crome',
             right:'5dp',
         });
         buttonBar.add(openInBrowser);
@@ -253,14 +246,7 @@ function Offers() {
     }
      
     
-    self.add(ribbon);
-    self.add(backButton);
     
-    backButton.addEventListener('click', function(){
-        self.hide();
-    });
-    
-    self.add(headerOpaque);
     return self;
 }
 

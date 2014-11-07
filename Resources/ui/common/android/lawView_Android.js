@@ -2,7 +2,7 @@ function lawView(_title) {
     //create object instance, a parasitic subclass of Observable
     var imagepath = '/images/law/';
     var self = Ti.UI.createView({
-        backgroundImage:'/images/mainmenu/background.png',
+        backgroundImage:'/images/mainmenu/background@2x.png',
     });
     var menuTitle=[];
     switch (_title) {
@@ -50,33 +50,33 @@ function lawView(_title) {
     };
     
     var textBtn = Ti.UI.createImageView({
-        image:imagepath + 'home.png',
+        image:imagepath + 'home@2x.png',
         left:'12.5dp',
         center:{y:'50dp'}
     });
     
     var menuButton = Ti.UI.createImageView({
-        image:imagepath + 'menu.png',
+        image:imagepath + 'menu@2x.png',
         right:'12.5dp',
         center:{y:'50dp'}
     });
     //self.add(menuButton);
     var helpButton = Ti.UI.createImageView({
-        image:imagepath + 'help.png',
+        image:imagepath + 'help@2x.png',
         left:'12.5dp',
         bottom:'15dp'
     });
     //self.add(helpButton);
     
     var profileButton = Ti.UI.createImageView({
-        image:imagepath + 'profile.png',
+        image:imagepath + 'profile@2x.png',
         right:'12.5dp',
         bottom:'15dp'
     });
     //self.add(profileButton);
     
     var lawIcon = Ti.UI.createImageView({
-        image:imagepath + _title +'R.png',
+        image:imagepath + _title +'R@2x.png',
         left:'0dp',
         center:{y:'50%'}
     });
@@ -89,7 +89,7 @@ function lawView(_title) {
     });
     
     var menu1 = Ti.UI.createView({
-        backgroundImage:imagepath + _title +'1.png',
+        backgroundImage:imagepath + _title +'1@2x.png',
         right:'0dp',
         bottom:'36.5',
         width:'222dp',
@@ -97,7 +97,7 @@ function lawView(_title) {
         text:menuTitle[0],
     });
     var menu2 = Ti.UI.createView({
-        backgroundImage:imagepath + _title +'2.png',
+        backgroundImage:imagepath + _title +'2@2x.png',
         right:'0dp',
         bottom:'36.5',
         width:'156dp',
@@ -105,7 +105,7 @@ function lawView(_title) {
         text:menuTitle[1],
     });
     var menu3 = Ti.UI.createView({
-        backgroundImage:imagepath + _title +'3.png',
+        backgroundImage:imagepath + _title +'3@2x.png',
         right:'0dp',
         bottom:'36.5',
         width:'119.5',
@@ -113,7 +113,7 @@ function lawView(_title) {
         text:menuTitle[2],
     });
     var menu4 = Ti.UI.createView({
-        backgroundImage:imagepath + _title +'4.png',
+        backgroundImage:imagepath + _title +'4@2x.png',
         right:'0dp',
         bottom:'36.5',
         width:'156dp',
@@ -121,7 +121,7 @@ function lawView(_title) {
         text:menuTitle[3],
     });
     var menu5 = Ti.UI.createView({
-        backgroundImage:imagepath + _title +'5.png',
+        backgroundImage:imagepath + _title +'5@2x.png',
         right:'0dp',
         width:'222dp',
         height:'54dp',
@@ -173,10 +173,10 @@ function lawView(_title) {
     menu.add(menu4);
     menu.add(menu5);
     
-    var qbutton = require('ui/common/buttonCreator');
+    var qbutton = require('ui/common/android/buttonCreator_Android');
     
     function openQuestions(popLabel){
-    	var Question = require('ui/common/QuestionView');
+    	var Question = require('ui/common/android/QuestionView_Android');
     	questions = new Question(popLabel);
     	self.add(questions);
     }

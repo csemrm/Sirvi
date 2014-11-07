@@ -3,7 +3,7 @@ function rewardsView() {
 	//create object instance, a parasitic subclass of Observable
 	var imagepath = '/images/mainmenu/';
 	var self = Ti.UI.createView({
-		backgroundImage : imagepath + 'background.png',
+		backgroundImage : imagepath + 'background@2x.png',
 	});
 
 	var userPoints = Ti.App.Properties.getInt('userPoints', 0);
@@ -41,21 +41,10 @@ function rewardsView() {
 	});
 	
 	var logoImg = Ti.UI.createImageView({
-		image : imagepath + 'logo.png',
+		image : imagepath + 'logo@2x.png',
 		top : '30dp'
 	});
 
-	var loginImg = Ti.UI.createImageView({
-		image : imagepath + 'loginbtn.png',
-		height : '47dp',
-		width : '175dp'
-	});
-
-	var loginLabel = Ti.UI.createLabel({
-		text : 'Redeem Now',
-		font : h2,
-		color : 'white'
-	});
 
 	var centerText = Ti.UI.createLabel({
 		text : 'You Have Earned',
@@ -85,11 +74,13 @@ function rewardsView() {
 
 	var loginBtn = Ti.UI.createButton({
 		height : '47dp',
-		width : '180dp',
-		bottom : '30dp'
+		width : '175dp',
+		bottom : '30dp',
+		title : 'Redeem Now',
+		font : h2,
+		color : 'white',
+		backgroundImage : imagepath + 'loginbtn@2x.png',
 	});
-	loginBtn.add(loginImg);
-	loginBtn.add(loginLabel);
 
 	loginBtn.addEventListener('click', function(e) {
 		Titanium.Platform.openURL('http://www.sirvipays.com');
@@ -100,7 +91,7 @@ function rewardsView() {
 	});
 
 	self.add(logoImg);
-	self.add(timerLabel);
+	pointsView.add(timerLabel);
 	self.add(pointsView);
 	self.add(loginBtn);
 

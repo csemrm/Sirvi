@@ -4,14 +4,15 @@ function MainMenu() {
 	var apiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
 	var imagepath = '/images/mainmenu/';
 	var self = Ti.UI.createView({
-		backgroundImage : imagepath + 'background.png',
+		backgroundImage : imagepath + 'background@2x.png',
 	});
-	var Notifications = require('/libs/notifications').Notifications;
-	new Notifications();
+	Ti.API.info(' Launched MainMenu_Android js ');
+	//var Notifications = require('/libs/notifications').Notifications;
+	//new Notifications();
 
 	loaded = false;
 	textloaded = false;
-	var qbutton = require('ui/common/buttonCreator');
+	var qbutton = require('ui/common/android/buttonCreator_Android');
 
 	var userCred = Ti.App.Properties.getObject('userCred');
 	var longitude;
@@ -19,37 +20,22 @@ function MainMenu() {
 
 	Ti.App.Properties.setBool('questions', true);
 
-	loginReq();
+	// loginReq();
 
-	var h1 = {
-		fontFamily : 'HelveticaNeue-Thin',
-		fontSize : '28dp',
-		color : '#fff'
-	};
-	var h2 = {
-		fontFamily : 'HelveticaNeue-Thin',
-		fontSize : '18dp',
-		color : '#fff'
-	};
-	var h3 = {
-		fontFamily : 'HelveticaNeue-Thin',
-		fontSize : '14dp',
-		color : '#fff'
-	};
-
-	var h4 = {
-		fontFamily : 'HelveticaNeue-Thin',
-		fontSize : '16dp',
-		color : '#fff'
-	};
+	var appglobal = require('../AppGlobals');
+	var h1 = appglobal.getFont('28dp'); // {fontFamily: 'HelveticaNeue-Thin',fontSize:'28dp',color:'#fff'};
+    var h2 = appglobal.getFont('18dp'); //{fontFamily: 'HelveticaNeue-Thin',fontSize:'18dp',color:'#fff'};
+    var h3 = appglobal.getFont('14dp'); //{fontFamily: 'HelveticaNeue-Thin',fontSize:'14dp',color:'#fff'};
+	var h4 = appglobal.getFont('16dp'); //{fontFamily: 'HelveticaNeue-Thin',fontSize:'14dp',color:'#fff'};
 
 	var textBtn = Ti.UI.createImageView({
-		image : imagepath + 'text.png',
+		image : imagepath + 'text@2x.png',
 		right : '12.5dp',
 		bottom : '15dp'
 
 	});
-	var textChat = require('ui/common/FirstView');
+	var textChat = require('ui/common/android/FirstView_Android');
+	
 	textBtn.addEventListener('click', function() {
 		if (!textloaded) {
 			chatView = new textChat();
@@ -86,7 +72,9 @@ function MainMenu() {
 		locationCallback(e);
 	});
 
-	function loginReq() {
+	function loginReq() 
+	{
+		Ti.API.info('called from some where ');
 		var apiCall = '/api/appUsers/login';
 		var url = apiURL + apiCall;
 		var client = Ti.Network.createHTTPClient({
@@ -118,8 +106,9 @@ function MainMenu() {
 		Ti.App.Properties.setObject('userCred', userData);
 	}
 
-	function openProfile(userData) {
-		var Profile = require('ui/common/SlideOutMenu');
+	function openProfile(userData) 
+	{
+		var Profile = require('ui/common/android/SlideOutMenu_Android');
 		profileView = new Profile(userData);
 		self.add(overlay1);
 		overlay1.animate({
@@ -128,7 +117,7 @@ function MainMenu() {
 		});
 		self.add(profileView);
 
-		Ti.addEventListener('closeSlideOut', function(e) {
+		Ti.App.addEventListener('closeSlideOut', function(e) {
 			overlay1.animate({
 				opacity : 0,
 				duration : 750
@@ -140,23 +129,23 @@ function MainMenu() {
 	}
 
 
-	Ti.addEventListener('openProfile', function(e) {
-		var ProfileView = require('ui/common/ProfileView');
+	Ti.App.addEventListener('openProfile', function(e) {
+		var ProfileView = require('ui/common/android/ProfileView_Android');
 		profile = new ProfileView(self);
 		self.add(profile);
 	});
-	Ti.addEventListener('openInbox', function(e) {
-		var ProfileView = require('ui/common/InboxView');
+	Ti.App.addEventListener('openInbox', function(e) {
+		var ProfileView = require('ui/common/android/InboxView_Android');
 		profile = new ProfileView(self);
 		self.add(profile);
 	});
-	Ti.addEventListener('openInterests', function(e) {
-		var ProfileView = require('ui/common/InterestsView');
+	Ti.App.addEventListener('openInterests', function(e) {
+		var ProfileView = require('ui/common/android/InterestsView_Android');
 		profile = new ProfileView(self);
 		self.add(profile);
 	});
-	Ti.addEventListener('openSettings', function(e) {
-		var ProfileView = require('ui/common/SettingsView');
+	Ti.App.addEventListener('openSettings', function(e) {
+		var ProfileView = require('ui/common/android/SettingsView_Android');
 		profile = new ProfileView(self);
 		self.add(profile);
 	});
@@ -210,7 +199,7 @@ function MainMenu() {
 	});
 
 	var menuButton = Ti.UI.createImageView({
-		image : imagepath + 'menu.png',
+		image : imagepath + 'menu@2x.png',
 		right : '12.5dp',
 		center : {
 			y : '50dp'
@@ -218,18 +207,18 @@ function MainMenu() {
 	});
 
 	var helpButton = Ti.UI.createImageView({
-		image : imagepath + 'help.png',
+		image : imagepath + 'help@2x.png',
 		left : '12.5dp',
 		bottom : '15dp'
 	});
 
 	var helpScreen = Ti.UI.createImageView({
-		image : imagepath + 'helpScreen.png',
+		image : imagepath + 'helpScreen@2x.png',
 		bottom : '0dp'
 	});
 
 	var profileButton = Ti.UI.createImageView({
-		image : imagepath + 'profile.png',
+		image : imagepath + 'profile@2x.png',
 		left : '12.5dp',
 		center : {
 			y : '50dp'
@@ -237,8 +226,10 @@ function MainMenu() {
 	});
 
 	var callBtn = Ti.UI.createImageView({
-		image : imagepath + 'sirviR.png',
-		left : '-320dp'
+		image : imagepath + 'sirviR@2x.png',
+		width : '50%',
+		height : '50%',
+		left : '-320dp',
 	});
 	callBtn.addEventListener('click', function() {
 		callSirvi();
@@ -273,7 +264,7 @@ function MainMenu() {
 		var miniSirvi = Titanium.UI.createImageView({
 			height : '50dp',
 			width : '50dp',
-			image : '/images/mainmenu/callBtn.png'
+			image : '/images/mainmenu/callBtn@2x.png'
 		});
 
 		var statuslabel = Ti.UI.createLabel({
@@ -398,42 +389,42 @@ function MainMenu() {
 		opacity : 0
 	});
 	var healthBig = Ti.UI.createImageView({
-		image : imagepath + 'healthR.png',
+		image : imagepath + 'healthR@2x.png',
 		width : '72.5dp',
 		height : '73dp'
 	});
 	var lawBig = Ti.UI.createImageView({
-		image : imagepath + 'lawR.png',
+		image : imagepath + 'lawR@2x.png',
 		width : '73.5dp',
 		height : '74dp'
 	});
 	var datingBig = Ti.UI.createImageView({
-		image : imagepath + 'dateR.png',
+		image : imagepath + 'dateR@2x.png',
 		width : '72.5dp',
 		height : '73dp'
 	});
 	var lawBtn = Ti.UI.createImageView({
-		image : imagepath + 'law.png',
+		image : imagepath + 'law@2x.png',
 		top : '0dp',
 		left : '20dp'
 	});
 	var healthBtn = Ti.UI.createImageView({
-		image : imagepath + 'health.png',
+		image : imagepath + 'health@2x.png',
 		right : '0dp',
 	});
 	var datingBtn = Ti.UI.createImageView({
-		image : imagepath + 'dating.png',
+		image : imagepath + 'dating@2x.png',
 		right : '45.5dp',
 		bottom : '0dp'
 	});
 	var financeBtn = Ti.UI.createImageView({
-		image : imagepath + 'finance.png',
+		image : imagepath + 'finance@2x.png',
 		right : '65dp',
 		bottom : '-40dp',
 
 	});
 	var raffleBtn = Ti.UI.createImageView({
-		image : imagepath + 'raffle.png',
+		image : imagepath + 'raffle@2x.png',
 		bottom : '-70dp',
 		left : '-90dp',
 		opacity : 0
@@ -581,7 +572,7 @@ function MainMenu() {
 		}
 	});
 
-	var Question = require('ui/common/QuestionView');
+	var Question = require('ui/common/android/QuestionView_Android');
 	raffleBtn.addEventListener('click', function(e) {
 		if (!loaded) {
 			loadTerms();
@@ -592,11 +583,11 @@ function MainMenu() {
 	var raffleTermsView = Titanium.UI.createView({
 		height : Titanium.UI.FILL,
 		width : Titanium.UI.FILL,
-		backgroundImage : '/images/mainmenu/background.png'
+		backgroundImage : '/images/mainmenu/background@2x.png'
 	});
 
 	var raffleBackBtn = Titanium.UI.createImageView({
-		image : '/images/law/home.png',
+		image : '/images/law/home@2x.png',
 		left : '12.5dp',
 		center : {
 			y : '40dp'
@@ -606,12 +597,12 @@ function MainMenu() {
 	var raffleBckgrnd = Titanium.UI.createImageView({
 		height : Titanium.UI.FILL,
 		width : Titanium.UI.FILL,
-		backgroundImage : '/images/mainmenu/spstart.png'
+		backgroundImage : '/images/mainmenu/spstart@2x.png'
 	});
 
 	var lowerButtonView = Titanium.UI.createView({
-		height : '50dp',
-		bottom : '40dp'
+		height : '70dp',
+		bottom : '20dp'
 	});
 
 	var raffleRegister = qbutton.createButton('Register', '#0d004c');
@@ -647,10 +638,10 @@ function MainMenu() {
 
 
 	financeBtn.addEventListener('click', function(e) {
-		var offersView = require('ui/common/Offers');
+		var offersView = require('ui/common/android/Offers_Android');
 		self.add(new offersView);
 	});
-	var rewardsView = require('ui/common/rewards');
+	var rewardsView = require('ui/common/android/rewards_Android');
 
 	menuButton.addEventListener('click', function(e) {
 		_rewards = new rewardsView();
@@ -674,6 +665,7 @@ function MainMenu() {
 	childView.add(datingBtn);
 	childView.add(financeBtn);
 	childView.add(raffleBtn);
+	
 	self.add(childView);
 	self.add(callBtn);
 	self.add(textBtn);

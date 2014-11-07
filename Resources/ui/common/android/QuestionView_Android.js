@@ -67,12 +67,11 @@ function QuestionView(popLabel) {
     });
 
     var pointsView = Ti.UI.createView({
-        width : Ti.UI.FILL,
-        height : Ti.UI.FILL,
+        width : '100%',
+        height : '100%',
+        //zIndex : -2,
         backgroundImage:'/images/mainmenu/surveyEnd@2x.png'
     });
-    
-
     
     //pointsView.add(centerText);
     pointsView.add(pointsNumber);
@@ -84,19 +83,11 @@ function QuestionView(popLabel) {
 
     var questions = [];
 
-    var backButton = Ti.UI.createImageView({
-        image : imagepath + 'arrow.png',
-        left : '12.5dp',
-        center : {
-            y : '40dp'
-        }
-    });
-
     var apiCall = '/api/questions';
     var apiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
     var url = 'http://104.131.124.227:3000/api/questions?filter=%7B%22where%22%3A%7B%22section%22%3A%22' + popLabel.toLowerCase()+ '%22%7D%7D';
     //apiURL + apiCall;
-
+	Ti.API.info('url -- '+url);
     function questionReq() {
 
         var client = Ti.Network.createHTTPClient({
@@ -176,11 +167,10 @@ function QuestionView(popLabel) {
 
     questionReq();
 
-    homeButton = Ti.UI.createImageView({
+    var homeButton = Ti.UI.createImageView({
         image : imagepath + 'home@2x.png',
         left : '10dp',
-        top : '25dp',
-        zIndex : 0
+        top : '5dp',
     });
     self.add(homeButton);
     homeButton.addEventListener('click', function() {

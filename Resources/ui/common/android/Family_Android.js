@@ -51,12 +51,12 @@ function MyProfileView(data) {
 	self.add(backButton);
 
 	var arrowImg = Ti.UI.createImageView({
-		image : imagepath + 'arrow.png'
+		image : imagepath + 'arrow@2x.png'
 	});
 	backButton.add(arrowImg);
 
 	var welcomeImg = Ti.UI.createImageView({
-		image : imagepath + 'welcome.png',
+		image : imagepath + 'welcome@2x.png',
 		width : '294dp',
 		center : {
 			y : '15dp'
@@ -87,7 +87,7 @@ function MyProfileView(data) {
 	});
 
 	var nameField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'user@2x.png',
 		hintText : 'NAME',
 		font : h2,
 		width : '229.5dp',
@@ -99,7 +99,7 @@ function MyProfileView(data) {
 	});
 	
 	var emailField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'email.png',
+		backgroundImage : imagepath + 'email@2x.png',
 		hintText : 'EMAIL',
 		font : h2,
 		width : '229.5dp',
@@ -112,7 +112,7 @@ function MyProfileView(data) {
 	});
 	
 	var phoneField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'phone.png',
+		backgroundImage : imagepath + 'phone@2x.png',
 		hintText : 'PHONE',
 		font : h2,
 		width : '229.5dp',
@@ -124,7 +124,7 @@ function MyProfileView(data) {
 	});
 
 	var genderField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'user@2x.png',
 		hintText : 'GENDER',
 		font : h2,
 		width : '229.5dp',
@@ -136,7 +136,7 @@ function MyProfileView(data) {
 	});
 
 	var bdayField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'bday.png',
+		backgroundImage : imagepath + 'bday@2x.png',
 		hintText : 'BIRTHDAY',
 		font : h2,
 		width : '229.5dp',
@@ -149,7 +149,7 @@ function MyProfileView(data) {
 	});
 
 	var streetField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'city.png',
+		backgroundImage : imagepath + 'city@2x.png',
 		hintText : 'STREET',
 		font : h2,
 		width : '229.5dp',
@@ -161,7 +161,7 @@ function MyProfileView(data) {
 	});
 
 	var cityField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'city.png',
+		backgroundImage : imagepath + 'city@2x.png',
 		hintText : 'CITY',
 		font : h2,
 		width : '229.5dp',
@@ -173,7 +173,7 @@ function MyProfileView(data) {
 	});
 
 	var stateField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'city.png',
+		backgroundImage : imagepath + 'city@2x.png',
 		hintText : 'STATE',
 		font : h2,
 		width : '229.5dp',
@@ -185,7 +185,7 @@ function MyProfileView(data) {
 	});
 
 	var zipField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'city.png',
+		backgroundImage : imagepath + 'city@2x.png',
 		hintText : 'ZIP',
 		font : h2,
 		width : '229.5dp',
@@ -196,27 +196,16 @@ function MyProfileView(data) {
 		value:data.zip,
 	});
 
-	var updateImg = Ti.UI.createImageView({
-		image : imagepath + 'signupBtn.png',
+	var updateBtn = Ti.UI.createButton({
+		backgroundImage : imagepath + 'signupBtn@2x.png',
 		height : '47dp',
-		width : '170.5dp'
-	});
-
-	var updateLabel = Ti.UI.createLabel({
-		text : 'UPDATE',
+		width : '170.5dp',
+		top : '28.5dp',
+		title : 'UPDATE',
 		font : h1,
 		color : 'white'
 	});
 
-	var updateBtn = Ti.UI.createButton({
-		height : '47dp',
-		width : '170.5dp',
-		top : '28.5dp'
-	});
-
-	updateBtn.add(updateImg);
-	updateBtn.add(updateLabel);
-	
 	var paddingSpace = Ti.UI.createView({
 		height:'60dp',
 	});

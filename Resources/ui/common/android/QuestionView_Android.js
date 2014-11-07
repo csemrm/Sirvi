@@ -24,7 +24,7 @@ function QuestionView(popLabel) {
     _color2 = '#c20261';
 
     var self = Ti.UI.createView({
-        backgroundImage : '/images/mainmenu/background.png'
+        backgroundImage : '/images/mainmenu/background@2x.png'
     });
 
     var imagepath = '/images/interest/';
@@ -69,7 +69,7 @@ function QuestionView(popLabel) {
     var pointsView = Ti.UI.createView({
         width : Ti.UI.FILL,
         height : Ti.UI.FILL,
-        backgroundImage:'/images/mainmenu/surveyEnd.png'
+        backgroundImage:'/images/mainmenu/surveyEnd@2x.png'
     });
     
 
@@ -80,7 +80,7 @@ function QuestionView(popLabel) {
     self.add(pointsView);
     pointsView.hide();
 
-    var qbutton = require('ui/common/buttonCreator');
+    var qbutton = require('ui/common/android/buttonCreator_Android');
 
     var questions = [];
 
@@ -154,7 +154,7 @@ function QuestionView(popLabel) {
         var scrollableView = Ti.UI.createScrollableView({
             views : qViews,
             zIndex : -1,
-            backgroundImage : '/images/mainmenu/background.png'
+            backgroundImage : '/images/mainmenu/background@2x.png'
             //showPagingControl:true
         });
         self.add(scrollableView);
@@ -177,7 +177,7 @@ function QuestionView(popLabel) {
     questionReq();
 
     homeButton = Ti.UI.createImageView({
-        image : imagepath + 'home.png',
+        image : imagepath + 'home@2x.png',
         left : '10dp',
         top : '25dp',
         zIndex : 0

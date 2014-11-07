@@ -17,7 +17,7 @@ function SettingsView(parent) {
         color : '#fff'
     };
     var textBtn = Ti.UI.createImageView({
-        image:imagepath + 'home.png',
+        image:imagepath + 'home@2x.png',
         left:'12.5dp',
         center:{y:'50dp'}
     });

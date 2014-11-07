@@ -3,7 +3,7 @@ function chatView() {
     //create object instance, a parasitic subclass of Observable
     var imagepath = '/images/mainmenu/';
     var self = Ti.UI.createView({
-        backgroundImage:imagepath + 'background.png',
+        backgroundImage:imagepath + 'background@2x.png',
     });
     
     var userCred = Ti.App.Properties.getObject('userCred',{});
@@ -20,7 +20,7 @@ function chatView() {
     var h4 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'60dp',color:'#fff'};
     
     var textBtn = Ti.UI.createImageView({
-        image:'/images/law/home.png',
+        image:'/images/law/home@2x.png',
         left:'12.5dp',
         center:{y:'50dp'}
     });

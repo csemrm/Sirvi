@@ -4,8 +4,8 @@ function MyProfileView(parentData) {
 	newData = parentData;
 	var self = Ti.UI.createView({
 		backgroundColor : '#23b823',
-		height : Ti.Platform.displayCaps.platformHeight,
-		width : Ti.Platform.displayCaps.platformWidth,
+		height : '100%',
+		width : '100%',
 		bottom : -Ti.Platform.displayCaps.platformHeight,
 		layout : 'vertical'
 	});
@@ -54,12 +54,12 @@ function MyProfileView(parentData) {
 	self.add(backButton);
 
 	var arrowImg = Ti.UI.createImageView({
-		image : imagepath + 'arrow.png'
+		image : imagepath + 'arrow@2x.png'
 	});
 	backButton.add(arrowImg);
 
 	var welcomeImg = Ti.UI.createImageView({
-		image : imagepath + 'welcome.png',
+		image : imagepath + 'welcome@2x.png',
 		width : '294dp',
 		center : {
 			y : '15dp'
@@ -98,7 +98,7 @@ function MyProfileView(parentData) {
 	});
 
 	var currentWorkNameField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'user@2x.png',
 		hintText : 'Employer Name',
 		font : h2,
 		width : '229.5dp',
@@ -109,7 +109,7 @@ function MyProfileView(parentData) {
 	});
 
 	var currentWorkAddressField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'email.png',
+		backgroundImage : imagepath + 'email@2x.png',
 		hintText : 'Employer Address',
 		font : h2,
 		width : '229.5dp',
@@ -129,7 +129,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previousWorkNameField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'phone.png',
+		backgroundImage : imagepath + 'phone@2x.png',
 		hintText : 'Employer Name',
 		font : h2,
 		width : '229.5dp',
@@ -140,7 +140,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previousWorkAddressField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'user@2x.png',
 		hintText : 'Employer Address',
 		font : h2,
 		width : '229.5dp',
@@ -160,7 +160,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previous1WorkNameField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'phone.png',
+		backgroundImage : imagepath + 'phone@2x.png',
 		hintText : 'Employer Name',
 		font : h2,
 		width : '229.5dp',
@@ -171,7 +171,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previous1WorkAddressField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'user@2x.png',
 		hintText : 'Employer Address',
 		font : h2,
 		width : '229.5dp',
@@ -182,7 +182,7 @@ function MyProfileView(parentData) {
 	});
 
 	var updateImg = Ti.UI.createImageView({
-		image : imagepath + 'signupBtn.png',
+		image : imagepath + 'signupBtn@2x.png',
 		height : '47dp',
 		width : '170.5dp'
 	});

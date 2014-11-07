@@ -54,12 +54,12 @@ function MyProfileView(parentData) {
 	self.add(backButton);
 
 	var arrowImg = Ti.UI.createImageView({
-		image : imagepath + 'arrow.png'
+		image : imagepath + 'arrow@2x.png'
 	});
 	backButton.add(arrowImg);
 
 	var welcomeImg = Ti.UI.createImageView({
-		image : imagepath + 'welcome.png',
+		image : imagepath + 'welcome@2x.png',
 		width : '294dp',
 		center : {
 			y : '15dp'
@@ -91,7 +91,7 @@ function MyProfileView(parentData) {
 
 	
 	var currentEducationTypeField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'user@2x.png',
 		hintText : 'School Type',
 		font : h2,
 		width : '229.5dp',
@@ -101,7 +101,7 @@ function MyProfileView(parentData) {
 	});
 
 	var currentEducationNameField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'email.png',
+		backgroundImage : imagepath + 'email@2x.png',
 		hintText : 'School Name',
 		font : h2,
 		width : '229.5dp',
@@ -112,7 +112,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previousEducationTypeField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'phone.png',
+		backgroundImage : imagepath + 'phone@2x.png',
 		hintText : 'School Type',
 		font : h2,
 		width : '229.5dp',
@@ -123,7 +123,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previousEducationNameField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'user@2x.png',
 		hintText : 'School Name',
 		font : h2,
 		width : '229.5dp',
@@ -134,7 +134,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previous1EducationTypeField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'phone.png',
+		backgroundImage : imagepath + 'phone@2x.png',
 		hintText : 'School Type',
 		font : h2,
 		width : '229.5dp',
@@ -145,7 +145,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previous1EducationNameField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'user@2x.png',
 		hintText : 'School Name',
 		font : h2,
 		width : '229.5dp',
@@ -156,7 +156,7 @@ function MyProfileView(parentData) {
 	});
 	
 	var previous2EducationTypeField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'phone.png',
+		backgroundImage : imagepath + 'phone@2x.png',
 		hintText : 'School Type',
 		font : h2,
 		width : '229.5dp',
@@ -167,7 +167,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previous2EducationNameField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'user@2x.png',
 		hintText : 'School Name',
 		font : h2,
 		width : '229.5dp',
@@ -178,7 +178,7 @@ function MyProfileView(parentData) {
 	});
 
 	var updateImg = Ti.UI.createImageView({
-		image : imagepath + 'signupBtn.png',
+		image : imagepath + 'signupBtn@2x.png',
 		height : '47dp',
 		width : '170.5dp'
 	});

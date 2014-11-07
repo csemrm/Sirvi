@@ -17,34 +17,21 @@ var h3 = {
 
 exports.createButton = function(title, _color) {
     //_color='#132243';
-    var _image = Ti.UI.createView({
-        backgroundColor : _color,
-        height : '47dp',
-        width : '170.5dp',
-        borderColor : 'white',
-        borderRadius : '23.5dp',
-        borderWidth : '1dp',
-        option : title,
-        //index:count
-    });
-
-    var _label = Ti.UI.createLabel({
-        text : title,
-        font : h2,
-        color : 'white',
-        option : title,
-        //index:count
-    });
 
     var _button = Ti.UI.createButton({
+    	title : title,
+    	font : h2,
         height : '47dp',
         width : '170.5dp',
         top : '20dp',
         option : title,
-        //index:count
+        color : 'white',
+        borderColor : 'white',
+        borderRadius : '23.5dp',
+        borderWidth : '1dp',
+        option : title,
+        backgroundColor : _color
     });
-    _button.add(_image);
-    _button.add(_label);
 
     return _button;
 };

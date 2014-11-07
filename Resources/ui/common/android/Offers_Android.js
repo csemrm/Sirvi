@@ -4,7 +4,7 @@ function Offers() {
     var imagepath = '/images/offers/';
     var self = Ti.UI.createView({
         height:'100%',
-        backgroundImage:imagepath + 'background.png',
+        backgroundImage:imagepath + 'background@2x.png',
     });
     
     var h1 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'28dp',color:'#fff'};
@@ -33,7 +33,7 @@ function Offers() {
     
     
     var backButton = Ti.UI.createImageView({
-        image:imagepath + 'home.png',
+        image:imagepath + 'home@2x.png',
         left:'12.5dp',
         center:{y:'52.5dp'}
     });
@@ -48,7 +48,7 @@ function Offers() {
     self.add(headerLabel);
     
     var ribbon = Ti.UI.createImageView({
-        image:imagepath + 'ribbon.png',
+        image:imagepath + 'ribbon@2x.png',
         top:'0dp',
         right:'5dp'
     });

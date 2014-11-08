@@ -21,7 +21,7 @@ function ProfileView(parent) {
 	};
 
 	var textBtn = Ti.UI.createImageView({
-		image : imagepath + 'home.png',
+		image : imagepath + 'home@2x.png',
 		left : '12.5dp',
 		center : {
 			y : '50dp'
@@ -37,25 +37,25 @@ function ProfileView(parent) {
 	});
 
 	var pageData = [{
-		icon : 'profile.png',
+		icon : 'profile@2x.png',
 		title : 'My Profile',
 		link : 'MyProfile'
 	}, {
-		icon : 'inbox.png',
+		icon : 'inbox@2x.png',
 		title : 'Family',
 		link : 'Family'
 	}, {
-		icon : 'interest.png',
+		icon : 'interest@2x.png',
 		title : 'Work',
 		link : 'Work'
 	}, {
-		icon : 'signOut.png',
+		icon : 'signOut@2x.png',
 		title : 'Education',
 		link : 'Education'
 	}];
 
 	var self = Ti.UI.createView({
-		backgroundImage : '/images/mainmenu/background.png',
+		backgroundImage : '/images/mainmenu/background@2x.png',
 		height : Ti.UI.FILL,
 		width : Ti.UI.FILL
 	});
@@ -114,7 +114,7 @@ function ProfileView(parent) {
 		self.profilePictureView = Ti.UI.createImageView({
 			height : '100%',
 			width : '100%',
-			image : data.profile_image || imagepath + 'placeholder.png'
+			image : data.profile_image || imagepath + 'placeholder@2x.png'
 		});
 		circleView.add(self.profilePictureView);
 
@@ -275,7 +275,6 @@ function ProfileView(parent) {
 		xhr.send({
 			data : file
 		});
-
 	}
 
 
@@ -290,19 +289,19 @@ function ProfileView(parent) {
 			onload : function(e) {
 				data = JSON.parse(this.responseText).details;
 				if (linkClick == 'MyProfile') {
-					var MyProfile = require('ui/common/MyProfile');
+					var MyProfile = require('ui/common/android/MyProfile_Android');
 					MyProfileView = new MyProfile(data);
 					self.add(MyProfileView);
 				} else if (linkClick == 'Family') {
-					var Family = require('ui/common/Family');
+					var Family = require('ui/common/android/Family_Android');
 					FamilyView = new Family(data);
 					self.add(FamilyView);
 				} else if (linkClick == 'Work') {
-					var Work = require('ui/common/Work');
+					var Work = require('ui/common/android/Work_Android');
 					WorkView = new Work(data);
 					self.add(WorkView);
 				} else if (linkClick == 'Education') {
-					var Education = require('ui/common/Education');
+					var Education = require('ui/common/android/Education_Android');
 					EducationView = new Education(data);
 					self.add(EducationView);
 				}
@@ -315,11 +314,8 @@ function ProfileView(parent) {
 		client.setRequestHeader("Content-Type", "application/json");
 		client.setRequestHeader('charset', 'utf-8');
 		client.send();
-
 	});
-
 	return self;
-
 }
 
 module.exports = ProfileView;

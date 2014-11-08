@@ -44,16 +44,12 @@ function MyProfileView(data) {
 	var imagepath = '/images/signup/';
 
 	var backButton = Ti.UI.createView({
-		height : '40dp',
-		width : '60dp',
-		top : '20dp'
+		height : '17dp',
+		width : '9dp',
+		top : '20dp',
+		backgroundImage : imagepath + 'arrow@2x.png'
 	});
 	self.add(backButton);
-
-	var arrowImg = Ti.UI.createImageView({
-		image : imagepath + 'arrow@2x.png'
-	});
-	backButton.add(arrowImg);
 
 	var welcomeImg = Ti.UI.createImageView({
 		image : imagepath + 'welcome@2x.png',
@@ -196,27 +192,16 @@ function MyProfileView(data) {
 		value:data.zip,
 	});
 
-	var updateImg = Ti.UI.createImageView({
-		image : imagepath + 'signupBtn@2x.png',
-		height : '47dp',
-		width : '170.5dp'
-	});
-
-	var updateLabel = Ti.UI.createLabel({
-		text : 'UPDATE',
-		font : h1,
-		color : 'white'
-	});
-
 	var updateBtn = Ti.UI.createButton({
+		backgroundImage : imagepath + 'signupBtn@2x.png',
 		height : '47dp',
 		width : '170.5dp',
-		top : '28.5dp'
+		top : '28.5dp',
+		title : 'UPDATE',
+		font : h1,
+		color : 'white'		
 	});
 
-	updateBtn.add(updateImg);
-	updateBtn.add(updateLabel);
-	
 	var paddingSpace = Ti.UI.createView({
 		height:'60dp',
 	});

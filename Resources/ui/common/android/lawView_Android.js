@@ -51,18 +51,24 @@ function lawView(_title) {
     
     var textBtn = Ti.UI.createImageView({
         image:imagepath + 'home@2x.png',
+        width : '52dp',
+        height : '52dp',
         left:'12.5dp',
         center:{y:'50dp'}
     });
     
     var menuButton = Ti.UI.createImageView({
         image:imagepath + 'menu@2x.png',
+        width : '52dp',
+        height : '52dp',
         right:'12.5dp',
         center:{y:'50dp'}
     });
     //self.add(menuButton);
     var helpButton = Ti.UI.createImageView({
         image:imagepath + 'help@2x.png',
+        width : '52dp',
+        height : '52dp',
         left:'12.5dp',
         bottom:'15dp'
     });
@@ -70,6 +76,8 @@ function lawView(_title) {
     
     var profileButton = Ti.UI.createImageView({
         image:imagepath + 'profile@2x.png',
+        width : '52dp',
+        height : '52dp',
         right:'12.5dp',
         bottom:'15dp'
     });
@@ -78,6 +86,8 @@ function lawView(_title) {
     var lawIcon = Ti.UI.createImageView({
         image:imagepath + _title +'R@2x.png',
         left:'0dp',
+        width : '205dp',
+        height : '205dp',
         center:{y:'50%'}
     });
     

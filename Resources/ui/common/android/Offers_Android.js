@@ -25,8 +25,10 @@ function Offers() {
     
     var backButton = Ti.UI.createImageView({
         image:imagepath + 'home@2x.png',
+        width : '52dp',
+        height : '52dp',
         left:'12.5dp',
-        center:{y:'40dp'}
+        center:{y:'20dp'}
     });
     backButton.addEventListener('click', function(){
         self.hide();
@@ -37,7 +39,7 @@ function Offers() {
     var headerLabel = Ti.UI.createLabel({
         text:'Daily Deals',
         font:h1,
-        center:{y:'40dp'},
+        center:{y:'20dp'},
         color:'white'
     });
     self.add(headerLabel);

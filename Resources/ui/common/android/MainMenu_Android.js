@@ -30,6 +30,8 @@ function MainMenu() {
 
 	var textBtn = Ti.UI.createImageView({
 		image : imagepath + 'text@2x.png',
+		height : '52dp',
+		width : '52dp',
 		right : '12.5dp',
 		bottom : '15dp'
 
@@ -200,6 +202,8 @@ function MainMenu() {
 
 	var menuButton = Ti.UI.createImageView({
 		image : imagepath + 'menu@2x.png',
+		height : '52dp',
+		width : '52dp',
 		right : '12.5dp',
 		center : {
 			y : '50dp'
@@ -208,6 +212,8 @@ function MainMenu() {
 
 	var helpButton = Ti.UI.createImageView({
 		image : imagepath + 'help@2x.png',
+		height : '52dp',
+		width : '52dp',
 		left : '12.5dp',
 		bottom : '15dp'
 	});
@@ -219,6 +225,8 @@ function MainMenu() {
 
 	var profileButton = Ti.UI.createImageView({
 		image : imagepath + 'profile@2x.png',
+		height : '52dp',
+		width : '52dp',
 		left : '12.5dp',
 		center : {
 			y : '50dp'
@@ -227,8 +235,8 @@ function MainMenu() {
 
 	var callBtn = Ti.UI.createImageView({
 		image : imagepath + 'sirviR@2x.png',
-		width : '50%',
-		height : '50%',
+		width : '215dp',
+		height : '215dp',
 		left : '-320dp',
 	});
 	callBtn.addEventListener('click', function() {
@@ -405,26 +413,36 @@ function MainMenu() {
 	});
 	var lawBtn = Ti.UI.createImageView({
 		image : imagepath + 'law@2x.png',
+		height : '73dp',
+		width : '73.5dp',
 		top : '0dp',
 		left : '20dp'
 	});
 	var healthBtn = Ti.UI.createImageView({
 		image : imagepath + 'health@2x.png',
+		height : '72.5dp',
+		width : '72dp',
 		right : '0dp',
 	});
 	var datingBtn = Ti.UI.createImageView({
 		image : imagepath + 'dating@2x.png',
+		height : '72.5dp',
+		width : '72dp',
 		right : '45.5dp',
 		bottom : '0dp'
 	});
 	var financeBtn = Ti.UI.createImageView({
 		image : imagepath + 'finance@2x.png',
+		height : '72.5dp',
+		width : '73.5dp',
 		right : '65dp',
 		bottom : '-40dp',
 
 	});
 	var raffleBtn = Ti.UI.createImageView({
 		image : imagepath + 'raffle@2x.png',
+		height : '73.5dp',
+		width : '73.5dp',
 		bottom : '-70dp',
 		left : '-90dp',
 		opacity : 0
@@ -501,7 +519,7 @@ function MainMenu() {
 		});
 		if (Titanium.App.Properties.getBool('firsttime', true)) {
 			setTimeout(function() {
-				helpScreen.show();
+				//helpScreen.show();
 				Titanium.App.Properties.setBool('firsttime', false);
 			}, 1500);
 		}
@@ -672,7 +690,7 @@ function MainMenu() {
 	self.add(menuButton);
 	self.add(helpButton);
 	self.add(profileButton);
-	self.add(helpScreen);
+	//self.add(helpScreen);
 	helpScreen.hide();
 
 	return self;

@@ -1,6 +1,7 @@
 //FirstView Component Constructor
-function Offers() {
+function Offers(cWindow) {
     //create object instance, a parasitic subclass of Observable
+    //var cWindow = Ti.UI.getCurrentWindow;
     var imagepath = '/images/offers/';
     var self = Ti.UI.createView({
         height:'100%',
@@ -28,10 +29,11 @@ function Offers() {
         width : '52dp',
         height : '52dp',
         left:'12.5dp',
-        center:{y:'20dp'}
+        center:{y:'40dp'}
     });
     backButton.addEventListener('click', function(){
-        self.hide();
+        //self.hide();
+        cWindow.close({animated:false});
     });
     
     self.add(backButton);
@@ -39,7 +41,8 @@ function Offers() {
     var headerLabel = Ti.UI.createLabel({
         text:'Daily Deals',
         font:h1,
-        center:{y:'20dp'},
+        left:'70dp',
+        center:{y:'40dp'},
         color:'white'
     });
     self.add(headerLabel);
@@ -246,8 +249,6 @@ function Offers() {
             self.remove(frameView);
         });
     }
-     
-    
     
     return self;
 }

@@ -206,7 +206,7 @@ function MainMenu() {
 		width : '52dp',
 		right : '12.5dp',
 		center : {
-			y : '50dp'
+			y : '40dp'
 		}
 	});
 
@@ -229,7 +229,7 @@ function MainMenu() {
 		width : '52dp',
 		left : '12.5dp',
 		center : {
-			y : '50dp'
+			y : '40dp'
 		}
 	});
 
@@ -240,7 +240,31 @@ function MainMenu() {
 		left : '-320dp',
 	});
 	callBtn.addEventListener('click', function() {
-		callSirvi();
+		//callSirvi();
+		var anim1 = Ti.UI.createAnimation({
+            top: "0dp",
+            duration: 1000
+        });
+		 //Window open and close on android without animation 
+    		var win2 = Ti.UI.createWindow({
+        	title:'Example',
+        	backgroundColor:'blue',
+        	fullscreen : false,
+        	//windowSoftInputMode:Ti.UI.Android.SOFT_INPUT_ADJUST_UNSPECIFIED  //** important to make a heavyweight window
+    		});
+    		win2.addEventListener('androidback', function(){
+              win2.close({activityExitAnimation : Titanium.App.Android.R.slide_top});
+        	});
+    		//win2.open({animated:false});
+    		//win2.open(anim1);
+    		win2.open({
+    			activityEnterAnimation: Ti.Android.R.anim.slide_in_left,
+    			//activityExitAnimation: Ti.Android.R.anim.slide_out_right
+			});
+    		//win2.animate(anim1);
+    		//win2.open();
+    		
+    		
 	});
 
 	var overlay = Ti.UI.createView({
@@ -466,7 +490,7 @@ function MainMenu() {
 		height : '200dp',
 		left : '0dp',
 		center : {
-			y : Ti.Platform.displayCaps.platformHeight / 2
+			y : (Ti.Platform.displayCaps.platformHeight/2) / 2
 		},
 		duration : 500,
 		curve : Ti.UI.ANIMATION_CURVE_EASE_OUT
@@ -655,9 +679,23 @@ function MainMenu() {
 	}
 
 
-	financeBtn.addEventListener('click', function(e) {
+	financeBtn.addEventListener('click', function(e) 
+	{
 		var offersView = require('ui/common/android/Offers_Android');
-		self.add(new offersView);
+		//self.add(new offersView);
+			var winOffer = Ti.UI.createWindow({
+        		fullscreen : false,
+        	});
+        	winOffer.add(new offersView(winOffer));
+        	winOffer.addEventListener("open", function() 
+    		{
+    			var actionBar = winOffer.activity.actionBar;
+    			if (actionBar) { actionBar.hide(); }
+			});
+    		winOffer.addEventListener('androidback', function(){
+              winOffer.close({animated:false});
+        	});
+    		winOffer.open({animated:false});
 	});
 	var rewardsView = require('ui/common/android/rewards_Android');
 

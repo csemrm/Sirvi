@@ -1,4 +1,4 @@
-function lawView(_title) {
+function lawView(_title,cWindow) {
     //create object instance, a parasitic subclass of Observable
     var imagepath = '/images/law/';
     var self = Ti.UI.createView({
@@ -43,20 +43,16 @@ function lawView(_title) {
     var h1 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'28dp',color:'#fff'};
     var h2 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'18dp',color:'#fff'};
     var h3 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'21dp',color:'#fff'};
-    var h4 = {
-        fontFamily : 'HelveticaNeue-Thin',
-        fontSize : '16dp',
-        color : '#fff'
-    };
+    var h4 = {fontFamily : 'HelveticaNeue-Thin',fontSize : '16dp',color : '#fff'};
     
     var textBtn = Ti.UI.createImageView({
         image:imagepath + 'home@2x.png',
         width : '52dp',
         height : '52dp',
         left:'12.5dp',
-        center:{y:'50dp'}
+        center:{y:'40dp'}
     });
-    
+    /*
     var menuButton = Ti.UI.createImageView({
         image:imagepath + 'menu@2x.png',
         width : '52dp',
@@ -82,7 +78,8 @@ function lawView(_title) {
         bottom:'15dp'
     });
     //self.add(profileButton);
-    
+    */
+   
     var lawIcon = Ti.UI.createImageView({
         image:imagepath + _title +'R@2x.png',
         left:'0dp',
@@ -295,8 +292,9 @@ function lawView(_title) {
     
     
     textBtn.addEventListener('click', function(){
-        Ti.App.fireEvent('mainmenu');
-        Ti.App.fireEvent('closelawview');
+        //Ti.App.fireEvent('mainmenu');
+        //Ti.App.fireEvent('closelawview');
+        if(cWindow){ cWindow.close({animated:false}); }
     });
     
     

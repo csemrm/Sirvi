@@ -551,25 +551,48 @@ function MainMenu() {
 
 	lawBtn.addEventListener('click', function(e) {
 		if (!Ti.App.Properties.getBool('questions', false)) {
-			loadQuestions();
-		} else {
+			//loadQuestions();
+		} else 
+		{
 			var dTop = ((Ti.Platform.displayCaps.platformHeight - 386.5) / 2) + 36.75;
 			var dLeft = (Ti.Platform.displayCaps.platformWidth - 163.25);
 			lawBig.center = {
 				x : dLeft,
 				y : dTop
 			};
-			self.add(lawBig);
+			//self.add(lawBig);
 			lawBtn.hide();
 			lawBig.animate(planetZoom);
-			childView.animate(planetRotateOut, function(e) {
+			childView.animate(planetRotateOut, function(e) 
+			{
+				/*
 				Ti.App.fireEvent('lawview', {
 					x : 'law'
 				});
+				self.add(lawView);
+				*/
+				loadExtraWindows('law');
 			});
 			callBtn.animate(shrinkBtn);
 		}
 	});
+
+function loadExtraWindows(title)
+{
+	var Law = require('ui/common/android/lawView_Android');
+
+	var winLaw = Ti.UI.createWindow({ fullscreen : false });
+        winLaw.add(new Law(title,winLaw));
+        winLaw.addEventListener("open", function() 
+    	{
+    		var actionBar = winLaw.activity.actionBar;
+    		if (actionBar) { actionBar.hide(); }
+		});
+    	winLaw.addEventListener('androidback', function(){
+             winLaw.close({animated:false});
+        });
+    	winLaw.open({animated:false});
+}
 
 	healthBtn.addEventListener('click', function(e) {
 		if (!Ti.App.Properties.getBool('questions', false)) {
@@ -581,13 +604,16 @@ function MainMenu() {
 				x : dLeft,
 				y : dTop
 			};
-			self.add(healthBig);
+			//self.add(healthBig);
 			healthBtn.hide();
 			healthBig.animate(planetZoom);
-			childView.animate(planetRotateOut, function() {
+			childView.animate(planetRotateOut, function() 
+			{
+				/*
 				Ti.App.fireEvent('lawview', {
 					x : 'health'
-				});
+				});*/
+				loadExtraWindows('health');
 			});
 			callBtn.animate(shrinkBtn);
 		}
@@ -602,13 +628,16 @@ function MainMenu() {
 				x : dLeft,
 				y : '50%'
 			};
-			self.add(datingBig);
+			//self.add(datingBig);
 			datingBtn.hide();
 			datingBig.animate(planetZoom);
-			childView.animate(planetRotateOut, function() {
+			childView.animate(planetRotateOut, function() 
+			{
+				loadExtraWindows('date');
+				/*
 				Ti.App.fireEvent('lawview', {
 					x : 'date'
-				});
+				});*/
 			});
 			callBtn.animate(shrinkBtn);
 		}
@@ -667,15 +696,29 @@ function MainMenu() {
 		self.add(raffleTermsView);
 	}
 
-	function loadQuestions() {
+	function loadQuestions() 
+	{
 		var quesToLoad = 'sirvipays';
+		var winQuestion = Ti.UI.createWindow({ fullscreen : false });
+        	winQuestion.add(new Question(quesToLoad,winOffer));
+        	winQuestion.addEventListener("open", function() 
+    		{
+    			var actionBar = winQuestion.activity.actionBar;
+    			if (actionBar) { actionBar.hide(); }
+			});
+    		winQuestion.addEventListener('androidback', function(){
+              winQuestion.close({animated:false});
+        	});
+    		winQuestion.open({animated:false});
+    		
+		/*
 		if (!loaded) {
 			QuestionView = new Question(quesToLoad);
 			self.add(QuestionView);
 			loaded = true;
 		} else {
 			QuestionView.show();
-		}
+		}*/
 	}
 
 

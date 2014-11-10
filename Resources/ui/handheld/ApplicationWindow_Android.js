@@ -36,7 +36,7 @@ function ApplicationWindow_Android() {
 	var PreMain = require('ui/common/android/PreMain_Android');
 	var MainMenu = require('ui/common/android/MainMenu_Android');
 	var Tag = require('ui/common/android/TagView_Android');
-	var Law = require('ui/common/android/lawView_Android');
+	//var Law = require('ui/common/android/lawView_Android');
 	var Question = require('ui/common/android/QuestionView_Android');
 	var Profile = require('ui/common/android/ProfileView_Android');
 	

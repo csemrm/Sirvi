@@ -1,5 +1,5 @@
 //FirstView Component Constructor
-function QuestionView(popLabel) {
+function QuestionView(popLabel,cWindow) {
     //create object instance, a parasitic subclass of Observable
     //purple
     var userCredentials = Ti.App.Properties.getObject('userCred');
@@ -28,26 +28,10 @@ function QuestionView(popLabel) {
     });
 
     var imagepath = '/images/interest/';
-    var h1 = {
-        fontFamily : 'HelveticaNeue-Thin',
-        fontSize : '24dp',
-        color : '#fff'
-    };
-    var h2 = {
-        fontFamily : 'HelveticaNeue-Thin',
-        fontSize : '18dp',
-        color : '#fff'
-    };
-    var h3 = {
-        fontFamily : 'HelveticaNeue-Thin',
-        fontSize : '14dp',
-        color : '#fff'
-    };
-    var h4 = {
-        fontFamily : 'HelveticaNeue-Thin',
-        fontSize : '50dp',
-        color : '#fff'
-    };
+    var h1 = { fontFamily : 'HelveticaNeue-Thin',fontSize : '24dp',color : '#fff' };
+    var h2 = { fontFamily : 'HelveticaNeue-Thin',fontSize : '18dp',color : '#fff'};
+    var h3 = { fontFamily : 'HelveticaNeue-Thin',fontSize : '14dp',color : '#fff'};
+    var h4 = { fontFamily : 'HelveticaNeue-Thin',fontSize : '50dp',color : '#fff'};
 
     var centerText = Ti.UI.createLabel({
         text : 'You Have Earned',
@@ -169,12 +153,15 @@ function QuestionView(popLabel) {
 
     var homeButton = Ti.UI.createImageView({
         image : imagepath + 'home@2x.png',
-        left : '10dp',
-        top : '5dp',
+        width : '52dp',
+        height : '52dp',
+        left:'12.5dp',
+        center : { y:'100dp' },
     });
     self.add(homeButton);
     homeButton.addEventListener('click', function() {
-        self.hide();
+        //self.hide();
+        if (cWindow) { cWindow.close({animated:false}); };
     });
 
     return self;

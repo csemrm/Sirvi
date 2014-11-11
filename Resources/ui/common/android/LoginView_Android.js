@@ -144,6 +144,7 @@ function LoginView()
 	var formView = Ti.UI.createScrollView({
 		width : '240dp',
 		layout : 'vertical',
+		scrollType : 'vertical',
 		height : '200dp',
 		center : {
 			y : '50%'
@@ -273,13 +274,11 @@ function LoginView()
 	});
 	backButton.addEventListener('click', function(e) 
 	{
+		Ti.App.fireEvent('closeLogin');
 		self.animate({
 			bottom : -(appgloabl.PixelsToDPUnites(Ti.Platform.displayCaps.platformHeight)),
 			duration : 750
-		}, function() {
-				
-		});
-		Ti.App.fireEvent('closeLogin');
+		}, function() {});
 	});
 
 	forgotPassLabel.addEventListener('click', function(e) 

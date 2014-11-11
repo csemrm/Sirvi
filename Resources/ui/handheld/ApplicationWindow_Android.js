@@ -7,7 +7,7 @@ function ApplicationWindow_Android() {
 	Ti.App.Properties.setString('apiURL', apiURL);
 	var imagepath = '/images/load/';
 	var self = Ti.UI.createWindow({
-		//backgroundImage : imagepath + 'startBack.png',
+		backgroundImage : imagepath + 'startBack.png',
 		orientationModes: [ Ti.UI.PORTRAIT],
 		//statusBarStyle:Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT
 	});
@@ -97,28 +97,25 @@ function ApplicationWindow_Android() {
 	});
 
 	Ti.App.addEventListener('closeSignup', function(e) {
-		//self.backgroundImage = null;
-		//self.backgroundColor = '#23b823';
+		self.backgroundImage = null;
+		self.backgroundColor = '#23b823';
 		LoadView = new Load(0);
 		self.add(LoadView);
 	});
 
 	Ti.App.addEventListener('login', function(e) 
 	{
-		//self.backgroundImage = null;
-		//self.backgroundColor = '#23b823';
+		self.backgroundImage = null;
+		self.backgroundColor = '#23b823';
 		LoginView = new Login();
 		self.add(LoginView);
 	});
 
 	Ti.App.addEventListener('closeLogin', function(e) 
 	{
-		//self.backgroundImage = null;
-		//self.backgroundColor = '#23b823';
-		//if(LoadView == null)
-		{
-			LoadView = new Load(0);	
-		}
+		self.backgroundImage = null;
+		self.backgroundColor = '#23b823';
+		LoadView = new Load(0);	
 		self.add(LoadView);
 	});
 	

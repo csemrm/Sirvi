@@ -325,6 +325,10 @@ function LoadView(_dur) {
             bottom : '0dp',
             duration : 750
         });
+        self.animate({
+            bottom : '0dp',
+            duration : 750
+        });
         loginRegister();
         logoImg.top = '25dp';
         self.add(logoImg);

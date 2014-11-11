@@ -52,6 +52,7 @@ function SignupView() {
     
     var scrollView = Ti.UI.createScrollView({
         height:'450dp',
+        scrollType : 'vertical',
         width:'100%'
     });
     if(Ti.Platform.displayCaps.platformHeight>500)

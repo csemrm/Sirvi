@@ -33,3 +33,12 @@
 	exports.getAll = function() {
 		return AppGlobals;
 	};
+	exports.PixelsToDPUnites = function (ThePixels)
+	{
+		return (ThePixels / (Titanium.Platform.displayCaps.dpi / 160));
+	};
+	
+	exports.DPUnitsToPixels = function (TheDPUnits)
+	{
+		return (TheDPUnits * (Titanium.Platform.displayCaps.dpi / 160));
+	};

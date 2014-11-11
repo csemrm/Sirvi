@@ -2,12 +2,13 @@
 function SignupView() {
 	//create object instance, a parasitic subclass of Observable
 	
+	var appglobal = require('../AppGlobals');
 	
     var self = Ti.UI.createView({
         backgroundColor:'#23b823',
         height:'100%',
         width:'100%',
-        bottom:-(Ti.Platform.displayCaps.platformHeight/2)+'dp'
+        bottom:-(appglobal.PixelsToDPUnites(Ti.Platform.displayCaps.platformHeight))
     });
     self.animate({bottom:'0dp',duration:750});
     
@@ -40,7 +41,7 @@ function SignupView() {
     });
     //self.add(welcomeImg);
     
-    var appglobal = require('../AppGlobals');
+    
     
     var welcomeLabel = Ti.UI.createLabel({
         text:'Let\'s Get Started',

@@ -7,38 +7,25 @@ function ApplicationWindow_Android() {
 	Ti.App.Properties.setString('apiURL', apiURL);
 	var imagepath = '/images/load/';
 	var self = Ti.UI.createWindow({
-		backgroundImage : imagepath + 'startBack.png',
+		//backgroundImage : imagepath + 'startBack.png',
+		orientationModes: [ Ti.UI.PORTRAIT],
 		//statusBarStyle:Titanium.UI.iPhone.StatusBar.LIGHT_CONTENT
 	});
   
   var appgloabl = require("../common/AppGlobals");
   
-  //Hide action bar for Android 
-    self.addEventListener("open", function() 
-    {
-    		var actionBar;
-        	if (! self.activity) 
-        	{
-            	Ti.API.error("Can't access action bar on a lightweight window.");
-        	} else {
-            	actionBar = self.activity.actionBar;
-            	if (actionBar) {
-                	actionBar.hide();
-            	}
-        	}
-	});
-
-	var Load = require('ui/common/android/LoadView_Android');
+  	var Load = require('ui/common/android/LoadView_Android');
 	var Signup = require('ui/common/android/SignupView_Android');
 	var Login = require('ui/common/android/LoginView_Android');
-	var Tutorial = require('ui/common/android/TutorialView_Android');
-	var Interests = require('ui/common/android/InterestsView_Android');
-	var PreMain = require('ui/common/android/PreMain_Android');
-	var MainMenu = require('ui/common/android/MainMenu_Android');
-	var Tag = require('ui/common/android/TagView_Android');
-	//var Law = require('ui/common/android/lawView_Android');
-	var Question = require('ui/common/android/QuestionView_Android');
-	var Profile = require('ui/common/android/ProfileView_Android');
+	
+	// var Tutorial = require('ui/common/android/TutorialView_Android');
+	// var Interests = require('ui/common/android/InterestsView_Android');
+	// var PreMain = require('ui/common/android/PreMain_Android');
+	// var MainMenu = require('ui/common/android/MainMenu_Android');
+	// var Tag = require('ui/common/android/TagView_Android');
+	// //var Law = require('ui/common/android/lawView_Android');
+	// var Question = require('ui/common/android/QuestionView_Android');
+	// var Profile = require('ui/common/android/ProfileView_Android');
 	
 	var userCred = Ti.App.Properties.getObject('userCred', {});
 
@@ -51,7 +38,8 @@ function ApplicationWindow_Android() {
 	userEmail = Ti.App.Properties.getString('email', '');
 	userPass = Ti.App.Properties.getString('pass', '');
 
-	if ((userEmail) && (userPass) && (loginStatus)) {
+	if ((userEmail) && (userPass) && (loginStatus)) 
+	{
 		loginReq();
 	} else {
 		LoadView = new Load(2000);
@@ -89,12 +77,13 @@ function ApplicationWindow_Android() {
 		var userData = data;
 		Ti.App.Properties.setObject('userCred', userData);
 		//Ti.App.Properties.setBool('loggedIn',true);
-		MainMenuView = new MainMenu();
-		self.add(MainMenuView);
+		//MainMenuView = new MainMenu();
+		//self.add(MainMenuView);
 	}
 
-
-	Ti.App.addEventListener('load', function(e) {
+	
+	Ti.App.addEventListener('load', function(e) 
+	{
 		self.remove(MainMenuView);
 		LoadView = new Load(2000);
 		self.add(LoadView);
@@ -108,26 +97,32 @@ function ApplicationWindow_Android() {
 	});
 
 	Ti.App.addEventListener('closeSignup', function(e) {
-		self.backgroundImage = null;
-		self.backgroundColor = '#23b823';
+		//self.backgroundImage = null;
+		//self.backgroundColor = '#23b823';
 		LoadView = new Load(0);
 		self.add(LoadView);
 	});
 
-	Ti.App.addEventListener('login', function(e) {
-		self.backgroundImage = null;
-		self.backgroundColor = '#23b823';
+	Ti.App.addEventListener('login', function(e) 
+	{
+		//self.backgroundImage = null;
+		//self.backgroundColor = '#23b823';
 		LoginView = new Login();
 		self.add(LoginView);
 	});
 
-	Ti.App.addEventListener('closeLogin', function(e) {
-		self.backgroundImage = null;
-		self.backgroundColor = '#23b823';
-		LoadView = new Load(0);
+	Ti.App.addEventListener('closeLogin', function(e) 
+	{
+		//self.backgroundImage = null;
+		//self.backgroundColor = '#23b823';
+		//if(LoadView == null)
+		{
+			LoadView = new Load(0);	
+		}
 		self.add(LoadView);
 	});
-
+	
+	/*
 	Ti.App.addEventListener('TutorialView', function(e) {
 
 		TutorialView = new Tutorial();
@@ -173,7 +168,7 @@ function ApplicationWindow_Android() {
 		lawView = new Law(e.x);
 		self.add(lawView);
 	});
-
+	*/
 	return self;
 }
 

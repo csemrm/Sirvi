@@ -152,12 +152,15 @@ function MainMenu() {
 		self.add(profile);
 	});
 
-	function locationCallback(e) {
+	function locationCallback(e) 
+	{
 		if (!e.success || e.error) {
 			Ti.API.info('error: location callback: ' + JSON.stringify(e.error));
 			return;
 		}
-		var urlCall = apiURL + '/api/appUsers/' + userCred['userId'] + '?access_token=' + userCred['id'];
+		if (userCred != null) 
+		{
+			var urlCall = apiURL + '/api/appUsers/' + userCred['userId'] + '?access_token=' + userCred['id'];
 
 		var longitude = e.coords.longitude;
 		var latitude = e.coords.latitude;
@@ -192,6 +195,8 @@ function MainMenu() {
 		client.setRequestHeader('charset', 'utf-8');
 		client.send(JSON.stringify(params));
 		Ti.API.info(JSON.stringify(params));
+		}
+		
 	};
 
 	Titanium.Geolocation.addEventListener('location', locationCallback);
@@ -554,6 +559,9 @@ function MainMenu() {
 			//loadQuestions();
 		} else 
 		{
+			loadExtraWindows('law');
+			
+			/*
 			var dTop = ((Ti.Platform.displayCaps.platformHeight - 386.5) / 2) + 36.75;
 			var dLeft = (Ti.Platform.displayCaps.platformWidth - 163.25);
 			lawBig.center = {
@@ -570,19 +578,17 @@ function MainMenu() {
 					x : 'law'
 				});
 				self.add(lawView);
-				*/
-				loadExtraWindows('law');
+				
+				
 			});
 			callBtn.animate(shrinkBtn);
+			*/
 		}
 	});
 
 function loadExtraWindows(title)
 {
-	var Law = require('ui/common/android/lawView_Android');
-
-	var winLaw = Ti.UI.createWindow({ fullscreen : false });
-        winLaw.add(new Law(title,winLaw));
+		var winLaw = Ti.UI.createWindow({ fullscreen : false });
         winLaw.addEventListener("open", function() 
     	{
     		var actionBar = winLaw.activity.actionBar;
@@ -592,6 +598,8 @@ function loadExtraWindows(title)
              winLaw.close({animated:false});
         });
     	winLaw.open({animated:false});
+    	var Law = require('ui/common/android/lawView_Android');
+    	winLaw.add(new Law(title,winLaw));
 }
 
 	healthBtn.addEventListener('click', function(e) {

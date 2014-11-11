@@ -4,12 +4,14 @@ function LoadView(_dur) {
     
     var appglobal = require('../AppGlobals');
     
+   // alert('px '+appglobal.PixelsToDPUnites(Ti.Platform.displayCaps.platformHeight)+' dp '+Ti.Platform.displayCaps.platformHeight);
+    
     if(Ti.Platform.osname!= 'mobileweb'){
     var fb = require('facebook');
     fb.appid = 214878188648827;
     fb.permissions = ['email'];
     }
-
+	
     var imagepath = '/images/load/';
     var self = Ti.UI.createView({
         width : '100%',
@@ -20,7 +22,6 @@ function LoadView(_dur) {
     var images = [];
     for (var i = 1; i < 130; i++) {
         images.push('/images/loopImages/' + i + '.jpeg');
-        break;
     }
 
     var videoFile = Titanium.UI.createImageView({
@@ -33,16 +34,8 @@ function LoadView(_dur) {
         width : Ti.UI.FILL
     });
 
-    var h1 = {
-        fontFamily : 'HelveticaNeue-Thin',
-        fontSize : '32dp',
-        color : '#fff'
-    };
-    var h2 = {
-        fontFamily : 'HelveticaNeue-Thin',
-        fontSize : '22dp',
-        color : '#fff'
-    };
+    var h1 = {fontFamily : 'HelveticaNeue-Thin',fontSize : '32dp',color : '#fff'};
+    var h2 = {fontFamily : 'HelveticaNeue-Thin',fontSize : '22dp',color : '#fff'};
     //label using localization-ready strings from <app dir>/i18n/en/strings.xml
 
     var logoImg = Ti.UI.createImageView({
@@ -52,6 +45,8 @@ function LoadView(_dur) {
 
     var mailIcon = Titanium.UI.createImageView({
         image : imagepath + 'mail.png',
+        width : '71.5dp',
+        height : '72dp',
         //left:'20dp',
         //bottom:'100dp',
         center : {
@@ -62,7 +57,8 @@ function LoadView(_dur) {
 
     var fbIcon = Titanium.UI.createImageView({
         image : imagepath + 'fb.png',
-        //bottom:'120dp',
+        width : '71.5dp',
+        height : '72dp',
         center : {
             x : '50%',
             y : '70%'
@@ -71,6 +67,8 @@ function LoadView(_dur) {
 
     var twIcon = Titanium.UI.createImageView({
         image : imagepath + 'tw.png',
+        width : '71.5dp',
+        height : '72dp',
         //bottom:'120dp',
         //right:'20dp',
         center : {
@@ -137,19 +135,14 @@ function LoadView(_dur) {
     });
 
     //Add behavior for UI
-    function loginRegister() {
-        self.add(loginMenu);
+    function loginRegister() 
+    {
+        //self.add(loginMenu);
         loginMenu.animate(a);
         arrow.animate(b);
         self.add(loginLabel);
         loginLabel.animate(c);
     };
-    var greenGuy = Ti.UI.createView({
-        backgroundColor : '#23b823',
-        height : Ti.Platform.displayCaps.platformHeight,
-        width : Ti.Platform.displayCaps.platformWidth,
-        bottom : '0dp'
-    });
 
     mailIcon.addEventListener('click', pageMoveUp);
     fbIcon.addEventListener('click', fblogin);
@@ -255,7 +248,8 @@ function LoadView(_dur) {
         Ti.App.fireEvent('TutorialView');
 
     }
-    function saveInfoFB(data) {
+    function saveInfoFB(data) 
+    {
         userData = data;
         userData['email'] = Ti.App.Properties.getString('socialUserEmail');
         userData['password'] = Ti.App.Properties.getString("socialUserId");
@@ -305,7 +299,8 @@ function LoadView(_dur) {
         
     }
     
-    var openingAnimation = function() {
+    var openingAnimation = function() 
+    {
         self.add(bottomView);
         self.add(logoImg);
         bottomView.animate({
@@ -322,17 +317,13 @@ function LoadView(_dur) {
             bottomView.addEventListener('click', loginRegister);
         });
     };
-    if (!_dur) {
-        bottomView.bottom = Ti.Platform.displayCaps.platformHeight/2;
+    if (!_dur) 
+    {
+        bottomView.bottom = appglobal.PixelsToDPUnites(Ti.Platform.displayCaps.platformHeight);
         self.add(bottomView);
-        self.add(greenGuy);
         bottomView.animate({
             bottom : '0dp',
-            duration : 650
-        });
-        greenGuy.animate({
-            bottom : -Ti.Platform.displayCaps.platformHeight,
-            duration : 655
+            duration : 750
         });
         loginRegister();
         logoImg.top = '25dp';
@@ -341,20 +332,21 @@ function LoadView(_dur) {
 	if (_dur) {
             setTimeout(openingAnimation, 3000);
         }
-    /*    
+    
     videoFile.addEventListener('load', function(e) {
-        //videoFile.start();
+        videoFile.start();
         if (_dur) {
             setTimeout(openingAnimation, 3000);
         }
     });
-    */
+    
     self.add(videoFile);
 	
 	
-    function pageMoveUp() {
-        self.animate({
-            bottom : Ti.Platform.displayCaps.platformHeight,
+    function pageMoveUp() 
+    {
+        bottomView.animate({
+            bottom :  appglobal.PixelsToDPUnites(Ti.Platform.displayCaps.platformHeight),
             duration : 750,
             autoreverse : false
         }, function() {
@@ -362,22 +354,29 @@ function LoadView(_dur) {
         });
         Ti.App.fireEvent('signup');
     }
-
+	var winMain;
+	
     function pageMoveUpL() 
     {
     	videoFile.stop();
+    	Ti.App.fireEvent('login');
         self.animate({
-            bottom : Ti.Platform.displayCaps.platformHeight,
+            bottom : appglobal.PixelsToDPUnites(Ti.Platform.displayCaps.platformHeight),
             duration : 750,
             autoreverse : false
-        }, function() {
-            self = null;
-        });
-        Ti.App.fireEvent('login');
+        }, function(){});
         
-        //temperory lookup premain  
-       // Ti.App.fireEvent('mainmenu');
     }
+
+function GoToMainWindow()
+{
+		var MainMenu = require('ui/common/android/MainMenu_Android');
+		var homeWindow = new MainMenu();
+
+	    //open the main page as heavy android window 
+        winMain = Ti.UI.createWindow({ fullscreen : false, exitOnClose:true,orientationModes: [ Ti.UI.PORTRAIT] });
+    	winMain.add(homeWindow);
+}
 
     return self;
 }

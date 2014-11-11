@@ -7,7 +7,7 @@ function LoginView()
 		backgroundColor : '#23b823',
 		height : '100%',//Ti.Platform.displayCaps.platformHeight,
 		width : '100%',//Ti.Platform.displayCaps.platformWidth,
-		bottom : -(Ti.Platform.displayCaps.platformHeight/2)
+		bottom : -(appgloabl.PixelsToDPUnites(Ti.Platform.displayCaps.platformHeight))
 	});
 	self.animate({
 		bottom : '0dp',
@@ -183,7 +183,7 @@ function LoginView()
 
 	bottomLabelView.addEventListener('click', function() {
 		self.animate({
-			bottom : -Ti.Platform.displayCaps.platformHeight,
+			bottom : - appgloabl.PixelsToDPUnites(Ti.Platform.displayCaps.platformHeight),
 			duration : 750
 		}, function() {
 			self = null;
@@ -271,12 +271,13 @@ function LoginView()
 		passField.blur();
 		loginReq();
 	});
-	backButton.addEventListener('click', function(e) {
+	backButton.addEventListener('click', function(e) 
+	{
 		self.animate({
-			bottom : -(Ti.Platform.displayCaps.platformHeight),
+			bottom : -(appgloabl.PixelsToDPUnites(Ti.Platform.displayCaps.platformHeight)),
 			duration : 750
 		}, function() {
-			self = null;
+				
 		});
 		Ti.App.fireEvent('closeLogin');
 	});

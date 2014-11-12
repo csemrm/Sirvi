@@ -653,62 +653,18 @@ function loadExtraWindows(title)
 
 	var Question = require('ui/common/android/QuestionView_Android');
 	raffleBtn.addEventListener('click', function(e) {
-		if (!loaded) {
-			loadTerms();
+		if (!loaded) 
+		{
+			loadReffelWindow();
 		} else
 			loadQuestions();
 	});
-
-	var raffleTermsView = Titanium.UI.createView({
-		height : Titanium.UI.FILL,
-		width : Titanium.UI.FILL,
-		backgroundImage : '/images/mainmenu/background@2x.png'
-	});
-
-	var raffleBackBtn = Titanium.UI.createImageView({
-		image : '/images/law/home@2x.png',
-		left : '12.5dp',
-		center : {
-			y : '40dp'
-		}
-	});
-
-	var raffleBckgrnd = Titanium.UI.createImageView({
-		height : Titanium.UI.FILL,
-		width : Titanium.UI.FILL,
-		backgroundImage : '/images/mainmenu/spstart@2x.png'
-	});
-
-	var lowerButtonView = Titanium.UI.createView({
-		height : '70dp',
-		bottom : '20dp'
-	});
-
-	var raffleRegister = qbutton.createButton('Register', '#0d004c');
-
-	raffleRegister.addEventListener('click', function() {
-		loadQuestions();
-	});
-
-	lowerButtonView.add(raffleRegister);
-
-	raffleTermsView.add(raffleBckgrnd);
-	raffleTermsView.add(raffleBackBtn);
-	raffleTermsView.add(lowerButtonView);
-
-	raffleBackBtn.addEventListener('click', function() {
-		self.remove(raffleTermsView);
-	});
-
-	function loadTerms() {
-		self.add(raffleTermsView);
-	}
 
 	function loadQuestions() 
 	{
 		var quesToLoad = 'sirvipays';
 		var winQuestion = Ti.UI.createWindow({ fullscreen : false });
-        	winQuestion.add(new Question(quesToLoad,winOffer));
+        	winQuestion.add(new Question(quesToLoad,winQuestion));
         	winQuestion.addEventListener("open", function() 
     		{
     			var actionBar = winQuestion.activity.actionBar;
@@ -782,7 +738,65 @@ function loadExtraWindows(title)
 	//self.add(helpScreen);
 	helpScreen.hide();
 
+	function loadReffelWindow()
+	{
+		var raffleTermsView = Titanium.UI.createView({
+			height : Titanium.UI.FILL,
+			width : Titanium.UI.FILL,
+			backgroundImage : '/images/mainmenu/background@2x.png'
+		});
+
+		var raffleBackBtn = Titanium.UI.createImageView({
+			image : '/images/law/home@2x.png',
+			left : '12.5dp',
+			height : '52dp',
+			width : '52dp',
+			center : {
+				y : '40dp'
+			}
+		});
+
+		var raffleBckgrnd = Titanium.UI.createImageView({
+			height : Titanium.UI.FILL,
+			width : Titanium.UI.FILL,
+			backgroundImage : '/images/mainmenu/spstart@2x.png'
+		});
+
+		var lowerButtonView = Titanium.UI.createView({
+			height : '70dp',
+			bottom : '20dp'
+		});
+
+		var raffleRegister = qbutton.createButton('Register', '#0d004c');
+
+		raffleRegister.addEventListener('click', function() {
+			loadQuestions();
+		});
+
+		lowerButtonView.add(raffleRegister);
+
+		raffleTermsView.add(raffleBckgrnd);
+		raffleTermsView.add(raffleBackBtn);
+		raffleTermsView.add(lowerButtonView);
+
+		//open a new window
+		var winRaffle = Ti.UI.createWindow({
+        	fullscreen : false,
+        });
+        winRaffle.add(raffleTermsView);
+    	winRaffle.addEventListener('androidback', function(){
+            winRaffle.close({animated:false});
+        });
+    	winRaffle.open({animated:false});
+    		
+    	raffleBackBtn.addEventListener('click', function() {
+			winRaffle.close({animated:false});
+		});
+	}
+
 	return self;
 }
+
+
 
 module.exports = MainMenu;

@@ -143,7 +143,6 @@ function QuestionView(popLabel,cWindow) {
                     Ti.App.Properties.setInt('userPoints', 50);
                     pointsView.show();
                     Ti.App.Properties.setBool('questions', true);
-
                 }
             }
         });

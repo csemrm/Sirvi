@@ -1,5 +1,5 @@
 //FirstView Component Constructor
-function chatView() {
+function chatView(currentWindow) {
     //create object instance, a parasitic subclass of Observable
     var imagepath = '/images/mainmenu/';
     var self = Ti.UI.createView({
@@ -13,7 +13,6 @@ function chatView() {
     var url = apiURL + apiCall;
     
     
-    
     var h1 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'28dp',color:'#fff'};
     var h2 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'22dp',color:'#fff'};
     var h3 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'14dp',color:'#fff'};
@@ -21,8 +20,12 @@ function chatView() {
     
     var textBtn = Ti.UI.createImageView({
         image:'/images/law/home@2x.png',
-        left:'12.5dp',
-        center:{y:'50dp'}
+		height : '52dp',
+		width : '52dp',
+		left : '12.5dp',
+		center : {
+			y : '40dp'
+		}
     });
     
     self.add(textBtn);
@@ -156,9 +159,10 @@ function chatView() {
     }
 
     
-    textBtn.addEventListener('click', function(){
+    textBtn.addEventListener('click', function()
+    {
     	textChatField.blur();
-        self.hide(); 
+        currentWindow.close({animated:false}); 
     });
 
     return self;

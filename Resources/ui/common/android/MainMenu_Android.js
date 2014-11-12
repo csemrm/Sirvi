@@ -36,16 +36,16 @@ function MainMenu() {
 		bottom : '15dp'
 
 	});
-	var textChat = require('ui/common/android/FirstView_Android');
 	
-	textBtn.addEventListener('click', function() {
-		if (!textloaded) {
-			chatView = new textChat();
-			self.add(chatView);
-			textloaded = true;
-		} else {
-			chatView.show();
-		}
+	textBtn.addEventListener('click', function() 
+	{
+		var winChat = Ti.UI.createWindow({ fullscreen : false });
+		var textChat = require('ui/common/android/FirstView_Android');
+    	winChat.add(new textChat(winChat));
+    	winChat.addEventListener('androidback', function(){
+             winChat.close({animated:false});
+        });
+    	winChat.open({animated:false});
 	});
 
 	Ti.Geolocation.preferredProvider = "gps";
@@ -245,31 +245,7 @@ function MainMenu() {
 		left : '-320dp',
 	});
 	callBtn.addEventListener('click', function() {
-		//callSirvi();
-		var anim1 = Ti.UI.createAnimation({
-            top: "0dp",
-            duration: 1000
-        });
-		 //Window open and close on android without animation 
-    		var win2 = Ti.UI.createWindow({
-        	title:'Example',
-        	backgroundColor:'blue',
-        	fullscreen : false,
-        	//windowSoftInputMode:Ti.UI.Android.SOFT_INPUT_ADJUST_UNSPECIFIED  //** important to make a heavyweight window
-    		});
-    		win2.addEventListener('androidback', function(){
-              win2.close({activityExitAnimation : Titanium.App.Android.R.slide_top});
-        	});
-    		//win2.open({animated:false});
-    		//win2.open(anim1);
-    		win2.open({
-    			activityEnterAnimation: Ti.Android.R.anim.slide_in_left,
-    			//activityExitAnimation: Ti.Android.R.anim.slide_out_right
-			});
-    		//win2.animate(anim1);
-    		//win2.open();
-    		
-    		
+		callSirvi();
 	});
 
 	var overlay = Ti.UI.createView({

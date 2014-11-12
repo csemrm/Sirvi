@@ -43,63 +43,63 @@ function LoadView(_dur) {
         top : '-320dp'
     });
 
+ 
+var horz_buttons = Ti.UI.createView({
+    layout: 'horizontal',
+    height: '200dp',
+    top:'0dp',
+    width: '250dp'
+});
+ 
+ 
     var mailIcon = Titanium.UI.createImageView({
         image : imagepath + 'mail.png',
         width : '71.5dp',
         height : '72dp',
-        //left:'20dp',
-        //bottom:'100dp',
-        center : {
-            x : '17.5%',
-            y : '75%'
-        }
+        left:'10dp',
+        top :'16dp'
     });
 
     var fbIcon = Titanium.UI.createImageView({
         image : imagepath + 'fb.png',
         width : '71.5dp',
+        left:'10dp',
         height : '72dp',
-        center : {
-            x : '50%',
-            y : '70%'
-        }
+        top :'0dp'
     });
 
     var twIcon = Titanium.UI.createImageView({
         image : imagepath + 'tw.png',
         width : '71.5dp',
         height : '72dp',
-        //bottom:'120dp',
-        //right:'20dp',
-        center : {
-            x : '82.5%',
-            y : '75%'
-        }
+        left:'10dp',
+        top :'16dp'
     });
 
+	var menuWidth = appglobal.PixelsToDPUnites(Ti.Platform.displayCaps.platformWidth) + 140;
     var loginMenu = Titanium.UI.createView({
-        height : '100%',
-        width : '100%',
+        height : menuWidth,
+        width : menuWidth,
+        layout : 'vertical',
+        bottom : -(appglobal.PixelsToDPUnites(Ti.Platform.displayCaps.platformWidth)/2)-100,
         anchorPoint : {
-            x : 0.5,
-            y : 1.1
+            x : 0.0,
+            y : 0.0
         },
-        transform : Ti.UI.create2DMatrix().rotate(165),
+        transform : Ti.UI.create2DMatrix().rotate(180),
     });
 
-    loginMenu.add(mailIcon);
-    loginMenu.add(fbIcon);
-    loginMenu.add(twIcon);
-
-    var t = Ti.UI.create2DMatrix();
-    t = t.rotate(0);
+    horz_buttons.add(mailIcon);
+    horz_buttons.add(fbIcon);
+    horz_buttons.add(twIcon);
+	loginMenu.add(horz_buttons);
 
     var a = Titanium.UI.createAnimation({
         opacity : 1,
-        transform : t,
+        transform : Ti.UI.create2DMatrix().rotate(0),
         duration : 1000,
-        curve : Ti.UI.ANIMATION_CURVE_EASE_OUT
-        //autoreverse:true
+        curve : Ti.UI.ANIMATION_CURVE_EASE_OUT,
+        autoreverse:false
     });
 
     var b = Titanium.UI.createAnimation({
@@ -134,12 +134,15 @@ function LoadView(_dur) {
         opacity : 0
     });
 
+    self.add(loginMenu);
+    loginMenu.animate(a);
+
     //Add behavior for UI
     function loginRegister() 
     {
-        //self.add(loginMenu);
         loginMenu.animate(a);
         arrow.animate(b);
+        
         self.add(loginLabel);
         loginLabel.animate(c);
     };
@@ -358,12 +361,13 @@ function LoadView(_dur) {
         });
         Ti.App.fireEvent('signup');
     }
-	var winMain;
+	
 	
     function pageMoveUpL() 
     {
     	videoFile.stop();
-    	Ti.App.fireEvent('login');
+    	//Ti.App.fireEvent('login');
+    	GoToMainWindow();
         self.animate({
             bottom : appglobal.PixelsToDPUnites(Ti.Platform.displayCaps.platformHeight),
             duration : 750,
@@ -372,14 +376,16 @@ function LoadView(_dur) {
         
     }
 
+//this function leads to main home window after user login or signup
 function GoToMainWindow()
 {
 		var MainMenu = require('ui/common/android/MainMenu_Android');
 		var homeWindow = new MainMenu();
 
 	    //open the main page as heavy android window 
-        winMain = Ti.UI.createWindow({ fullscreen : false, exitOnClose:true,orientationModes: [ Ti.UI.PORTRAIT] });
+        var winMain = Ti.UI.createWindow({ fullscreen : false, exitOnClose:true,orientationModes: [ Ti.UI.PORTRAIT] });
     	winMain.add(homeWindow);
+    	winMain.open({animated:false});
 }
 
     return self;

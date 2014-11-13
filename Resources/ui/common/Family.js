@@ -1,4 +1,11 @@
-function MyProfileView(data) {
+function MyProfileView(parentData) {
+	data = parentData.family;
+	var spouse = false;
+	var children = false;
+	var childData = [];
+	tableData = [];
+
+	newData = parentData;
 	var self = Ti.UI.createView({
 		backgroundColor : '#23b823',
 		height : Ti.Platform.displayCaps.platformHeight,
@@ -10,7 +17,7 @@ function MyProfileView(data) {
 		bottom : '0dp',
 		duration : 750
 	});
-	
+
 	var userCred = Ti.App.Properties.getObject('userCred');
 
 	var h1 = {
@@ -28,10 +35,9 @@ function MyProfileView(data) {
 		fontSize : '14dp',
 		color : '#fff'
 	};
-
 	var h4 = {
 		fontFamily : 'HelveticaNeue-Thin',
-		fontSize : '18dp',
+		fontSize : '20dp',
 		color : '#fff'
 	};
 
@@ -64,7 +70,7 @@ function MyProfileView(data) {
 	});
 
 	var welcomeLabel = Ti.UI.createLabel({
-		text : 'My Profile',
+		text : 'Family',
 		font : h1,
 		color : 'white',
 		center : {
@@ -80,157 +86,225 @@ function MyProfileView(data) {
 	scrollView.add(welcomeImg);
 	scrollView.add(welcomeLabel);
 
+	self.add(scrollView);
+
 	var formView = Ti.UI.createScrollView({
-		width : '235dp',
+		width : Titanium.Platform.displayCaps.platformWidth,
 		layout : 'vertical',
-		top:'20dp',
+		top : '20dp',
 	});
 
-	var nameField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
-		hintText : 'NAME',
+	var maritalStatusField = Ti.UI.createTextField({
+		backgroundImage : imagepath + 'marital.png',
+		hintText : 'Marital Status',
 		font : h2,
 		width : '229.5dp',
 		height : '28.5dp',
 		paddingLeft : '35dp',
 		color : 'white',
-		value:data.first_name + ' ' + data.last_name,
-		editable:false
-	});
-	
-	var emailField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'email.png',
-		hintText : 'EMAIL',
-		font : h2,
-		width : '229.5dp',
-		height : '28.5dp',
-		paddingLeft : '35dp',
-		color : 'white',
-		top : '5%',
-		editable:false,
-		value:data.masked_email,
-	});
-	
-	var phoneField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'phone.png',
-		hintText : 'PHONE',
-		font : h2,
-		width : '229.5dp',
-		height : '28.5dp',
-		top : '5%',
-		paddingLeft : '35dp',
-		color : 'white',
-		value:data.phone
+		editable : false
 	});
 
-	var genderField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
-		hintText : 'GENDER',
-		font : h2,
-		width : '229.5dp',
-		height : '28.5dp',
-		top : '5%',
-		paddingLeft : '35dp',
-		color : 'white',
-		value:data.gender
+	formView.add(maritalStatusField);
+
+	var spouseView = Titanium.UI.createView({
+		height : Ti.UI.SIZE,
+		layout : 'vertical'
 	});
 
-	var bdayField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'bday.png',
-		hintText : 'BIRTHDAY',
+	formView.add(spouseView);
+
+	var NumberOfChildren = Ti.UI.createTextField({
+		backgroundImage : imagepath + 'children.png',
+		hintText : 'Number of Children',
 		font : h2,
 		width : '229.5dp',
 		height : '28.5dp',
 		paddingLeft : '35dp',
 		color : 'white',
-		top : '5%',
-		editable : false,
-		value:data.birthday,
+		top : '2.5%',
+		editable : false
 	});
 
-	var streetField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'city.png',
-		hintText : 'STREET',
-		font : h2,
-		width : '229.5dp',
-		height : '28.5dp',
-		paddingLeft : '35dp',
-		color : 'white',
-		top : '5%',
-		value:data.street
+	formView.add(NumberOfChildren);
+
+	var childrenView = Titanium.UI.createView({
+		height : Ti.UI.SIZE,
+		backgroundColor : 'transparent'
 	});
 
-	var cityField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'city.png',
-		hintText : 'CITY',
-		font : h2,
-		width : '229.5dp',
-		height : '28.5dp',
-		paddingLeft : '35dp',
-		color : 'white',
-		top : '5%',
-		value:data.city,
+	formView.add(childrenView);
+
+	var childrenTable = Titanium.UI.createTableView({
+		height : Ti.UI.SIZE,
+		backgroundColor : 'transparent',
+		separatorColor : 'transparent',
+		top : '1.5%'
 	});
 
-	var stateField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'city.png',
-		hintText : 'STATE',
-		font : h2,
-		width : '229.5dp',
-		height : '28.5dp',
-		paddingLeft : '35dp',
-		color : 'white',
-		top : '5%',
-		value:data.state,
-	});
+	function createSpouse() {
+		spouseView.spouseNameField = Ti.UI.createTextField({
+			backgroundImage : imagepath + 'user.png',
+			hintText : 'Spouse Name',
+			font : h2,
+			width : '229.5dp',
+			height : '28.5dp',
+			paddingLeft : '35dp',
+			color : 'white',
+			top : '1.5%',
+		});
+		spouseView.spouseGenderField = Ti.UI.createTextField({
+			backgroundImage : imagepath + 'gender.png',
+			hintText : 'Spouse Gender',
+			font : h2,
+			width : '229.5dp',
+			height : '28.5dp',
+			paddingLeft : '35dp',
+			color : 'white',
+			top : '2.5%',
+		});
+		spouseView.spouseDOBField = Ti.UI.createTextField({
+			backgroundImage : imagepath + 'bday.png',
+			hintText : 'Spouse Birthday',
+			font : h2,
+			width : '229.5dp',
+			height : '28.5dp',
+			paddingLeft : '35dp',
+			color : 'white',
+			top : '2.5%',
+		});
 
-	var zipField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'city.png',
-		hintText : 'ZIP',
-		font : h2,
-		width : '229.5dp',
-		height : '28.5dp',
-		paddingLeft : '35dp',
-		color : 'white',
-		top : '5%',
-		value:data.zip,
-	});
+		spouse = true;
+
+		spouseView.add(spouseView.spouseNameField);
+		spouseView.add(spouseView.spouseGenderField);
+		spouseView.add(spouseView.spouseDOBField);
+	}
+
+	function createChildren(num, childrenData) {
+		tableData = [];
+		if (num == 'None') {
+			if (children) {
+				childrenView.remove(childrenTable);
+				children = false;
+			}
+		} else {
+			for (var i = 0; i < num; i++) {
+				childRow = Ti.UI.createTableViewRow({
+					layout : 'vertical',
+					height : Ti.UI.SIZE,
+					backgroundColor : 'transparent'
+				});
+
+				childNameField = Ti.UI.createTextField({
+					backgroundImage : imagepath + 'user.png',
+					hintText : 'Child Name',
+					font : h2,
+					width : '229.5dp',
+					height : '28.5dp',
+					paddingLeft : '35dp',
+					color : 'white',
+					top : '2.5%',
+				});
+				childGenderField = Ti.UI.createTextField({
+					backgroundImage : imagepath + 'gender.png',
+					hintText : 'Child Gender',
+					font : h2,
+					width : '229.5dp',
+					height : '28.5dp',
+					paddingLeft : '35dp',
+					color : 'white',
+					top : '2.5%',
+				});
+				childDOBField = Ti.UI.createTextField({
+					backgroundImage : imagepath + 'bday.png',
+					hintText : 'Child Birthday',
+					font : h2,
+					width : '229.5dp',
+					height : '28.5dp',
+					paddingLeft : '35dp',
+					color : 'white',
+					top : '2.5%',
+				});
+
+				childRow.add(childNameField);
+				childRow.add(childGenderField);
+				childRow.add(childDOBField);
+				
+				if(childrenData[i]){
+					if(childrenData[i].name){
+						childNameField.value = childrenData[i].name;
+					}
+					if(childrenData[i].gender){
+						childGenderField.value = childrenData[i].gender;
+					}
+					if(childrenData[i].birthday){
+						childDOBField.value = childrenData[i].birthday;
+					}
+				}
+
+				tableData.push(childRow);
+			};
+			childrenTable.setData(tableData);
+			childrenView.add(childrenTable);
+			children = true;
+		}
+
+	}
 
 	var updateImg = Ti.UI.createImageView({
 		image : imagepath + 'signupBtn.png',
-		height : '47dp',
-		width : '170.5dp'
+		height : '35dp',
 	});
 
 	var updateLabel = Ti.UI.createLabel({
 		text : 'UPDATE',
-		font : h1,
+		font : h2,
 		color : 'white'
 	});
 
 	var updateBtn = Ti.UI.createButton({
 		height : '47dp',
 		width : '170.5dp',
-		top : '28.5dp'
+		top : '2.5%'
 	});
 
 	updateBtn.add(updateImg);
 	updateBtn.add(updateLabel);
-	
+
 	var paddingSpace = Ti.UI.createView({
-		height:'60dp',
+		height : '60dp',
 	});
-	
+
 	updateBtn.addEventListener('click', updateProfile);
-	
-	function updateProfile (){
+
+	function getChildData() {
+		Ti.API.info('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=');
+		Ti.API.info(childrenTable.data);
+		Ti.API.info(childrenTable.data[0]);
+		Ti.API.info(childrenTable.data[0].rows);
+		Ti.API.info(childrenTable.data[0].rows[0]);
+		Ti.API.info('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=');
+		for (var i = 0; i < childrenTable.getData(); i++) {
+			child = {
+				name : tableData.rowData[0].value,
+				gender : tableData.rowData[1].value,
+				birthday : tableData.rowData[2].value
+			};
+
+			childData.push(child);
+		};
+		return(childData);
+	}
+
+	function updateProfile() {
 		var urlCall = apiURL + '/api/appUsers/' + userCred['userId'] + '?access_token=' + userCred['id'];
 
 		var client = Ti.Network.createHTTPClient({
 			onload : function(e) {
 				Ti.API.info(this.responseText);
 				successDialog = Titanium.UI.createAlertDialog({
-					message:'Your profile has been updated!'
+					message : 'Your profile has been updated!'
 				}).show();
 			},
 			onerror : function(e) {
@@ -238,20 +312,28 @@ function MyProfileView(data) {
 			},
 			timeout : 5000 // in milliseconds
 		});
+		
+		if(maritalStatusField.value==='Married'){
+			spouseData = {
+				name : spouseView.spouseNameField.value,
+				gender : spouseView.spouseGenderField.value,
+				birthday : spouseView.spouseDOBField.value,
+			};
+		} else {
+			spouseData = null;
+		}
+
+		familyData = {
+			marital_status : maritalStatusField.value,
+			spouse : spouseData,
+			children : getChildData()
+		};
+
+		newData.family = familyData;
+		Ti.API.info(JSON.stringify(familyData));
 
 		params = {
-			details : {
-				"first_name" : data.first_name,
-				"last_name" : data.last_name,
-				"masked_email" : data.masked_email,
-				"gender" : genderField.value,
-				"birthday" : bdayField.value,
-				"phone" : phoneField.value,
-				"street" : streetField.value,
-				"city" : cityField.value,
-				"state" : stateField.value,
-				"zip" : zipField.value,
-			}
+			details : newData
 		};
 
 		client.open("PUT", urlCall);
@@ -261,19 +343,81 @@ function MyProfileView(data) {
 		Ti.API.info(JSON.stringify(params));
 	}
 
-	formView.add(nameField);
-	formView.add(emailField);
-	formView.add(genderField);
-	formView.add(phoneField);
-	formView.add(bdayField);
-	formView.add(streetField);
-	formView.add(cityField);
-	formView.add(stateField);
-	formView.add(zipField);
+	if (data) {
+		maritalStatusField.value = data.marital_status;
+		if (data.spouse) {
+			createSpouse();
+			spouseView.spouseNameField.value = data.spouse.name;
+			spouseView.spouseGenderField.value = data.spouse.gender;
+			spouseView.spouseDOBField.value = data.spouse.birthday;
+		}
+		if (data.children) {
+			NumberOfChildren.value = data.children.length;
+			childData = data.children;
+			createChildren(data.children.length, data.children);
+		}
+	}
+
 	formView.add(updateBtn);
 	formView.add(paddingSpace);
-	self.add(scrollView);
 	self.add(formView);
+
+	function checkSpouse() {
+		spouse = false;
+		spouseView.remove(spouseView.spouseNameField);
+		spouseView.remove(spouseView.spouseGenderField);
+		spouseView.remove(spouseView.spouseDOBField);
+	}
+
+	maritalStatusField.addEventListener('click', function() {
+		var opts = {
+			cancel : 3,
+			options : ['Single', 'Married', 'Divorced', 'Cancel'],
+			selectedIndex : 0,
+			title : 'Marital Status'
+		};
+		var dialog = Ti.UI.createOptionDialog(opts);
+		dialog.show();
+
+		dialog.addEventListener('click', function(e) {
+			if (e.index == 0) {
+				maritalStatusField.value = 'Single';
+				if (spouse) {
+					checkSpouse();
+				}
+			} else if (e.index == 2) {
+				maritalStatusField.value = 'Divorced';
+				if (spouse) {
+					checkSpouse();
+				}
+			} else if (e.index == 1) {
+				maritalStatusField.value = 'Married';
+				if (!spouse) {
+					createSpouse();
+				}
+			}
+		});
+	});
+
+	NumberOfChildren.addEventListener('click', function() {
+		childOpts = ['1', '2', '3', '4', '5', '6', 'No', 'Cancel'];
+
+		var opts = {
+			cancel : 7,
+			options : ['1', '2', '3', '4', '5', '6', 'None', 'Cancel'],
+			selectedIndex : 6,
+			title : 'Number Of Children'
+		};
+		var dialog = Ti.UI.createOptionDialog(opts);
+		dialog.show();
+
+		dialog.addEventListener('click', function(e) {
+			if (e.index != 7) {
+				NumberOfChildren.value = childOpts[e.index] + ' Children';
+				createChildren(childOpts[e.index]);
+			}
+		});
+	});
 
 	backButton.addEventListener('click', function(e) {
 		self.animate({

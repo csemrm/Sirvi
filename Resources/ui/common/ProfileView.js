@@ -92,7 +92,7 @@ function ProfileView(parent) {
 		tableData = [];
 		var topProfileView = Ti.UI.createView({
 			height : '45%',
-			backgroundColor : '#bbb',
+			backgroundColor : '#23b823',
 			top : '0dp',
 			opacity : 0.9
 		});
@@ -124,8 +124,9 @@ function ProfileView(parent) {
 			center : {
 				y : '78%'
 			},
-			text : data.first_name + ' ' + data.last_name || 'Omar Maghrabi',
-			font : h1
+			text : data.first_name + ' ' + data.last_name || ' ',
+			font : h1,
+			color:'white'
 		});
 
 		var subTitleText = Ti.UI.createLabel({
@@ -133,7 +134,8 @@ function ProfileView(parent) {
 				y : '90%'
 			},
 			text : data.city,
-			font : h2
+			font : h2,
+			color : 'white'
 		});
 
 		topProfileView.add(circleView);

@@ -1,6 +1,6 @@
 function MyProfileView(parentData) {
 	data = parentData.education;
-	
+
 	newData = parentData;
 	var self = Ti.UI.createView({
 		backgroundColor : '#23b823',
@@ -89,9 +89,8 @@ function MyProfileView(parentData) {
 		top : '20dp',
 	});
 
-	
 	var currentEducationTypeField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'edtype.png',
 		hintText : 'School Type',
 		font : h2,
 		width : '229.5dp',
@@ -101,7 +100,7 @@ function MyProfileView(parentData) {
 	});
 
 	var currentEducationNameField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'email.png',
+		backgroundImage : imagepath + 'edname.png',
 		hintText : 'School Name',
 		font : h2,
 		width : '229.5dp',
@@ -112,7 +111,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previousEducationTypeField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'phone.png',
+		backgroundImage : imagepath + 'edtype.png',
 		hintText : 'School Type',
 		font : h2,
 		width : '229.5dp',
@@ -123,7 +122,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previousEducationNameField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'edname.png',
 		hintText : 'School Name',
 		font : h2,
 		width : '229.5dp',
@@ -134,7 +133,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previous1EducationTypeField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'phone.png',
+		backgroundImage : imagepath + 'edtype.png',
 		hintText : 'School Type',
 		font : h2,
 		width : '229.5dp',
@@ -145,7 +144,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previous1EducationNameField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'edname.png',
 		hintText : 'School Name',
 		font : h2,
 		width : '229.5dp',
@@ -154,9 +153,9 @@ function MyProfileView(parentData) {
 		paddingLeft : '35dp',
 		color : 'white',
 	});
-	
+
 	var previous2EducationTypeField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'phone.png',
+		backgroundImage : imagepath + 'edtype.png',
 		hintText : 'School Type',
 		font : h2,
 		width : '229.5dp',
@@ -167,7 +166,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previous2EducationNameField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'edname.png',
 		hintText : 'School Name',
 		font : h2,
 		width : '229.5dp',
@@ -179,13 +178,12 @@ function MyProfileView(parentData) {
 
 	var updateImg = Ti.UI.createImageView({
 		image : imagepath + 'signupBtn.png',
-		height : '47dp',
-		width : '170.5dp'
+		height : '35dp',
 	});
 
 	var updateLabel = Ti.UI.createLabel({
 		text : 'UPDATE',
-		font : h1,
+		font : h2,
 		color : 'white'
 	});
 
@@ -206,7 +204,7 @@ function MyProfileView(parentData) {
 
 	function updateProfile() {
 		var urlCall = apiURL + '/api/appUsers/' + userCred['userId'] + '?access_token=' + userCred['id'];
-
+		var education = [];
 		var client = Ti.Network.createHTTPClient({
 			onload : function(e) {
 				Ti.API.info(this.responseText);
@@ -220,32 +218,32 @@ function MyProfileView(parentData) {
 			timeout : 5000 // in milliseconds
 		});
 
-		data[0] = {
+		education[0] = {
 			type : currentEducationTypeField.value,
-			school:{
+			school : {
 				name : currentEducationNameField.value,
 			}
 		};
-		data[1] = {
+		education[1] = {
 			type : previousEducationTypeField.value,
-			school:{
+			school : {
 				name : previousEducationNameField.value,
 			}
 		};
-		data[2] = {
+		education[2] = {
 			type : previous1EducationTypeField.value,
-			school:{
+			school : {
 				name : previous1EducationNameField.value,
 			}
 		};
-		data[3] = {
+		education[3] = {
 			type : previous2EducationTypeField.value,
-			school:{
+			school : {
 				name : previous2EducationNameField.value,
 			}
 		};
-		newData.education = data;
-		Ti.API.info(JSON.stringify(data));
+		newData.education = education;
+		Ti.API.info(JSON.stringify(education));
 
 		params = {
 			details : newData
@@ -258,21 +256,23 @@ function MyProfileView(parentData) {
 		Ti.API.info(JSON.stringify(params));
 	}
 
-	if (data[0]) {
-		currentEducationTypeField.value = data[0].type;
-		currentEducationNameField.value = data[0].school.name;
-	}
-	if (data[1]) {
-		previousEducationTypeField.value = data[1].type;
-		previousEducationNameField.value = data[1].school.name;
-	}
-	if (data[2]) {
-		previous1EducationTypeField.value = data[2].type;
-		previous1EducationNameField.value = data[2].school.name;
-	}
-	if (data[3]) {
-		previous2EducationTypeField.value = data[3].type;
-		previous2EducationNameField.value = data[3].school.name;
+	if (data) {
+		if (data[0]) {
+			currentEducationTypeField.value = data[0].type;
+			currentEducationNameField.value = data[0].school.name;
+		}
+		if (data[1]) {
+			previousEducationTypeField.value = data[1].type;
+			previousEducationNameField.value = data[1].school.name;
+		}
+		if (data[2]) {
+			previous1EducationTypeField.value = data[2].type;
+			previous1EducationNameField.value = data[2].school.name;
+		}
+		if (data[3]) {
+			previous2EducationTypeField.value = data[3].type;
+			previous2EducationNameField.value = data[3].school.name;
+		}
 	}
 
 	formView.add(currentEducationTypeField);

@@ -106,7 +106,7 @@ function MyProfileView(data) {
 		height : '28.5dp',
 		paddingLeft : '35dp',
 		color : 'white',
-		top : '5%',
+		top : '2.5%',
 		editable:false,
 		value:data.masked_email,
 	});
@@ -117,14 +117,14 @@ function MyProfileView(data) {
 		font : h2,
 		width : '229.5dp',
 		height : '28.5dp',
-		top : '5%',
+		top : '2.5%',
 		paddingLeft : '35dp',
 		color : 'white',
 		value:data.phone
 	});
 
 	var genderField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'gender.png',
 		hintText : 'GENDER',
 		font : h2,
 		width : '229.5dp',
@@ -143,7 +143,7 @@ function MyProfileView(data) {
 		height : '28.5dp',
 		paddingLeft : '35dp',
 		color : 'white',
-		top : '5%',
+		top : '2.5%',
 		editable : false,
 		value:data.birthday,
 	});
@@ -168,7 +168,7 @@ function MyProfileView(data) {
 		height : '28.5dp',
 		paddingLeft : '35dp',
 		color : 'white',
-		top : '5%',
+		top : '2.5%',
 		value:data.city,
 	});
 
@@ -180,7 +180,7 @@ function MyProfileView(data) {
 		height : '28.5dp',
 		paddingLeft : '35dp',
 		color : 'white',
-		top : '5%',
+		top : '2.5%',
 		value:data.state,
 	});
 
@@ -192,26 +192,25 @@ function MyProfileView(data) {
 		height : '28.5dp',
 		paddingLeft : '35dp',
 		color : 'white',
-		top : '5%',
+		top : '2.5%',
 		value:data.zip,
 	});
 
 	var updateImg = Ti.UI.createImageView({
 		image : imagepath + 'signupBtn.png',
-		height : '47dp',
-		width : '170.5dp'
+		height : '35dp',
 	});
 
 	var updateLabel = Ti.UI.createLabel({
 		text : 'UPDATE',
-		font : h1,
+		font : h2,
 		color : 'white'
 	});
 
 	var updateBtn = Ti.UI.createButton({
 		height : '47dp',
 		width : '170.5dp',
-		top : '28.5dp'
+		top : '5%'
 	});
 
 	updateBtn.add(updateImg);
@@ -251,6 +250,7 @@ function MyProfileView(data) {
 				"city" : cityField.value,
 				"state" : stateField.value,
 				"zip" : zipField.value,
+				"profile_image":data.profile_image
 			}
 		};
 

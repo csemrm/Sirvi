@@ -39,7 +39,7 @@ exports.createButton = function(title, _color) {
     var _button = Ti.UI.createButton({
         height : '47dp',
         width : '170.5dp',
-        top : '20dp',
+        top : '15dp',
         option : title,
         //index:count
     });

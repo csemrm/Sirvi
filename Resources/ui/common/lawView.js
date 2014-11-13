@@ -1,10 +1,77 @@
 function lawView(_title) {
     //create object instance, a parasitic subclass of Observable
     var imagepath = '/images/law/';
+    var apiURL = Ti.App.Properties.getString('apiURL', 'http://104.131.124.227:3000');
     var self = Ti.UI.createView({
         backgroundImage:'/images/mainmenu/background.png',
     });
+    var longitude;
+	var latitude;
     var menuTitle=[];
+    
+    Titanium.Geolocation.getCurrentPosition(function(e) {
+		if (!e.success || e.error) {
+			Ti.API.info('error: get current position: ' + JSON.stringify(e.error));
+			return;
+		}
+
+		longitude = e.coords.longitude;
+		latitude = e.coords.latitude;
+		var altitude = e.coords.altitude;
+		var heading = e.coords.heading;
+		var accuracy = e.coords.accuracy;
+		var speed = e.coords.speed;
+		var timestamp = e.coords.timestamp;
+		var altitudeAccuracy = e.coords.altitudeAccuracy;
+		Ti.API.info('speed ' + speed);
+		locationCallback(e);
+	});
+    
+    var userCred = Ti.App.Properties.getObject('userCred');
+    
+    function locationCallback(e) {
+		if (!e.success || e.error) {
+			Ti.API.info('error: location callback: ' + JSON.stringify(e.error));
+			return;
+		}
+		var urlCall = apiURL + '/api/appUsers/' + userCred['userId'] + '?access_token=' + userCred['id'];
+
+		var longitude = e.coords.longitude;
+		var latitude = e.coords.latitude;
+		var altitude = e.coords.altitude;
+		var heading = e.coords.heading;
+		var accuracy = e.coords.accuracy;
+		var speed = e.coords.speed;
+		var timestamp = e.coords.timestamp;
+		var altitudeAccuracy = e.coords.altitudeAccuracy;
+
+		var client = Ti.Network.createHTTPClient({
+			onload : function(e) {
+				//Ti.API.info(e.success);
+				Ti.API.info(this.responseText);
+				//saveInfo(JSON.parse(this.responseText));
+			},
+			onerror : function(e) {
+				Ti.API.info(e.error + ' Location Callback Function ' + JSON.stringify(e));
+			},
+			timeout : 5000 // in milliseconds
+		});
+
+		params = {
+			last_location : {
+				"lat" : latitude,
+				"lng" : longitude
+			}
+		};
+
+		client.open("PUT", urlCall);
+		client.setRequestHeader("Content-Type", "application/json");
+		client.setRequestHeader('charset', 'utf-8');
+		client.send(JSON.stringify(params));
+		Ti.API.info(JSON.stringify(params));
+	};
+
+	Titanium.Geolocation.addEventListener('location', locationCallback);
     switch (_title) {
     case 'law':
         menuTitle=[
@@ -250,7 +317,10 @@ function lawView(_title) {
         callDialog.add(titleView);
         callDialog.add(spacer);
         callDialog.add(newButton);
-        newButton.addEventListener('click', function() {
+        callNow.addEventListener('click', function(e){
+        	callSirvi(popLabel);
+        });
+        goBack.addEventListener('click', function() {
             self.remove(callDialog);
             self.remove(overlay);
         });
@@ -258,6 +328,132 @@ function lawView(_title) {
         self.add(overlay);
         self.add(callDialog); 
     }
+    
+    function callSirvi(intent) {
+		var Twilio = require('com.twilio.client');
+
+		var callDialog = Ti.UI.createView({
+			height : Ti.UI.SIZE,
+			width : '90%',
+			backgroundColor : '#white',
+			borderRadius : 8,
+			layout : 'vertical',
+			opacity : 0.8
+		});
+
+		var miniSirvi = Titanium.UI.createImageView({
+			height : '50dp',
+			width : '50dp',
+			image : '/images/mainmenu/callBtn.png'
+		});
+
+		var statuslabel = Ti.UI.createLabel({
+			text : 'Connecting to Sirvi... \nPlease wait while we connect your concierge specialist',
+			font : h4,
+			color : 'black',
+			textAlign : 'left'
+		});
+
+		var titleView = Titanium.UI.createView({
+			width : '100%',
+			layout : 'horizontal',
+			height : Titanium.UI.SIZE
+		});
+
+		titleView.add(miniSirvi);
+		titleView.add(statuslabel);
+
+		newButton = Titanium.UI.createButton({
+			title : 'End Call',
+			color : 'red'
+		});
+		callDialog.add(titleView);
+		callDialog.add(newButton);
+		newButton.addEventListener('click', function() {
+			Twilio.Device.disconnectAll();
+			self.remove(callDialog);
+			self.remove(overlay);
+		});
+
+		//var url = 'http://healthypeps.com/auth.php';
+		//makeCall(this.responseText);
+		var url = 'http://104.131.188.13/auth.php';
+		var client = Ti.Network.createHTTPClient({
+			onload : function(e) {
+				Ti.API.info('Received capability token: ' + this.responseText);
+				Twilio.Device.setup(this.responseText);
+				makeCall(this.responseText);
+			},
+			onerror : function(e) {
+				Ti.Platform.openURL('tel:18666971684');
+			},
+			timeout : 5000
+		});
+		client.open('POST', url);
+
+		authParams = {
+			caller : userCred['userId'],
+			access_token : userCred['id'],
+			lat : latitude,
+			lng : longitude
+		};
+
+		client.send(authParams);
+
+		function getDate() {
+			var currentTime = new Date();
+			var hours = currentTime.getHours();
+			var minutes = currentTime.getMinutes();
+			var month = currentTime.getMonth() + 1;
+			var day = currentTime.getDate();
+			var year = currentTime.getFullYear();
+
+			return month + "/" + day + "/" + year + " - " + hours + ":" + minutes;
+		};
+		var nowTime = getDate();
+		var _url = apiURL + '/api/calls/';
+		var _client = Ti.Network.createHTTPClient({
+			onload : function(e) {
+
+				//Ti.API.info(' ' + this.responseText);
+				//Twilio.Device.setup(this.responseText);
+				//makeCall(this.responseText);
+			},
+			onerror : function(e) {
+				Ti.Platform.openURL('tel:18666971684');
+			},
+			timeout : 5000
+		});
+		_client.open('POST', _url);
+
+		authParams1 = {
+			"phone_number" : 0,
+			"wait_time" : "00",
+			"start_time" : new Date(),//nowTime,
+			"intent" : intent,
+			"resolution" : "00",
+			"recording_url" : "00",
+			"end_time" : "00",
+			"agentId" : "objectid",
+			"appUserId" : userCred['userId'],
+			"access_token":userCred['id']
+		};
+
+		_client.send(authParams1);
+
+		// Make an outbound call
+		function makeCall(token) {
+			Ti.API.info(Twilio.Device.status(token) + 'making call...');
+			Twilio.Device.connect({
+				PhoneNumber : '+18666971684',
+				CallerId : '+15612038918',
+			});
+			Ti.API.info(Twilio.Device.status(token) + 'call enroute...');
+			self.add(overlay);
+			self.add(callDialog); locationCallback;
+		}
+
+	}
     
     menu.animate(
         {right:'0dp',duration:1000}, 
@@ -273,8 +469,8 @@ function lawView(_title) {
     
     
     menu.addEventListener('click', function(e){
-        //openCallPopUp(e.source.text);
-        openQuestions(e.source.text);
+        openCallPopUp(e.source.text);
+        //openQuestions(e.source.text);
     });
 
     

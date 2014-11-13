@@ -36,7 +36,6 @@ function MainMenu() {
 		fontSize : '14dp',
 		color : '#fff'
 	};
-
 	var h4 = {
 		fontFamily : 'HelveticaNeue-Thin',
 		fontSize : '16dp',
@@ -65,8 +64,6 @@ function MainMenu() {
 	Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
 	Titanium.Geolocation.distanceFilter = 10;
 
-	//
-	// GET CURRENT POSITION - THIS FIRES ONCE
 	//
 	Titanium.Geolocation.getCurrentPosition(function(e) {
 		if (!e.success || e.error) {
@@ -304,12 +301,11 @@ function MainMenu() {
 			self.remove(overlay);
 		});
 
-		var url = 'http://healthypeps.com/auth.php';
-		makeCall(this.responseText);
+		//var url = 'http://healthypeps.com/auth.php';
+		//makeCall(this.responseText);
 		var url = 'http://104.131.188.13/auth.php';
 		var client = Ti.Network.createHTTPClient({
 			onload : function(e) {
-
 				Ti.API.info('Received capability token: ' + this.responseText);
 				Twilio.Device.setup(this.responseText);
 				makeCall(this.responseText);
@@ -345,9 +341,9 @@ function MainMenu() {
 		var _client = Ti.Network.createHTTPClient({
 			onload : function(e) {
 
-				Ti.API.info(' ' + this.responseText);
-				Twilio.Device.setup(this.responseText);
-				makeCall(this.responseText);
+				//Ti.API.info(' ' + this.responseText);
+				//Twilio.Device.setup(this.responseText);
+				//makeCall(this.responseText);
 			},
 			onerror : function(e) {
 				Ti.Platform.openURL('tel:18666971684');
@@ -359,14 +355,14 @@ function MainMenu() {
 		authParams1 = {
 			"phone_number" : 0,
 			"wait_time" : "00",
-			"start_time" : nowTime,
-			"intent" : "00",
+			"start_time" : new Date().getTime(),//nowTime,
+			"intent" : "sirvipays",
 			"resolution" : "00",
 			"recording_url" : "00",
 			"end_time" : "00",
-			"id" : userCred['userId'],
 			"agentId" : "objectid",
-			"appUserId" : userCred['id']
+			"appUserId" : userCred['userId'],
+			"access_token":userCred['id']
 		};
 
 		_client.send(authParams1);
@@ -380,8 +376,7 @@ function MainMenu() {
 			});
 			Ti.API.info(Twilio.Device.status(token) + 'call enroute...');
 			self.add(overlay);
-			self.add(callDialog);
-			locationCallback;
+			self.add(callDialog); locationCallback;
 		}
 
 	}

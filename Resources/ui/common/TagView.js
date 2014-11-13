@@ -3,17 +3,17 @@ function TagView(label) {
 	//create object instance, a parasitic subclass of Observable
 	var h1 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'28dp',color:'#fff'};
     var h2 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'18dp',color:'#fff'};
-    var h3 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'15dp',color:'#fff'};
+    var h3 = {fontFamily: 'HelveticaNeue-Thin',fontSize:'14dp',color:'#fff'};
     
     var imagepath = '/images/interest/';
     
     
     
 	var self = Ti.UI.createView({
-        height:'30dp',
+        height:'35dp',
+        width:'103dp',
         backgroundColor:'#00b9ff',
-        borderRadius:'12.5dp',
-        layout:'horizontal',
+        borderRadius:'17.5dp',
         type:'off',
         left:'3dp',
         top:'3dp'
@@ -24,13 +24,13 @@ function TagView(label) {
         font:h3,
         color:'white',
         textAlign:'center',
-        left:'1dp'
+        left:'30dp',
+        width:'72dp'
     });
     
     var cross = Ti.UI.createImageView({
         image:imagepath + 'redcross.png',
         left:'1dp',
-        top:'1dp',
         width:'28dp',
         type:'off'
     });
@@ -50,7 +50,7 @@ function TagView(label) {
     });
     
     
-    self.width = interestLabel.toImage().width + 32;
+    //self.width = interestLabel.toImage().width + 32;
     self.add(cross);
     self.add(interestLabel);
     

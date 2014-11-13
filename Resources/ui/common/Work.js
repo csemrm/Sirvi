@@ -1,6 +1,6 @@
 function MyProfileView(parentData) {
 	data = parentData.work;
-	
+
 	newData = parentData;
 	var self = Ti.UI.createView({
 		backgroundColor : '#23b823',
@@ -98,7 +98,7 @@ function MyProfileView(parentData) {
 	});
 
 	var currentWorkNameField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'work.png',
 		hintText : 'Employer Name',
 		font : h2,
 		width : '229.5dp',
@@ -109,7 +109,7 @@ function MyProfileView(parentData) {
 	});
 
 	var currentWorkAddressField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'email.png',
+		backgroundImage : imagepath + 'city.png',
 		hintText : 'Employer Address',
 		font : h2,
 		width : '229.5dp',
@@ -129,7 +129,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previousWorkNameField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'phone.png',
+		backgroundImage : imagepath + 'work.png',
 		hintText : 'Employer Name',
 		font : h2,
 		width : '229.5dp',
@@ -140,7 +140,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previousWorkAddressField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'city.png',
 		hintText : 'Employer Address',
 		font : h2,
 		width : '229.5dp',
@@ -160,7 +160,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previous1WorkNameField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'phone.png',
+		backgroundImage : imagepath + 'work.png',
 		hintText : 'Employer Name',
 		font : h2,
 		width : '229.5dp',
@@ -171,7 +171,7 @@ function MyProfileView(parentData) {
 	});
 
 	var previous1WorkAddressField = Ti.UI.createTextField({
-		backgroundImage : imagepath + 'user.png',
+		backgroundImage : imagepath + 'city.png',
 		hintText : 'Employer Address',
 		font : h2,
 		width : '229.5dp',
@@ -183,13 +183,12 @@ function MyProfileView(parentData) {
 
 	var updateImg = Ti.UI.createImageView({
 		image : imagepath + 'signupBtn.png',
-		height : '47dp',
-		width : '170.5dp'
+		height : '35dp',
 	});
 
 	var updateLabel = Ti.UI.createLabel({
 		text : 'UPDATE',
-		font : h1,
+		font : h2,
 		color : 'white'
 	});
 
@@ -210,7 +209,7 @@ function MyProfileView(parentData) {
 
 	function updateProfile() {
 		var urlCall = apiURL + '/api/appUsers/' + userCred['userId'] + '?access_token=' + userCred['id'];
-
+		var work=[];
 		var client = Ti.Network.createHTTPClient({
 			onload : function(e) {
 				Ti.API.info(this.responseText);
@@ -224,26 +223,26 @@ function MyProfileView(parentData) {
 			timeout : 5000 // in milliseconds
 		});
 
-		data[0] = {
+		work[0] = {
 			employer : {
 				name : currentWorkNameField.value,
 				address : currentWorkAddressField.value
 			}
 		};
-		data[1] = {
+		work[1] = {
 			employer : {
 				name : previousWorkNameField.value,
 				address : previousWorkAddressField.value
 			}
 		};
-		data[2] = {
+		work[2] = {
 			employer : {
 				name : previous1WorkNameField.value,
 				address : previous1WorkAddressField.value
 			}
 		};
-		newData.work = data;
-		Ti.API.info(JSON.stringify(data));
+		newData.work = work;
+		Ti.API.info(JSON.stringify(work));
 
 		params = {
 			details : newData
@@ -256,17 +255,19 @@ function MyProfileView(parentData) {
 		Ti.API.info(JSON.stringify(params));
 	}
 
-	if (data[0]) {
-		currentWorkNameField.value = data[0].employer.name;
-		currentWorkAddressField.value = data[0].employer.address;
-	}
-	if (data[1]) {
-		previousWorkNameField.value = data[1].employer.name;
-		previousWorkAddressField.value = data[1].employer.address;
-	}
-	if (data[2]) {
-		previous1WorkNameField.value = data[2].employer.name;
-		previous1WorkAddressField.value = data[2].employer.address;
+	if (data) {
+		if (data[0]) {
+			currentWorkNameField.value = data[0].employer.name;
+			currentWorkAddressField.value = data[0].employer.address;
+		}
+		if (data[1]) {
+			previousWorkNameField.value = data[1].employer.name;
+			previousWorkAddressField.value = data[1].employer.address;
+		}
+		if (data[2]) {
+			previous1WorkNameField.value = data[2].employer.name;
+			previous1WorkAddressField.value = data[2].employer.address;
+		}
 	}
 
 	formView.add(currentEmploymentLabel);
